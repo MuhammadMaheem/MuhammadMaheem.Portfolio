@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Muhammad Maheem - AI Developer & ML Engineer. Specializing in Machine Learning, Computer Vision, and building intelligent systems." />
+    <meta name="keywords" content="Muhammad Maheem, AI Developer, Machine Learning, Python, React, Portfolio" />
+    <meta name="author" content="Muhammad Maheem" />
+    <meta name="theme-color" content="#0f172a" />
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Muhammad Maheem | AI Developer & ML Engineer" />
+    <meta property="og:description" content="Building intelligent systems that learn, adapt, and evolve. Explore my portfolio of AI/ML projects." />
+    
+    <title>Muhammad Maheem | AI Developer & ML Engineer</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <style>
+      /* Critical CSS for initial load */
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background-color: #020617;
+        color: white;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      /* Loading placeholder */
+      .loading-screen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #020617, #0f172a);
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(6, 182, 212, 0.3);
+        border-top-color: #06b6d4;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loading-screen">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
