@@ -124,51 +124,63 @@ export function Contact() {
             </Card>
           </motion.div>
 
-          {/* CTA Card */}
+          {/* CTA Card - Rebuilt without Card component for better interactivity */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6 }}
+            className="h-full"
           >
-            <Card className="p-8 h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 z-0" />
+            <div className="p-8 h-full relative overflow-hidden rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
               
-              <div className="relative z-10">
-                <div className="text-6xl mb-6 text-cyan-400">
+              {/* Content */}
+              <div className="relative">
+ <div className="text-6xl mb-6 text-cyan-400">
                   <Rocket className="w-16 h-16" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                                <h3 className="text-2xl font-bold text-white mb-4">
                   Ready to Start a Project?
                 </h3>
                 <p className="text-slate-400 mb-8">
                   I'm available for freelance work and internship opportunities.
                   Let's create something extraordinary together!
                 </p>
-
-                <div className="space-y-4">
-                  <motion.a
-                    href={`mailto:${personalInfo.email}?subject=Project Inquiry`}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 hover:shadow-lg hover:shadow-cyan-500/30"
+                {/* Buttons Container */}
+                <div className="flex flex-col gap-4">
+                  {/* Email Button */}
+                  <a
+                    href={`mailto:${personalInfo.email}?subject=Project%20Inquiry`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = `mailto:${personalInfo.email}?subject=Project%20Inquiry`;
+                    }}
+                    className="group relative flex items-center justify-center gap-3 px-8 py-4 text-lg font-semibold text-white rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:-translate-y-1 active:translate-y-0"
+                    style={{ pointerEvents: 'auto' }}
                   >
-                    <Send className="w-5 h-5" />
-                    Send an Email
-                  </motion.a>
-                  
-                  <motion.a
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <Send className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="relative z-10">Send an Email</span>
+                  </a>
+                  {/* GitHub Button */}
+                  <a
                     href={personalInfo.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-800/50 text-slate-200 border border-slate-700 font-medium rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 hover:bg-slate-700/50 hover:border-cyan-500/50"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(personalInfo.github, '_blank', 'noopener,noreferrer');
+                    }}
+                    className="group relative flex items-center justify-center gap-3 px-8 py-4 text-lg font-semibold text-white rounded-xl bg-slate-800 border-2 border-slate-600 cursor-pointer overflow-hidden transition-all duration-300 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:-translate-y-1 active:translate-y-0"
+                    style={{ pointerEvents: 'auto' }}
                   >
-                    <ExternalLink className="w-5 h-5" />
-                    View My GitHub
-                  </motion.a>
+                    <span className="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <ExternalLink className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="relative z-10">View My GitHub</span>
+                  </a>
                 </div>
-
+                {/* Footer text */}
                 <div className="mt-8 pt-8 border-t border-slate-700/50">
                   <p className="text-sm text-slate-500 text-center">
                     Currently based in {personalInfo.location}
@@ -178,7 +190,7 @@ export function Contact() {
                   </p>
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </div>
       </div>
