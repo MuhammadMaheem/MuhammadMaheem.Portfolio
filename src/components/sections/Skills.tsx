@@ -3,13 +3,14 @@ import { useInView } from '@/hooks/useInView';
 import { skills } from '@/data/portfolio';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Card } from '@/components/ui/Card';
+import { Monitor, Zap, Bot, Wrench, Code, Atom, Flame, Eye, Database, Package, Rocket, BarChart, Link, Calculator } from 'lucide-react';
 
 interface SkillTagProps {
   name: string;
   delay: number;
   isInView: boolean;
   color: string;
-  icon: string;
+  icon: React.ReactElement;
 }
 
 function SkillTag({ name, delay, isInView, color, icon }: SkillTagProps) {
@@ -36,8 +37,8 @@ interface SkillCategoryProps {
   title: string;
   items: { name: string; level: number }[];
   color: string;
-  iconSet: string[];
-  categoryIcon: string;
+  iconSet: React.ReactElement[];
+  categoryIcon: React.ReactElement;
   delay: number;
   isInView: boolean;
 }
@@ -86,29 +87,29 @@ export function Skills() {
       title: 'Programming Languages',
       items: skills.languages,
       color: 'from-cyan-600/90 to-blue-600/90',
-      categoryIcon: '💻',
-      iconSet: ['🐍', '📜', '📘']
+      categoryIcon: <Monitor className="w-6 h-6" />,
+      iconSet: [<Code className="w-4 h-4" />, <Code className="w-4 h-4" />, <Code className="w-4 h-4" />]
     },
     {
       title: 'Frameworks & Libraries',
       items: skills.frameworks,
       color: 'from-purple-600/90 to-pink-600/90',
-      categoryIcon: '⚡',
-      iconSet: ['⚛️', '▲', '🚀', '🔥', '📊']
+      categoryIcon: <Zap className="w-6 h-6" />,
+      iconSet: [<Atom className="w-4 h-4" />, <Code className="w-4 h-4" />, <Package className="w-4 h-4" />, <Flame className="w-4 h-4" />, <Database className="w-4 h-4" />]
     },
     {
       title: 'AI & Machine Learning',
       items: skills.aiMl,
       color: 'from-green-600/90 to-emerald-600/90',
-      categoryIcon: '🤖',
-      iconSet: ['🧠', '👁️', '📚', '🔮', '💬']
+      categoryIcon: <Bot className="w-6 h-6" />,
+      iconSet: [<Code className="w-4 h-4" />, <Eye className="w-4 h-4" />, <Database className="w-4 h-4" />, <Code className="w-4 h-4" />, <Code className="w-4 h-4" />]
     },
     {
       title: 'Tools & Technologies',
       items: skills.tools,
       color: 'from-orange-600/90 to-red-600/90',
-      categoryIcon: '🛠️',
-      iconSet: ['📦', '🗄️', '👁️', '🎭']
+      categoryIcon: <Wrench className="w-6 h-6" />,
+      iconSet: [<Package className="w-4 h-4" />, <Database className="w-4 h-4" />, <Eye className="w-4 h-4" />, <Code className="w-4 h-4" />]
     }
   ];
 
@@ -143,16 +144,16 @@ export function Skills() {
           </h4>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { name: 'Python', icon: '🐍' },
-              { name: 'React', icon: '⚛️' },
-              { name: 'PyTorch', icon: '🔥' },
-              { name: 'OpenCV', icon: '👁️' },
-              { name: 'FastAPI', icon: '🚀' },
-              { name: 'Next.js', icon: '▲' },
-              { name: 'ChromaDB', icon: '🗄️' },
-              { name: 'Streamlit', icon: '📊' },
-              { name: 'LangChain', icon: '🔗' },
-              { name: 'TensorFlow', icon: '🧮' }
+              { name: 'Python', icon: <Code className="w-5 h-5" /> },
+              { name: 'React', icon: <Atom className="w-5 h-5" /> },
+              { name: 'PyTorch', icon: <Flame className="w-5 h-5" /> },
+              { name: 'OpenCV', icon: <Eye className="w-5 h-5" /> },
+              { name: 'FastAPI', icon: <Rocket className="w-5 h-5" /> },
+              { name: 'Next.js', icon: <Code className="w-5 h-5" /> },
+              { name: 'ChromaDB', icon: <Database className="w-5 h-5" /> },
+              { name: 'Streamlit', icon: <BarChart className="w-5 h-5" /> },
+              { name: 'LangChain', icon: <Link className="w-5 h-5" /> },
+              { name: 'TensorFlow', icon: <Calculator className="w-5 h-5" /> }
             ].map((tech, index) => (
               <motion.div
                 key={tech.name}

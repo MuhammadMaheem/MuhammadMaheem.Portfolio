@@ -1,3 +1,6 @@
+import React from 'react';
+import { FileText, Building2, User, Gamepad2, Hospital, Brain, Briefcase, Building, Bot, Stars, Palette, Lightbulb, TrendingUp } from 'lucide-react';
+
 export const personalInfo = {
   name: "Muhammad Maheem",
   title: "AI Developer & ML Engineer",
@@ -18,7 +21,7 @@ export interface Project {
   fullDesc: string;
   technologies: string[];
   category: string;
-  icon: string;
+  icon: React.ReactElement;
   features: string[];
   gradient: string;
   images: string[];
@@ -34,7 +37,7 @@ export const projects: Project[] = [
     fullDesc: "An advanced document processing and question-answering system that uses Retrieval-Augmented Generation (RAG) technology. This project demonstrates my expertise in building intelligent systems that can understand and process complex documents. Users can upload any PDF document and ask natural language questions to get intelligent, context-aware responses powered by vector embeddings and Large Language Models (LLMs). The system breaks down documents into manageable chunks, creates semantic embeddings, stores them in a vector database, and retrieves the most relevant context to generate accurate answers.",
     technologies: ["Python", "LangChain", "ChromaDB", "OpenAI", "Streamlit"],
     category: "NLP",
-    icon: "📄",
+    icon: <FileText className="w-6 h-6" />,
     features: [
       "PDF text extraction and intelligent chunking",
       "Vector embeddings with ChromaDB for semantic search",
@@ -59,7 +62,7 @@ export const projects: Project[] = [
     fullDesc: "A specialized chatbot designed for Hadith-related queries that demonstrates advanced NLP capabilities. This project combines my passion for AI with Islamic knowledge, creating a tool that helps users explore and understand Hadith literature. The system processes natural language questions, searches through a curated database of authentic Hadith, and provides accurate responses with proper source citations. It uses semantic similarity to find relevant Hadith even when the user's query doesn't exactly match the text.",
     technologies: ["Python", "NLP", "RAG", "FastAPI", "LangChain"],
     category: "NLP",
-    icon: "🕌",
+    icon: <Building2 className="w-6 h-6" />,
     features: [
       "Specialized Hadith knowledge base integration",
       "Natural language understanding for Arabic & English",
@@ -84,7 +87,7 @@ export const projects: Project[] = [
     fullDesc: "A comprehensive attendance tracking system built using advanced computer vision techniques. This project showcases my skills in image processing and deep learning for face recognition. The system captures faces in real-time through a webcam, encodes facial features into 128-dimensional vectors using dlib's face recognition model, and matches them against a database of known faces. When a match is found, it automatically logs the attendance with timestamp, making traditional manual attendance obsolete.",
     technologies: ["Python", "OpenCV", "Dlib", "NumPy", "Pandas", "SQLite"],
     category: "Computer Vision",
-    icon: "👤",
+    icon: <User className="w-6 h-6" />,
     features: [
       "Real-time face detection with HOG/CNN",
       "128-dimension face encoding for accuracy",
@@ -109,7 +112,7 @@ export const projects: Project[] = [
     fullDesc: "An intelligent Tic-Tac-Toe agent implemented using Deep Q-Network (DQN) that learns to play optimally through reinforcement learning. This project demonstrates my understanding of neural networks, reinforcement learning concepts, and game theory. The AI starts with no knowledge of the game and learns through self-play, eventually discovering optimal strategies. The DQN architecture uses experience replay and target networks to stabilize training, showcasing fundamental concepts that scale to more complex games.",
     technologies: ["Python", "PyTorch", "DQN", "NumPy", "Matplotlib"],
     category: "Reinforcement Learning",
-    icon: "🎮",
+    icon: <Gamepad2 className="w-6 h-6" />,
     features: [
       "Deep Q-Network architecture implementation",
       "Experience replay buffer for stable learning",
@@ -134,7 +137,7 @@ export const projects: Project[] = [
     fullDesc: "A machine learning model for predicting Chronic Kidney Disease (CKD) using various classification algorithms. This healthcare AI project analyzes patient medical data including blood tests, urine tests, and patient history to provide early detection and risk assessment. The model compares multiple algorithms like Random Forest, SVM, and XGBoost to find the best performer. Feature importance analysis helps medical professionals understand which factors contribute most to CKD risk.",
     technologies: ["Python", "Scikit-learn", "Pandas", "Matplotlib", "Seaborn", "XGBoost"],
     category: "Healthcare AI",
-    icon: "🏥",
+    icon: <Hospital className="w-6 h-6" />,
     features: [
       "Multiple classification algorithm comparison",
       "Feature importance and selection analysis",
@@ -159,7 +162,7 @@ export const projects: Project[] = [
     fullDesc: "A machine learning model trained to predict personality traits based on user responses and behavioral data. This project explores the intersection of psychology and AI, using the MBTI framework to categorize personality types. Users answer a series of questions, and the model analyzes patterns in their responses to predict their personality type. The system uses feature engineering to extract meaningful signals from text and numerical responses, applying various ML techniques for accurate classification.",
     technologies: ["Python", "Scikit-learn", "NLTK", "Streamlit", "Pandas"],
     category: "ML",
-    icon: "🧠",
+    icon: <Brain className="w-6 h-6" />,
     features: [
       "MBTI personality type prediction",
       "Behavioral pattern analysis from responses",
@@ -184,7 +187,7 @@ export const projects: Project[] = [
     fullDesc: "A comprehensive Software as a Service management platform built with modern frontend technologies. This project showcases my web development skills and ability to create clean, responsive user interfaces. The application features a sleek dashboard for managing subscriptions, users, and business operations. Built with React and Next.js, it demonstrates my understanding of component architecture, state management, and modern CSS frameworks like Tailwind.",
     technologies: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
     category: "Web Development",
-    icon: "💼",
+    icon: <Briefcase className="w-6 h-6" />,
     features: [
       "Fully responsive dashboard design",
       "User management and role-based access",
@@ -209,7 +212,7 @@ export const projects: Project[] = [
     fullDesc: "A full-featured banking management application with an intuitive Streamlit GUI that handles all core banking operations. This FinTech project demonstrates my ability to build practical, user-friendly applications that solve real-world problems. The system supports account creation, deposits, withdrawals, transfers, and statement generation. Data is stored securely in SQLite with proper transaction handling to ensure data integrity.",
     technologies: ["Python", "Streamlit", "SQLite", "Pandas", "Plotly"],
     category: "FinTech",
-    icon: "🏦",
+    icon: <Building className="w-6 h-6" />,
     features: [
       "Account creation and management",
       "Secure transaction processing",
@@ -257,13 +260,18 @@ export const skills = {
   ]
 };
 
-export const interests = [
-  { name: "Artificial Intelligence", icon: "🤖" },
-  { name: "Astronomy", icon: "🌌" },
-  { name: "Drawing & Sketching", icon: "🎨" },
-  { name: "Gaming", icon: "🎮" },
-  { name: "New Technologies", icon: "💡" },
-  { name: "SEO", icon: "📈" }
+export interface Interest {
+  name: string;
+  icon: React.ReactElement;
+}
+
+export const interests: Interest[] = [
+  { name: "Artificial Intelligence", icon: <Bot className="w-6 h-6" /> },
+  { name: "Astronomy", icon: <Stars className="w-6 h-6" /> },
+  { name: "Drawing & Sketching", icon: <Palette className="w-6 h-6" /> },
+  { name: "Gaming", icon: <Gamepad2 className="w-6 h-6" /> },
+  { name: "New Technologies", icon: <Lightbulb className="w-6 h-6" /> },
+  { name: "SEO", icon: <TrendingUp className="w-6 h-6" /> }
 ];
 
 export const softSkills = [

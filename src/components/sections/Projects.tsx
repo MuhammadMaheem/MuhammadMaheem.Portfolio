@@ -362,12 +362,6 @@ function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <div className="flex justify-center pt-4">
-                    <Button variant="primary" onClick={onClose} className="px-8">
-                      Close Project
-                    </Button>
-                  </div>
                 </div>
               </div>
             </div>

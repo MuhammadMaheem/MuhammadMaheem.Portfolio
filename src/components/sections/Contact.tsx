@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Send, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Send, ExternalLink, Rocket } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
 import { personalInfo } from '@/data/portfolio';
 import { SectionTitle } from '@/components/ui/SectionTitle';
@@ -131,10 +131,12 @@ export function Contact() {
             transition={{ duration: 0.6 }}
           >
             <Card className="p-8 h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 z-0" />
               
               <div className="relative z-10">
-                <div className="text-6xl mb-6">🚀</div>
+                <div className="text-6xl mb-6 text-cyan-400">
+                  <Rocket className="w-16 h-16" />
+                </div>
                 <h3 className="text-2xl font-bold text-white mb-4">
                   Ready to Start a Project?
                 </h3>
@@ -144,24 +146,27 @@ export function Contact() {
                 </p>
 
                 <div className="space-y-4">
-                  <Button
-                    variant="primary"
-                    size="lg"
+                  <motion.a
                     href={`mailto:${personalInfo.email}?subject=Project Inquiry`}
-                    icon={<Send className="w-5 h-5" />}
-                    className="w-full"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 hover:shadow-lg hover:shadow-cyan-500/30"
                   >
+                    <Send className="w-5 h-5" />
                     Send an Email
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="lg"
+                  </motion.a>
+                  
+                  <motion.a
                     href={personalInfo.github}
-                    icon={<ExternalLink className="w-5 h-5" />}
-                    className="w-full"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-800/50 text-slate-200 border border-slate-700 font-medium rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 hover:bg-slate-700/50 hover:border-cyan-500/50"
                   >
+                    <ExternalLink className="w-5 h-5" />
                     View My GitHub
-                  </Button>
+                  </motion.a>
                 </div>
 
                 <div className="mt-8 pt-8 border-t border-slate-700/50">
