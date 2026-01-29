@@ -16,9 +16,7 @@ export function Footer() {
             className="text-slate-400 text-sm flex items-center gap-1"
           >
             <span>© {currentYear} {personalInfo.name}</span>
-        
-
-          {/* Social Links */}
+          </motion.div>
           <div className="flex items-center gap-4">
             <motion.a
               href={personalInfo.github}
