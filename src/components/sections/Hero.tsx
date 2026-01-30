@@ -98,16 +98,7 @@ export function Hero() {
           />
         </motion.div>
 
-        {/* Status */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center justify-center gap-2 mb-10 text-slate-500"
-        >
-          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span>{personalInfo.status}</span>
-        </motion.div>
+     
 
         {/* CTA Buttons */}
         <motion.div
