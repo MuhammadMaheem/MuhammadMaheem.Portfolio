@@ -49,17 +49,19 @@ export function Experience() {
                   </div>
                 </div>
 
-                <ul className="space-y-2.5">
-                  {experience.highlights.map((highlight, highlightIndex) => (
-                    <li
-                      key={`${experience.company}-highlight-${highlightIndex}`}
-                      className="font-body text-sm text-[var(--color-text-secondary)] flex items-start gap-2"
-                    >
-                      <span className="w-1 h-1 mt-2 bg-[var(--color-accent-purple)] flex-shrink-0" />
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
+                <div className="max-w-3xl">
+                  <ul className="space-y-2.5">
+                    {experience.highlights.map((highlight, highlightIndex) => (
+                      <li
+                        key={`${experience.company}-highlight-${highlightIndex}`}
+                        className="font-body text-sm text-[var(--color-text-secondary)] flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 mt-2 bg-[var(--color-accent-purple)] flex-shrink-0" />
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </Card>
             </motion.div>
           ))}

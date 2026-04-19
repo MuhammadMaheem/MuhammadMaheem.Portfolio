@@ -45,7 +45,7 @@ export function Hero() {
         </motion.div>
 
         {/* Name — oversized Syne */}
-        <h1 className="font-display font-800 text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] leading-[0.9] tracking-tighter text-[var(--color-text-primary)] mb-8">
+        <h1 className="font-display font-800 text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] xl:text-[8rem] leading-[0.9] tracking-tighter text-[var(--color-text-primary)] mb-8">
           <span className="block">{personalInfo.name.split(' ')[0]}</span>
           <span
             className="block"

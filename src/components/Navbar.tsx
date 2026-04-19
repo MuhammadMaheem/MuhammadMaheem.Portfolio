@@ -123,7 +123,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-[var(--color-bg-primary)]/95 backdrop-blur-md border-b border-[var(--color-border-subtle)]"
+            className="md:hidden max-h-[85vh] overflow-y-auto bg-[var(--color-bg-primary)]/95 backdrop-blur-md border-b border-[var(--color-border-subtle)]"
           >
             <div className="px-6 py-4 space-y-1">
               {navLinks.map((link) => (
@@ -134,7 +134,7 @@ export function Navbar() {
                   exit={{ opacity: 0, x: -10 }}
                   onClick={() => scrollToSection(link.href)}
                   className={cn(
-                    'block w-full text-left px-3 py-2.5 text-xs tracking-widest uppercase font-body transition-colors',
+                    'block w-full min-h-[44px] text-left px-3 py-2.5 text-xs tracking-widest uppercase font-body transition-colors',
                     activeSection === link.href.slice(1)
                       ? 'text-[var(--color-accent-blue)]'
                       : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]'
