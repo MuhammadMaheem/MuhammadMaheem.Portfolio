@@ -1,51 +1,43 @@
 import { motion } from 'framer-motion';
-import { Heart, Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 import { personalInfo } from '@/data/portfolio';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative py-12 px-4 border-t border-slate-800">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="relative py-8 px-6 border-t border-[var(--color-border-subtle)]">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Copyright */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-slate-400 text-sm flex items-center gap-1"
+            viewport={{ once: true }}
+            className="font-body text-xs text-[var(--color-text-muted)] tracking-wider"
           >
-            <span>© {currentYear} {personalInfo.name}</span>
+            © {currentYear} {personalInfo.name}
           </motion.div>
-          <div className="flex items-center gap-4">
-            <motion.a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              className="p-2 text-slate-400 hover:text-white transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </motion.a>
-            <motion.a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              className="p-2 text-slate-400 hover:text-white transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5" />
-            </motion.a>
-            <motion.a
-              href={`mailto:${personalInfo.email}`}
-              whileHover={{ scale: 1.1, y: -2 }}
-              className="p-2 text-slate-400 hover:text-white transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="w-5 h-5" />
-            </motion.a>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            {[
+              { href: personalInfo.github, icon: Github, label: 'GitHub' },
+              { href: personalInfo.linkedin, icon: Linkedin, label: 'LinkedIn' },
+              { href: `mailto:${personalInfo.email}`, icon: Mail, label: 'Email' },
+            ].map(({ href, icon: Icon, label }) => (
+              <motion.a
+                key={label}
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                whileHover={{ y: -2 }}
+                className="p-2 text-[var(--color-text-muted)] hover:text-[var(--color-accent-blue)] transition-colors"
+                aria-label={label}
+              >
+                <Icon className="w-4 h-4" />
+              </motion.a>
+            ))}
           </div>
         </div>
 
@@ -53,7 +45,8 @@ export function Footer() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="mt-6 text-center text-xs text-slate-500"
+          viewport={{ once: true }}
+          className="mt-4 text-center font-body text-[10px] text-[var(--color-text-muted)] tracking-widest uppercase"
         >
           Built with React, TypeScript, Tailwind CSS & Framer Motion
         </motion.div>

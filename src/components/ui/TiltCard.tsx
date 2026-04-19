@@ -22,14 +22,13 @@ export function TiltCard({ children, className, glareEnabled = true }: TiltCardP
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Reduced rotation values for smoother effect
-    const rotateXValue = ((y - centerY) / centerY) * -8;
-    const rotateYValue = ((x - centerX) / centerX) * 8;
+    const rotateXValue = ((y - centerY) / centerY) * -6;
+    const rotateYValue = ((x - centerX) / centerX) * 6;
 
-    setTransform(`perspective(1000px) rotateX(${rotateXValue}deg) rotateY(${rotateYValue}deg) scale3d(1.02, 1.02, 1.02)`);
+    setTransform(`perspective(1000px) rotateX(${rotateXValue}deg) rotateY(${rotateYValue}deg)`);
     setGlarePosition({
       x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100
+      y: (y / rect.height) * 100,
     });
   };
 
@@ -39,7 +38,7 @@ export function TiltCard({ children, className, glareEnabled = true }: TiltCardP
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg)');
     setGlarePosition({ x: 50, y: 50 });
   };
 
@@ -52,19 +51,19 @@ export function TiltCard({ children, className, glareEnabled = true }: TiltCardP
       style={{
         transform,
         transformStyle: 'preserve-3d',
-        transition: 'transform 0.15s ease-out',
+        transition: 'transform 0.2s ease-out',
         willChange: 'transform',
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       className={cn('relative', className)}
     >
       {children}
       {glareEnabled && (
         <div
-          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
           style={{
-            opacity: isHovered ? 1 : 0,
-            background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255,255,255,0.15) 0%, transparent 50%)`
+            opacity: isHovered ? 0.08 : 0,
+            background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, var(--color-accent-purple) 0%, transparent 60%)`,
           }}
         />
       )}

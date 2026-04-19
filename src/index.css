@@ -1,41 +1,115 @@
 @import "tailwindcss";
 
-/* Custom scrollbar */
+/* ============================================
+   DESIGN TOKENS — Editorial Brutalist
+   ============================================ */
+
+@theme {
+  /* Colors — "My File Theme" (Dracula-inspired) */
+  --color-bg-primary: #282A36;
+  --color-bg-surface: #1e1f29;
+  --color-bg-elevated: #323444;
+  --color-border-subtle: #3a3d4f;
+  --color-border-strong: #4a4d62;
+  --color-text-primary: #F8F8F2;
+  --color-text-secondary: #ABB2BF;
+  --color-text-muted: #6272A4;
+  --color-accent-blue: #61AFEF;
+  --color-accent-purple: #BD93F9;
+  --color-accent-green: #50FA7B;
+  --color-accent-cyan: #8BE9FD;
+  --color-accent-yellow: #F1FA8C;
+  --color-accent-red: #FF5555;
+  --color-gradient-start: #4796E4;
+  --color-gradient-mid: #847ACE;
+  --color-gradient-end: #C3677F;
+
+  /* Fonts */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'IBM Plex Mono', monospace;
+}
+
+/* ============================================
+   NOISE / GRAIN OVERLAY
+   ============================================ */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ============================================
+   GRADIENT MESH BACKGROUND
+   ============================================ */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 600px 400px at 15% 20%, rgba(97, 175, 239, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 60%, rgba(189, 147, 249, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 90%, rgba(80, 250, 123, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #06b6d4, #8b5cf6);
-  border-radius: 4px;
+  background: linear-gradient(to bottom, var(--color-accent-blue), var(--color-accent-purple));
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #22d3ee, #a78bfa);
+  background: linear-gradient(to bottom, var(--color-accent-cyan), var(--color-accent-purple));
 }
 
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
+/* ============================================
+   SELECTION & FOCUS
+   ============================================ */
 
-/* Selection color */
 ::selection {
-  background: rgba(6, 182, 212, 0.3);
-  color: white;
+  background: rgba(189, 147, 249, 0.3);
+  color: var(--color-text-primary);
 }
 
-/* Focus visible outline */
 :focus-visible {
-  outline: 2px solid #06b6d4;
-  outline-offset: 2px;
+  outline: 2px solid var(--color-accent-green);
+  outline-offset: 3px;
 }
 
-/* Line clamp utility */
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================
+   LINE CLAMP UTILITY
+   ============================================ */
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -43,61 +117,190 @@ html {
   overflow: hidden;
 }
 
-/* Backdrop blur fallback */
-@supports not (backdrop-filter: blur(12px)) {
-  .backdrop-blur-sm {
-    background: rgba(15, 23, 42, 0.95);
-  }
-  .backdrop-blur-md {
-    background: rgba(15, 23, 42, 0.95);
-  }
-  .backdrop-blur-lg {
-    background: rgba(15, 23, 42, 0.98);
-  }
-}
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 
-/* Animation utilities */
-@keyframes float {
-  0%, 100% {
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
-  50% {
-    transform: translateY(-10px);
+}
+
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+@keyframes reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* Glow effects */
-.glow-cyan {
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.glow-purple {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+@keyframes draw-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-/* Text gradient animation */
-@keyframes gradient-shift {
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(4px) rotate(-1deg);
+  }
+}
+
+@keyframes border-sweep {
   0% {
-    background-position: 0% 50%;
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0% 0%;
   }
 }
 
-.animate-gradient {
-  background-size: 200% auto;
-  animation: gradient-shift 5s ease infinite;
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-/* Reduced motion preference */
+@keyframes corner-draw {
+  0% {
+    clip-path: inset(0 100% 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Animation classes */
+.animate-reveal-up {
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-reveal-left {
+  animation: reveal-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-reveal-right {
+  animation: reveal-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease forwards;
+}
+
+.animate-draw-line {
+  animation: draw-line 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: left center;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(248, 248, 242, 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+.stagger-5 { animation-delay: 0.40s; }
+.stagger-6 { animation-delay: 0.48s; }
+.stagger-7 { animation-delay: 0.56s; }
+.stagger-8 { animation-delay: 0.64s; }
+
+/* ============================================
+   SECTION DIVIDER LINE
+   ============================================ */
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border-subtle);
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 60px;
+  height: 1px;
+  background: var(--color-accent-blue);
+}
+
+/* ============================================
+   GRID PATTERN OVERLAY
+   ============================================ */
+
+.grid-pattern {
+  background-image:
+    linear-gradient(var(--color-border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-subtle) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.15;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

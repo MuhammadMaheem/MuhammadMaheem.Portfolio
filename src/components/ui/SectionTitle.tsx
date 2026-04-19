@@ -4,33 +4,52 @@ import { useInView } from '@/hooks/useInView';
 interface SectionTitleProps {
   title: string;
   subtitle?: string;
+  sectionNumber?: string;
 }
 
-export function SectionTitle({ title, subtitle }: SectionTitleProps) {
+export function SectionTitle({ title, subtitle, sectionNumber }: SectionTitleProps) {
   const [ref, isInView] = useInView<HTMLDivElement>();
 
   return (
-    <div ref={ref} className="text-center mb-16">
+    <div ref={ref} className="mb-16 md:mb-20">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative"
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {title}
+        {/* Section number watermark */}
+        {sectionNumber && (
+          <span
+            className="absolute -top-6 -left-2 md:-top-10 md:-left-4 text-[5rem] md:text-[8rem] font-display font-bold leading-none pointer-events-none select-none"
+            style={{
+              color: 'var(--color-border-subtle)',
+              opacity: 0.4,
+              zIndex: 0,
+            }}
+          >
+            {sectionNumber}
           </span>
-        </h2>
-        {subtitle && (
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">{subtitle}</p>
         )}
+
+        <div className="relative z-10">
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-[var(--color-text-primary)] tracking-tight">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="mt-3 text-sm md:text-base text-[var(--color-text-secondary)] font-body max-w-xl leading-relaxed">
+              {subtitle}
+            </p>
+          )}
+          {/* Gold underline */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="h-[2px] w-16 md:w-20 mt-4 bg-[var(--color-accent-purple)] origin-left"
+          />
+        </div>
       </motion.div>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="h-1 w-24 mx-auto mt-6 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
-      />
     </div>
   );
 }

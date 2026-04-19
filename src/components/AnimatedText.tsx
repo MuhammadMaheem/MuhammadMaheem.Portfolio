@@ -30,7 +30,7 @@ export function AnimatedText({ texts, className }: AnimatedTextProps) {
           }
         }
       },
-      isDeleting ? 50 : 100
+      isDeleting ? 40 : 80,
     );
 
     return () => clearTimeout(timeout);
@@ -41,8 +41,8 @@ export function AnimatedText({ texts, className }: AnimatedTextProps) {
       {displayText}
       <motion.span
         animate={{ opacity: [1, 0, 1] }}
-        transition={{ duration: 0.8, repeat: Infinity }}
-        className="inline-block w-0.5 h-[1em] bg-cyan-400 ml-1 align-middle"
+        transition={{ duration: 0.6, repeat: Infinity }}
+        className="inline-block w-[2px] h-[1.1em] bg-[var(--color-accent-blue)] ml-0.5 align-middle"
       />
     </span>
   );

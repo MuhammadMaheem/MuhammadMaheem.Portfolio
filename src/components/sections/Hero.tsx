@@ -1,8 +1,21 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ChevronDown, Sparkles } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
 import { personalInfo } from '@/data/portfolio';
 import { Button } from '@/components/ui/Button';
 import { AnimatedText } from '@/components/AnimatedText';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export function Hero() {
   const scrollToSection = (id: string) => {
@@ -10,173 +23,104 @@ export function Hero() {
   };
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden"
-    >
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute top-1/4 -left-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.3, 1]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 100, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
-        />
-      </div>
+    <section id="home" className="relative min-h-screen flex items-center px-6 overflow-hidden">
+      {/* Vertical accent line */}
+      <div className="absolute left-6 md:left-12 top-0 bottom-0 w-[1px] bg-[var(--color-border-subtle)]" />
+      {/* Horizontal accent line */}
+      <div className="absolute left-0 right-0 top-1/3 h-[1px] bg-[var(--color-border-subtle)] opacity-50" />
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        {/* AI Badge */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 max-w-5xl pt-32 pb-20"
+      >
+        {/* Section label */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-cyan-500/10 border border-cyan-500/30"
+          variants={item}
+          className="font-body text-[10px] tracking-[0.3em] uppercase text-[var(--color-text-muted)] mb-8 flex items-center gap-3"
         >
-          <span className="text-cyan-400 text-sm font-medium">AI Developer & ML Engineer</span>
+          <span className="w-8 h-[1px] bg-[var(--color-accent-blue)]" />
+          AI Developer & ML Engineer
         </motion.div>
 
-        {/* Name with 3D effect */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
-        >
-          <span className="relative inline-block">
-            <span className="bg-gradient-to-r from-white via-cyan-200 to-white bg-clip-text text-transparent">
-              {personalInfo.name.split(' ')[0]}
-            </span>
-          </span>
-          <br />
-          <motion.span
-            className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
-            animate={{
-              backgroundPosition: ['0%', '100%', '0%']
+        {/* Name — oversized Syne */}
+        <h1 className="font-display font-800 text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] leading-[0.9] tracking-tighter text-[var(--color-text-primary)] mb-8">
+          <span className="block">{personalInfo.name.split(' ')[0]}</span>
+          <span
+            className="block"
+            style={{
+              background:
+                'linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-purple))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
             }}
-            transition={{ duration: 5, repeat: Infinity }}
-            style={{ backgroundSize: '200% auto' }}
           >
             {personalInfo.name.split(' ')[1]}
-          </motion.span>
-        </motion.h1>
+          </span>
+        </h1>
 
-        {/* Tagline with typing effect */}
+        {/* Tagline */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-slate-400 mb-8 max-w-2xl mx-auto h-16"
+          variants={item}
+          className="font-body text-base md:text-lg text-[var(--color-text-secondary)] max-w-xl leading-relaxed mb-12 min-h-[2rem]"
         >
           <AnimatedText
             texts={[
-              "Building intelligent systems that learn, adapt, and evolve",
-              "Machine Learning & Deep Learning specialist",
-              "Creating AI-powered solutions for real-world problems",
-              "Passionate about Computer Vision & NLP"
+              'AI Engineer specializing in RAG systems and LLM evaluation pipelines',
+              'Building production-ready AI SaaS with FastAPI, Next.js, and ChromaDB',
+              'Shipping full-stack systems from Figma specs to production',
+              'Focused on grounded retrieval, quality gates, and reliable AI UX',
             ]}
           />
         </motion.div>
 
-     
-
         {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-12"
-        >
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => scrollToSection('projects')}
-          >
+        <motion.div variants={item} className="flex flex-wrap gap-4 mb-14">
+          <Button variant="primary" size="md" onClick={() => scrollToSection('projects')}>
             View My Work
           </Button>
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={() => scrollToSection('contact')}
-          >
+          <Button variant="secondary" size="md" onClick={() => scrollToSection('contact')}>
             Get In Touch
           </Button>
         </motion.div>
 
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex items-center justify-center gap-6"
-        >
-          <motion.a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.2, y: -5 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-500/50 transition-colors"
-            aria-label="GitHub Profile"
-          >
-            <Github className="w-6 h-6" />
-          </motion.a>
-          <motion.a
-            href={personalInfo.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.2, y: -5 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-500/50 transition-colors"
-            aria-label="LinkedIn Profile"
-          >
-            <Linkedin className="w-6 h-6" />
-          </motion.a>
-          <motion.a
-            href={`mailto:${personalInfo.email}`}
-            whileHover={{ scale: 1.2, y: -5 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-500/50 transition-colors"
-            aria-label="Email"
-          >
-            <Mail className="w-6 h-6" />
-          </motion.a>
+        {/* Social Links — minimal horizontal row */}
+        <motion.div variants={item} className="flex items-center gap-5">
+          {[
+            { href: personalInfo.github, icon: Github, label: 'GitHub' },
+            { href: personalInfo.linkedin, icon: Linkedin, label: 'LinkedIn' },
+            { href: `mailto:${personalInfo.email}`, icon: Mail, label: 'Email' },
+          ].map(({ href, icon: Icon, label }) => (
+            <motion.a
+              key={label}
+              href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              whileHover={{ y: -3 }}
+              className="font-body text-[10px] tracking-widest uppercase text-[var(--color-text-muted)] hover:text-[var(--color-accent-blue)] transition-colors flex items-center gap-2"
+              aria-label={label}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </motion.a>
+          ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.button
         onClick={() => scrollToSection('about')}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
+        animate={{ opacity: 1, y: [0, 8, 0] }}
         transition={{
-          opacity: { delay: 1, duration: 0.5 },
-          y: { duration: 2, repeat: Infinity }
+          opacity: { delay: 1.5, duration: 0.5 },
+          y: { duration: 2.5, repeat: Infinity },
         }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 hover:text-cyan-400 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 font-body text-[10px] tracking-widest uppercase text-[var(--color-text-muted)] hover:text-[var(--color-accent-blue)] transition-colors flex flex-col items-center gap-2"
         aria-label="Scroll down"
       >
-        <ChevronDown className="w-8 h-8" />
+        <ChevronDown className="w-5 h-5" />
       </motion.button>
     </section>
   );

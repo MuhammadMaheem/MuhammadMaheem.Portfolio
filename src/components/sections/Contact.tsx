@@ -11,51 +11,32 @@ export function Contact() {
 
   const contactLinks = [
     {
-      icon: <Mail className="w-6 h-6" />,
+      icon: <Mail className="w-5 h-5" />,
       label: 'Email',
       value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
-      color: 'from-cyan-500 to-blue-500'
     },
     {
-      icon: <Phone className="w-6 h-6" />,
+      icon: <Phone className="w-5 h-5" />,
       label: 'Phone',
       value: personalInfo.phone,
       href: `tel:${personalInfo.phone.replace(/\s/g, '')}`,
-      color: 'from-green-500 to-emerald-500'
     },
     {
-      icon: <MapPin className="w-6 h-6" />,
+      icon: <MapPin className="w-5 h-5" />,
       label: 'Location',
       value: personalInfo.location,
       href: '#',
-      color: 'from-purple-500 to-pink-500'
-    }
-  ];
-
-  const socialLinks = [
-    {
-      icon: <Github className="w-8 h-8" />,
-      label: 'GitHub',
-      username: '@MuhammadMaheem',
-      href: personalInfo.github,
-      color: 'hover:border-slate-400'
     },
-    {
-      icon: <Linkedin className="w-8 h-8" />,
-      label: 'LinkedIn',
-      username: 'Muhammad Maheem',
-      href: personalInfo.linkedin,
-      color: 'hover:border-blue-500'
-    }
   ];
 
   return (
-    <section id="contact" ref={ref} className="relative py-24 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" ref={ref} className="relative py-24 px-6">
+      <div className="max-w-7xl mx-auto">
         <SectionTitle
-          title="Get In Touch"
-          subtitle="Let's discuss your next project or just say hello!"
+          title="Contact"
+          subtitle="Let's discuss your next project or just say hello"
+          sectionNumber="06"
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,35 +44,38 @@ export function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             <Card className="p-8 h-full">
-              <h3 className="text-2xl font-bold text-white mb-6">
-                Let's Build Something Amazing Together
+              <h3 className="font-display text-xl font-bold text-[var(--color-text-primary)] mb-3">
+                Let&apos;s Build Something Together
               </h3>
-              <p className="text-slate-400 mb-8 leading-relaxed">
-                I'm always excited to work on new projects and collaborate with
-                like-minded individuals. Whether you have a project idea, want to discuss
-                AI/ML opportunities, or just want to connect — feel free to reach out!
+              <p className="font-body text-sm text-[var(--color-text-muted)] leading-relaxed mb-8">
+                I&apos;m always excited to work on new projects and collaborate with like-minded
+                individuals. Whether you have a project idea, want to discuss AI/ML opportunities,
+                or just want to connect — feel free to reach out.
               </p>
 
-              <div className="space-y-4 mb-8">
+              {/* Contact links */}
+              <div className="space-y-3 mb-8">
                 {contactLinks.map((link, index) => (
                   <motion.a
                     key={link.label}
                     href={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ x: 10 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-cyan-500/50 transition-colors group"
+                    initial={{ opacity: 0, x: -15 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -15 }}
+                    transition={{ delay: 0.2 + index * 0.08 }}
+                    whileHover={{ x: 6 }}
+                    className="flex items-center gap-4 p-4 border border-[var(--color-border-subtle)] hover:border-[var(--color-accent-blue)] transition-colors duration-300 group"
                   >
-                    <div className={`p-3 rounded-lg bg-gradient-to-r ${link.color} text-white`}>
+                    <span className="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent-blue)] transition-colors">
                       {link.icon}
-                    </div>
+                    </span>
                     <div>
-                      <span className="text-sm text-slate-500 block">{link.label}</span>
-                      <span className="text-white font-medium group-hover:text-cyan-400 transition-colors">
+                      <span className="font-body text-[10px] tracking-widest uppercase text-[var(--color-text-muted)] block mb-0.5">
+                        {link.label}
+                      </span>
+                      <span className="font-body text-sm text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-blue)] transition-colors">
                         {link.value}
                       </span>
                     </div>
@@ -99,93 +83,104 @@ export function Contact() {
                 ))}
               </div>
 
-              {/* Social Links */}
-              <div className="flex gap-4">
-                {socialLinks.map((link, index) => (
+              {/* Social cards */}
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    icon: <Github className="w-5 h-5" />,
+                    label: 'GitHub',
+                    username: '@MuhammadMaheem',
+                    href: personalInfo.github,
+                  },
+                  {
+                    icon: <Linkedin className="w-5 h-5" />,
+                    label: 'LinkedIn',
+                    username: 'Muhammad Maheem',
+                    href: personalInfo.linkedin,
+                  },
+                ].map((link, index) => (
                   <motion.a
                     key={link.label}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    className={`flex-1 p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 ${link.color} transition-colors text-center group`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                    transition={{ delay: 0.5 + index * 0.08 }}
+                    whileHover={{ y: -3, borderColor: 'var(--color-accent-blue)' }}
+                    className="p-4 border border-[var(--color-border-subtle)] text-center transition-colors duration-300"
                   >
-                    <div className="text-slate-400 group-hover:text-white transition-colors mb-2 flex justify-center">
+                    <div className="flex justify-center text-[var(--color-text-muted)] mb-2">
                       {link.icon}
                     </div>
-                    <span className="text-sm font-medium text-white block">{link.label}</span>
-                    <span className="text-xs text-slate-500">{link.username}</span>
+                    <span className="font-body text-xs text-[var(--color-text-primary)] block">
+                      {link.label}
+                    </span>
+                    <span className="font-body text-[10px] text-[var(--color-text-muted)]">
+                      {link.username}
+                    </span>
                   </motion.a>
                 ))}
               </div>
             </Card>
           </motion.div>
 
-          {/* CTA Card - Rebuilt without Card component for better interactivity */}
+          {/* CTA Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="h-full"
           >
-            <div className="p-8 h-full relative overflow-hidden rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50">
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-              
-              {/* Content */}
+            <div className="p-8 h-full border border-[var(--color-border-subtle)] relative overflow-hidden">
+              {/* Background accent */}
+              <div
+                className="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-20 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle, var(--color-accent-blue) 0%, transparent 70%)',
+                  filter: 'blur(60px)',
+                }}
+              />
+
               <div className="relative">
- <div className="text-6xl mb-6 text-cyan-400">
-                  <Rocket className="w-16 h-16" />
+                <div className="text-[var(--color-accent-blue)] mb-6">
+                  <Rocket className="w-12 h-12" />
                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="font-display text-2xl font-bold text-[var(--color-text-primary)] mb-3">
                   Ready to Start a Project?
                 </h3>
-                <p className="text-slate-400 mb-8">
-                  I'm available for freelance work and internship opportunities.
-                  Let's create something extraordinary together!
+                <p className="font-body text-sm text-[var(--color-text-muted)] leading-relaxed mb-8">
+                  I&apos;m available for freelance work and internship opportunities. Let&apos;s
+                  create something extraordinary together.
                 </p>
-                {/* Buttons Container */}
-                <div className="flex flex-col gap-4">
-                  {/* Email Button */}
+
+                {/* Buttons */}
+                <div className="flex flex-col gap-3 mb-8">
                   <a
                     href={`mailto:${personalInfo.email}?subject=Project%20Inquiry`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.location.href = `mailto:${personalInfo.email}?subject=Project%20Inquiry`;
-                    }}
-                    className="group relative flex items-center justify-center gap-3 px-8 py-4 text-lg font-semibold text-white rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:-translate-y-1 active:translate-y-0"
-                    style={{ pointerEvents: 'auto' }}
+                    className="group flex items-center justify-center gap-3 px-8 py-4 font-body text-sm tracking-widest uppercase bg-[var(--color-accent-blue)] text-[var(--color-text-primary)] hover:bg-[#4a9bd9] transition-colors"
                   >
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <Send className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="relative z-10">Send an Email</span>
+                    <Send className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                    Send an Email
                   </a>
-                  {/* GitHub Button */}
                   <a
                     href={personalInfo.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open(personalInfo.github, '_blank', 'noopener,noreferrer');
-                    }}
-                    className="group relative flex items-center justify-center gap-3 px-8 py-4 text-lg font-semibold text-white rounded-xl bg-slate-800 border-2 border-slate-600 cursor-pointer overflow-hidden transition-all duration-300 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:-translate-y-1 active:translate-y-0"
-                    style={{ pointerEvents: 'auto' }}
+                    className="group flex items-center justify-center gap-3 px-8 py-4 font-body text-sm tracking-widest uppercase border border-[var(--color-border-strong)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-blue)] hover:text-[var(--color-accent-blue)] transition-colors"
                   >
-                    <span className="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <ExternalLink className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="relative z-10">View My GitHub</span>
+                    <ExternalLink className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                    View My GitHub
                   </a>
                 </div>
-                {/* Footer text */}
-                <div className="mt-8 pt-8 border-t border-slate-700/50">
-                  <p className="text-sm text-slate-500 text-center">
+
+                {/* Footer */}
+                <div className="pt-6 border-t border-[var(--color-border-subtle)]">
+                  <p className="font-body text-xs text-[var(--color-text-muted)] text-center">
                     Currently based in {personalInfo.location}
                   </p>
-                  <p className="text-sm text-cyan-400 text-center mt-1">
+                  <p className="font-body text-xs text-[var(--color-accent-blue)] text-center mt-1">
                     Open to remote opportunities worldwide
                   </p>
                 </div>

@@ -22,29 +22,31 @@ export function Card({
     <motion.div
       onClick={onClick}
       className={cn(
-        'relative overflow-hidden rounded-2xl',
-        'bg-slate-900/50 backdrop-blur-sm border border-slate-700/50',
-        'transition-colors duration-300',
-        hoverable && 'cursor-pointer group hover:border-cyan-500/50',
+        'relative overflow-hidden',
+        'bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)]',
+        'transition-colors duration-500',
+        hoverable && 'cursor-pointer group hover:border-[var(--color-accent-blue)]',
         className
       )}
-      whileHover={hoverable && !disableHoverTransform ? { scale: 1.02 } : undefined}
-      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      whileHover={hoverable && !disableHoverTransform ? { y: -4 } : undefined}
+      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
     >
       {gradient && (
         <div
           className={cn(
-            'absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none',
+            'absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none',
             `bg-gradient-to-br ${gradient}`
           )}
         />
       )}
-      <div className="relative z-10 pointer-events-none">{children}</div>
+      {/* Corner accent */}
       {hoverable && (
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent" />
+        <div className="absolute top-0 right-0 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+          <div className="absolute top-0 right-0 w-full h-[1px] bg-[var(--color-accent-blue)]" />
+          <div className="absolute top-0 right-0 h-full w-[1px] bg-[var(--color-accent-blue)]" />
         </div>
       )}
+      <div className="relative z-10">{children}</div>
     </motion.div>
   );
 }
