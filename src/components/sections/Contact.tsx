@@ -71,11 +71,11 @@ export function Contact() {
                     <span className="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent-blue)] transition-colors">
                       {link.icon}
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <span className="font-body text-[10px] tracking-widest uppercase text-[var(--color-text-muted)] block mb-0.5">
                         {link.label}
                       </span>
-                      <span className="font-body text-sm text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-blue)] transition-colors">
+                      <span className="font-body text-sm text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-blue)] transition-colors break-all sm:break-normal">
                         {link.value}
                       </span>
                     </div>

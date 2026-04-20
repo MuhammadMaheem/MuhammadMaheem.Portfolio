@@ -50,10 +50,10 @@ export function About() {
 
               <div className="max-w-3xl">
                 <p className="font-body text-sm text-[var(--color-text-secondary)] leading-relaxed mb-8">
-                  I&apos;m an AI Developer and Machine Learning Engineer focused on
-                  production-grade RAG systems, LLM evaluation workflows, and full-stack SaaS
-                  delivery. I currently ship real systems as a paid intern while completing my
-                  BSc in Artificial Intelligence at Superior University.
+                  I&apos;m an AI Developer and Machine Learning Engineer focused on production-grade
+                  RAG systems, LLM evaluation workflows, and full-stack SaaS delivery. I currently
+                  ship real systems as a paid intern while completing my BSc in Artificial
+                  Intelligence at Superior University.
                 </p>
               </div>
 

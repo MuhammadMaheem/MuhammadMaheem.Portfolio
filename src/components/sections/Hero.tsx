@@ -33,7 +33,7 @@ export function Hero() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 max-w-5xl pt-32 pb-20"
+        className="relative z-10 w-full max-w-5xl pt-32 pb-20"
       >
         {/* Section label */}
         <motion.div
@@ -45,7 +45,7 @@ export function Hero() {
         </motion.div>
 
         {/* Name — oversized Syne */}
-        <h1 className="font-display font-800 text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] xl:text-[8rem] leading-[0.9] tracking-tighter text-[var(--color-text-primary)] mb-8">
+        <h1 className="font-display font-800 text-[clamp(2.75rem,15vw,3.5rem)] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] xl:text-[8rem] leading-[0.9] tracking-tighter text-[var(--color-text-primary)] mb-8">
           <span className="block">{personalInfo.name.split(' ')[0]}</span>
           <span
             className="block"
