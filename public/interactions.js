@@ -134,7 +134,7 @@
      (https://web3forms.com — no account, key emailed instantly).
      If left blank, the form opens the visitor's mail client
      pre-filled to your address — works with zero setup. */
-  const WEB3FORMS_KEY = '1605410d-eb4f-419e-b511-25c3ef4c5da4';
+  const WEB3FORMS_KEY = '05dc0c33-c161-4555-9aaa-268d42a26d3d';
   const CONTACT_EMAIL = 'mirza.muhammad.maheem@gmail.com';
 
   const form = $('#contactForm');
