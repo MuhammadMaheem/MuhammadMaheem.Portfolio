@@ -1,20 +1,10 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { viteSingleFile } from "vite-plugin-singlefile";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
+// Vanilla static site (HTML/CSS/JS + Three.js/anime.js via CDN).
+// `base` matches the GitHub Pages project path so public assets referenced
+// as `/styles.css`, `/data.js`, ... resolve under the deploy subpath.
 export default defineConfig({
   base: "/MuhammadMaheem.Portfolio/",
-  plugins: [react(), tailwindcss(), viteSingleFile()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
-  },
+  plugins: [],
 });

@@ -1,85 +1,233 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Muhammad Maheem - AI Developer & ML Engineer. Specializing in Machine Learning, Computer Vision, and building intelligent systems." />
-    <meta name="keywords" content="Muhammad Maheem, AI Developer, Machine Learning, Python, React, Portfolio" />
-    <meta name="author" content="Muhammad Maheem" />
-    <meta name="theme-color" content="#282A36" />
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="voltage">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad Maheem — AI Engineer</title>
+<meta name="description" content="MHM·01 — Muhammad Maheem, AI Engineer. Full-stack AI systems, deployed." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Nunito+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css?v=9" />
+</head>
+<body class="has-cursor">
 
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Muhammad Maheem | AI Developer & ML Engineer" />
-    <meta property="og:description" content="Building intelligent systems that learn, adapt, and evolve. Explore my portfolio of AI/ML projects." />
+<!-- background webgl -->
+<canvas id="bg-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="noise"></div>
 
-    <title>Muhammad Maheem | AI Developer & ML Engineer</title>
+<!-- custom cursor -->
+<div class="cursor-ring" id="cursorRing"><span class="c-label"></span></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
-    <!-- Google Fonts: Syne (headings) + IBM Plex Mono (body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top" data-cursor="home">
+    <span class="dot"></span>MHM<span style="color:var(--accent)">·01</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#modules">Skills</a>
+    <a href="#work">Projects</a>
+    <a href="#changelog">Experience</a>
+    <a href="#writing">Writing</a>
+    <a href="#uplink">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a class="resume-btn" href="Muhammad-Maheem-Resume.pdf" id="resumeBtn" data-cursor="download" target="_blank" rel="noopener" download>Spec sheet ↓</a>
+    <button class="theme-toggle nav-burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+</nav>
 
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        margin: 0;
-        background-color: #282A36;
-        color: #F8F8F2;
-        font-family: 'IBM Plex Mono', monospace;
-      }
-      #root {
-        min-height: 100vh;
-      }
-      /* Loading placeholder */
-      .loading-screen {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: #282A36;
-        gap: 1.5rem;
-      }
-      .loading-bar {
-        width: 120px;
-        height: 2px;
-        background: #3a3d4f;
-        position: relative;
-        overflow: hidden;
-      }
-      .loading-bar::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -40px;
-        width: 40px;
-        height: 100%;
-        background: #61AFEF;
-        animation: load-slide 1s ease-in-out infinite;
-      }
-      @keyframes load-slide {
-        0% { left: -40px; }
-        100% { left: 120px; }
-      }
-      .loading-text {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: #a89e92;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="root">
-      <div class="loading-screen">
-        <div class="loading-text">Loading</div>
-        <div class="loading-bar"></div>
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#modules">Skills</a>
+  <a href="#work">Projects</a>
+  <a href="#changelog">Experience</a>
+  <a href="#writing">Writing</a>
+  <a href="#uplink">Contact</a>
+  <div class="mm-foot">
+    <a class="resume-btn" href="Muhammad-Maheem-Resume.pdf" target="_blank" rel="noopener" download>Spec sheet ↓</a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap" id="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-codename" id="codename">MHM·01 // SYSTEM ONLINE</div>
+        <h1 id="heroTitle">
+          <span class="ln"><span>Muhammad</span></span>
+          <span class="ln"><span>Ma<em>heem</em></span></span>
+        </h1>
+        <div class="hero-role">
+          <span class="bar"></span>
+          <span id="heroRole">AI Engineer · Full-stack</span>
+        </div>
+        <p class="hero-tagline" id="heroTagline"></p>
+        <div class="hero-cta">
+          <a href="#work" class="btn btn-primary" data-cursor="view">View deployments <span class="arrow">→</span></a>
+          <a href="#uplink" class="btn btn-ghost" data-cursor="talk">Establish uplink</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-cue"><span class="line"></span> Scroll to boot</div>
+    <div class="drag-hint" id="dragHint">⟲ drag the core</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="band wrap" id="about">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="section-index">01</span> &nbsp;About</span>
+      <h2>Behind the unit,<br />a real person.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal" id="aboutCopy"></div>
+      <div class="reveal">
+        <div class="portrait" data-cursor="that's me">
+          <img class="portrait-img" src="/profil-pic/me.png" alt="Muhammad Maheem" />
+          <div class="scanline"></div>
+        </div>
+        <div class="spec-list" id="specList"></div>
       </div>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  </section>
+
+  <!-- MODULES (skills) -->
+  <section class="band wrap" id="modules">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="section-index">02</span> &nbsp;Skills</span>
+      <h2>What I'm made of.</h2>
+      <p class="sub">The toolkit, grouped by subsystem. Hover to wake a module.</p>
+    </div>
+    <div class="modules" id="moduleGrid"></div>
+  </section>
+
+  <!-- PROJECTS (deployments) -->
+  <section class="band wrap" id="work">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="section-index">03</span> &nbsp;Projects</span>
+      <h2>Things I shipped.</h2>
+      <p class="sub">Ten builds across LLM evaluation, RAG systems, computer vision, and full-stack AI products.</p>
+    </div>
+    <div class="proj-controls reveal" id="projFilters"></div>
+    <div class="proj-grid" id="projGrid"></div>
+  </section>
+
+  <!-- CHANGELOG (experience) -->
+  <section class="band wrap" id="changelog">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="section-index">04</span> &nbsp;Experience</span>
+      <h2>How I got here.</h2>
+    </div>
+    <div class="timeline reveal" id="timeline"></div>
+  </section>
+
+  <!-- TRANSMISSIONS (writing) -->
+  <section class="band wrap" id="writing">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="section-index">05</span> &nbsp;Writing</span>
+      <h2>Things I wrote down.</h2>
+      <p class="sub">Notes from the field — mostly about making AI behave in production.</p>
+    </div>
+    <div class="posts reveal" id="postList"></div>
+  </section>
+
+  <!-- UPLINK (contact) -->
+  <section class="band wrap" id="uplink">
+    <div class="uplink-card reveal">
+      <div>
+        <span class="eyebrow"><span class="section-index">06</span> &nbsp;Contact</span>
+        <h2>Let's build<br /><em>something</em>.</h2>
+        <p class="sub">Hiring, collaborating, or just want to argue about evals? My inbox is open.</p>
+        <div class="socials" id="socials"></div>
+      </div>
+      <form class="form" id="contactForm" novalidate>
+        <div class="field" id="f-name">
+          <label>Your name</label>
+          <input type="text" name="name" placeholder="Ada Lovelace" />
+          <div class="err">Tell me who you are</div>
+        </div>
+        <div class="field" id="f-email">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="you@company.com" />
+          <div class="err">That email looks off</div>
+        </div>
+        <div class="field" id="f-msg">
+          <label>Message</label>
+          <textarea name="msg" placeholder="What are we building?"></textarea>
+          <div class="err">Don't leave me hanging</div>
+        </div>
+        <button type="submit" class="btn btn-primary send" id="sendBtn" data-cursor="send">Transmit <span class="arrow">→</span></button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer wrap">
+    <div class="footer-grid">
+      <div class="big">MHM·01</div>
+      <div class="meta">
+        <div>Designed &amp; built by Muhammad Maheem</div>
+        <div style="margin-top:6px">© <span id="year"></span> · Lahore → everywhere</div>
+        <div style="margin-top:14px"><a href="#top" class="to-top">↑ Back to top</a></div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- PROJECT MODAL -->
+<div class="proj-modal" id="projModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="pm-backdrop" id="pmBackdrop"></div>
+  <div class="pm-panel">
+    <button class="pm-close" id="pmClose" aria-label="Close">✕</button>
+    <!-- LEFT: slider -->
+    <div class="pm-left">
+      <div class="pm-slider" id="pmSlider">
+        <div class="pm-slides" id="pmSlides"></div>
+      </div>
+      <div class="pm-slider-nav">
+        <button class="pm-prev" id="pmPrev" aria-label="Previous">←</button>
+        <div class="pm-dots" id="pmDots"></div>
+        <button class="pm-next" id="pmNext" aria-label="Next">→</button>
+      </div>
+    </div>
+    <!-- RIGHT: details -->
+    <div class="pm-body">
+      <div class="pm-meta">
+        <span class="pm-id" id="pmId"></span>
+        <span class="pm-tag" id="pmTag"></span>
+        <span class="pm-year" id="pmYear"></span>
+      </div>
+      <h2 class="pm-name" id="pmName"></h2>
+      <p class="pm-desc" id="pmDesc"></p>
+      <div class="pm-section">
+        <div class="pm-label">My role</div>
+        <p class="pm-role" id="pmRole"></p>
+      </div>
+      <div class="pm-section">
+        <div class="pm-label">Stack</div>
+        <div class="pm-tech" id="pmTech"></div>
+      </div>
+      <div class="pm-links" id="pmLinks"></div>
+    </div>
+  </div>
+</div>
+
+<!-- libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- app -->
+<script src="/data.js?v=9"></script>
+<script src="/scene.js?v=9"></script>
+<script src="/cursor.js?v=9"></script>
+<script src="/render.js?v=9"></script>
+<script src="/interactions.js?v=9"></script>
+</body>
 </html>
