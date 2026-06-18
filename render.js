@@ -25,7 +25,15 @@
 
   // ---- about ----
   const ac = $('aboutCopy');
-  S.identity.bio.forEach((p) => ac.appendChild(el('p', null, p)));
+  S.identity.bio.forEach((p, i) => {
+    if (i > 0) ac.appendChild(el('div', 'bio-sep'));
+    ac.appendChild(el('p', null, p));
+  });
+  if (S.identity.quote) {
+    const q = el('blockquote', 'bio-quote');
+    q.innerHTML = '<span class="bq-mark">"</span><span class="bq-text">' + S.identity.quote.text + '</span><cite class="bq-by">— ' + S.identity.quote.by + '</cite>';
+    ac.appendChild(q);
+  }
   const sl = $('specList');
   S.identity.specs.forEach((s) => {
     const r = el('div', 'row');

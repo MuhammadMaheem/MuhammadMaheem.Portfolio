@@ -20,6 +20,10 @@ window.SITE = {
       'My core work lives at the intersection of models and product. I design retrieval systems that stay grounded to source material, build eval harnesses that enforce quality gates before deployment, and craft the UIs that make complex AI feel effortless. As the sole engineer at PSDA, I shipped a full-stack SaaS platform from design to production — handling everything from FastAPI backends to Next.js frontends, database architecture to DevOps.',
       "I'm deeply invested in making AI systems reliable and measurable. Whether it's RAGAS-based quality evaluation, vector database optimization, or agentic system design, the principle is the same: if you can't measure it, it's not engineering. Outside of building, I'm sketching, exploring datasets, or diving into whatever new model architecture just landed.",
     ],
+    quote: {
+      text: 'First, solve the problem. Then, write the code.',
+      by: 'John Johnson',
+    },
     specs: [
       { k: 'Focus', v: 'Applied AI / LLM systems' },
       { k: 'Stack', v: 'Python · TypeScript · FastAPI' },
