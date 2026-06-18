@@ -6,274 +6,502 @@
 
 window.SITE = {
   identity: {
-    codename: "MHM·01",
-    name: "Muhammad Maheem",
-    role: "AI Developer & ML Engineer",
+    codename: 'MHM.DEV',
+    name: 'Muhammad Maheem',
+    role: 'AI Engineer & ML Systems Builder',
     // one-liner under the name
-    tagline: "RAG systems, LLM evaluation pipelines, and full-stack AI SaaS — shipped end to end.",
-    location: "Lahore, Pakistan",
-    status: "Open to internships & roles",
+    tagline:
+      'Production AI systems. RAG pipelines, eval frameworks, and full-stack SaaS — built and shipped.',
+    location: 'Lahore, Pakistan',
+    status: 'Open to internships & roles',
     // short human intro for the About section
     bio: [
-      "I'm an AI developer and ML engineer from Lahore, currently in my 4th semester of a BSc in Artificial Intelligence — and already shipping real systems for real users.",
-      "My happy place is the seam between models and product: retrieval pipelines that stay grounded, eval harnesses that treat quality as a deploy-time contract, and the full-stack UI that makes all of it feel obvious. As sole engineer at PSDA I've taken a SaaS platform from Figma specs to production.",
-      "Outside the terminal I'm usually sketching, staring at the night sky, losing to my own game-playing bots, or reading up on whatever new model just dropped."
+      "I'm an AI engineer and ML systems builder from Lahore, currently completing my BSc in Artificial Intelligence with a focus on production-grade AI systems. I specialize in building the infrastructure that makes AI actually work: RAG pipelines, evaluation frameworks, and the full-stack systems that move from research to real users.",
+      'My core work lives at the intersection of models and product. I design retrieval systems that stay grounded to source material, build eval harnesses that enforce quality gates before deployment, and craft the UIs that make complex AI feel effortless. As the sole engineer at PSDA, I shipped a full-stack SaaS platform from design to production — handling everything from FastAPI backends to Next.js frontends, database architecture to DevOps.',
+      "I'm deeply invested in making AI systems reliable and measurable. Whether it's RAGAS-based quality evaluation, vector database optimization, or agentic system design, the principle is the same: if you can't measure it, it's not engineering. Outside of building, I'm sketching, exploring datasets, or diving into whatever new model architecture just landed.",
     ],
     specs: [
-      { k: "Focus", v: "Applied AI / LLM systems" },
-      { k: "Stack", v: "Python · TypeScript · FastAPI" },
-      { k: "Based in", v: "Lahore, Pakistan" },
-      { k: "Education", v: "BSc AI (4th sem) · CGPA 3.58" },
-      { k: "Status", v: "Open to internships & roles" }
-    ]
+      { k: 'Focus', v: 'Applied AI / LLM systems' },
+      { k: 'Stack', v: 'Python · TypeScript · FastAPI' },
+      { k: 'Based in', v: 'Lahore, Pakistan' },
+      { k: 'Education', v: 'BSc AI (4th sem) · CGPA 3.58' },
+      { k: 'Status', v: 'Open to internships & roles' },
+    ],
   },
 
   // Quick numbers (unused in hero by design; kept for reference)
   metrics: [
-    { label: "Projects shipped", value: 13, suffix: "" },
-    { label: "Hadiths indexed", value: 39, suffix: "k" },
-    { label: "Heart-risk accuracy", value: 99, suffix: "%" },
-    { label: "CGPA", value: 3.58, suffix: "" }
+    { label: 'Projects shipped', value: 13, suffix: '' },
+    { label: 'Hadiths indexed', value: 39, suffix: 'k' },
+    { label: 'Heart-risk accuracy', value: 99, suffix: '%' },
+    { label: 'CGPA', value: 3.58, suffix: '' },
   ],
 
   // SKILLS — grouped "core modules"
   modules: [
     {
-      name: "Languages",
-      blurb: "The day-to-day toolkit.",
-      items: ["Python", "TypeScript", "JavaScript", "SQL"]
+      name: 'Languages',
+      blurb: 'The day-to-day toolkit.',
+      items: ['Python', 'HTML', 'CSS', 'TypeScript', 'JavaScript', 'SQL'],
     },
     {
-      name: "AI / ML",
-      blurb: "Where most of my time goes.",
-      items: ["RAG pipelines", "LLM eval (RAGAS)", "Multi-agent systems", "Vector DBs (Chroma/FAISS)", "Sentence Transformers", "Embeddings", "Gemini API", "OpenAI API", "Reinforcement learning", "Prompt engineering"]
+      name: 'AI / ML',
+      blurb: 'Where most of my time goes.',
+      items: [
+        'RAG pipelines',
+        'LLM eval (RAGAS)',
+        'Multi-agent systems',
+        'Vector DBs (Chroma/FAISS)',
+        'Sentence Transformers',
+        'Embeddings',
+        'Gemini API',
+        'OpenAI API',
+        'Reinforcement learning',
+        'Prompt engineering',
+      ],
     },
     {
-      name: "Frameworks",
-      blurb: "Building the product around the model.",
-      items: ["FastAPI", "Next.js", "React", "Tailwind", "Streamlit", "LangChain", "LangGraph"]
+      name: 'Frameworks',
+      blurb: 'Building the product around the model.',
+      items: ['FastAPI', 'Next.js', 'React', 'Tailwind', 'Streamlit', 'LangChain', 'LangGraph'],
     },
     {
-      name: "CV & Classic ML",
-      blurb: "Vision and the fundamentals.",
-      items: ["OpenCV", "Dlib", "scikit-learn", "PyTorch", "NumPy", "Pandas"]
+      name: 'CV & Classic ML',
+      blurb: 'Vision and the fundamentals.',
+      items: ['OpenCV', 'Dlib', 'scikit-learn', 'PyTorch', 'NumPy', 'Pandas'],
     },
     {
-      name: "Tools & Infra",
-      blurb: "Ship it, store it, run it.",
-      items: ["Git / GitHub", "Linux (Kali)", "Docker (basics)", "CI/CD", "Claude Code", "Copilot CLI", "Groq API", "ChromaDB", "PostgreSQL", "Data Structures"]
+      name: 'Tools & Infra',
+      blurb: 'Ship it, store it, run it.',
+      items: [
+        'Git / GitHub',
+        'Linux (Kali)',
+        'Docker (basics)',
+        'CI/CD',
+        'Claude Code',
+        'Copilot CLI',
+        'Groq API',
+        'ChromaDB',
+        'PostgreSQL',
+        'Data Structures',
+      ],
     },
     {
-      name: "Web & APIs",
-      blurb: "Glue that holds it together.",
-      items: ["REST APIs", "JWT auth", "NextAuth", "Firebase", "Vite", "Chrome Extensions"]
-    }
+      name: 'Web & APIs',
+      blurb: 'Glue that holds it together.',
+      items: ['REST APIs', 'JWT auth', 'NextAuth', 'Firebase', 'Vite', 'Chrome Extensions'],
+    },
   ],
 
   // PROJECTS — 13 deployments.
   projects: [
     {
-      id: "01", name: "Quality Evaluation PDF Chatbot", tag: "LLM Eval", year: "2026", featured: true,
-      blurb: "Advanced RAG pipeline with RAGAS quality gate, hybrid search, and Prometheus observability.",
-      tech: ["Python", "FastAPI", "Next.js 15", "ChromaDB", "Groq", "RAGAS", "BM25", "Redis", "PostgreSQL", "Docker"],
-      desc: "Production RAG PDF chatbot (DocuQuery) with multi-layer retrieval — dense semantic search, BM25 sparse search, cross-encoder reranking, and 11-operator metadata filtering. A RAGAS quality gate enforces faithfulness and answer relevancy thresholds before deployment. Observability via Prometheus metrics, structured JSON logging, and event tracking across the full query lifecycle. Feature-flag architecture enables safe, gradual rollout of each retrieval enhancement. Built with FastAPI, Next.js 15, and ChromaDB.",
-      role: "Solo engineer — RAG pipeline, hybrid search, RAGAS eval framework, full-stack.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Quality-Evaluation-RAG-chatbot" }],
+      id: '01',
+      name: 'Quality Evaluation PDF Chatbot',
+      tag: 'LLM Eval',
+      year: '2026',
+      featured: true,
+      blurb:
+        'Advanced RAG pipeline with RAGAS quality gate, hybrid search, and Prometheus observability.',
+      tech: [
+        'Python',
+        'FastAPI',
+        'Next.js 15',
+        'ChromaDB',
+        'Groq',
+        'RAGAS',
+        'BM25',
+        'Redis',
+        'PostgreSQL',
+        'Docker',
+      ],
+      desc: 'Production RAG PDF chatbot (DocuQuery) with multi-layer retrieval — dense semantic search, BM25 sparse search, cross-encoder reranking, and 11-operator metadata filtering. A RAGAS quality gate enforces faithfulness and answer relevancy thresholds before deployment. Observability via Prometheus metrics, structured JSON logging, and event tracking across the full query lifecycle. Feature-flag architecture enables safe, gradual rollout of each retrieval enhancement. Built with FastAPI, Next.js 15, and ChromaDB.',
+      role: 'Solo engineer — RAG pipeline, hybrid search, RAGAS eval framework, full-stack.',
+      links: [
+        {
+          label: 'GitHub',
+          url: 'https://github.com/MuhammadMaheem/Quality-Evaluation-RAG-chatbot',
+        },
+      ],
       screenshots: [
         'screenshots/DocuQuery/docupro.png',
         'screenshots/DocuQuery/docupro%202.png',
         'screenshots/DocuQuery/05_api_docs_swagger.png',
-        'screenshots/DocuQuery/05_api_docs_scrolled.png'
-      ]
+        'screenshots/DocuQuery/05_api_docs_scrolled.png',
+      ],
     },
     {
-      id: "02", name: "Agentic RAG PDF Chatbot", tag: "RAG", year: "2025", featured: true,
-      blurb: "Full-stack PDF chatbot with agentic RAG, token streaming, and per-user workspaces.",
-      tech: ["Python", "FastAPI", "Next.js 14", "Groq (Llama 3.3 70B)", "sentence-transformers", "pgvector", "PostgreSQL", "JWT", "SSE", "Docker"],
-      desc: "Production PDF chatbot using Agentic RAG with multi-query expansion for better retrieval accuracy. Token-by-token streaming via SSE, per-user workspaces with JWT auth, and precise page-number citations. Full pipeline: PDF upload → text chunking → sentence-transformer embeddings → pgvector similarity search → Groq generation. Persistent chat history across multiple sessions per document, with a dark responsive Next.js UI built with shadcn/ui and Framer Motion animations.",
-      role: "Full-stack — ingestion pipeline, pgvector retrieval, FastAPI backend, Next.js UI, Docker.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Pdf-Rag-chatbot" }],
-      screenshots: []
+      id: '02',
+      name: 'Agentic RAG PDF Chatbot',
+      tag: 'RAG',
+      year: '2025',
+      featured: true,
+      blurb: 'Full-stack PDF chatbot with agentic RAG, token streaming, and per-user workspaces.',
+      tech: [
+        'Python',
+        'FastAPI',
+        'Next.js 14',
+        'Groq (Llama 3.3 70B)',
+        'sentence-transformers',
+        'pgvector',
+        'PostgreSQL',
+        'JWT',
+        'SSE',
+        'Docker',
+      ],
+      desc: 'Production PDF chatbot using Agentic RAG with multi-query expansion for better retrieval accuracy. Token-by-token streaming via SSE, per-user workspaces with JWT auth, and precise page-number citations. Full pipeline: PDF upload → text chunking → sentence-transformer embeddings → pgvector similarity search → Groq generation. Persistent chat history across multiple sessions per document, with a dark responsive Next.js UI built with shadcn/ui and Framer Motion animations.',
+      role: 'Full-stack — ingestion pipeline, pgvector retrieval, FastAPI backend, Next.js UI, Docker.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Pdf-Rag-chatbot' }],
+      screenshots: [],
     },
     {
-      id: "03", name: "Hadith Chatbot", tag: "NLP", year: "2025", featured: true,
-      blurb: "39,038 authentic Hadiths assistant with bilingual semantic search.",
-      tech: ["Python", "Flask", "FAISS", "BM25", "LangChain", "sentence-transformers", "Groq API", "Pandas", "NumPy"],
+      id: '03',
+      name: 'Hadith Chatbot',
+      tag: 'NLP',
+      year: '2025',
+      featured: true,
+      blurb: '39,038 authentic Hadiths assistant with bilingual semantic search.',
+      tech: [
+        'Python',
+        'Flask',
+        'FAISS',
+        'BM25',
+        'LangChain',
+        'sentence-transformers',
+        'Groq API',
+        'Pandas',
+        'NumPy',
+      ],
       desc: "RAG chatbot over 39,038 authenticated Hadiths from six canonical collections (Bukhari, Muslim, Abu Daud, Ibn Majah, Al-Nasa'i, Tirmidhi). A two-stage retrieval pipeline — BM25 keyword pre-filter into FAISS semantic re-ranking (paraphrase-MiniLM-L6-v2 embeddings) — enables precise cross-hadith attribution across chains of narration, with LangChain orchestration and Groq's Llama 3.3 70B for context-aware answers. No external knowledge — LLM responses are strictly grounded in retrieved Hadiths. Returns bilingual English and Arabic responses with source attribution down to book, chapter, and Hadith number. Concise (top 3) and detailed (top 5) response modes available.",
-      role: "Solo build — data pipeline, FAISS search, bilingual answer generation, UI.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Hadith-Chatbot" }],
+      role: 'Solo build — data pipeline, FAISS search, bilingual answer generation, UI.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Hadith-Chatbot' }],
       screenshots: [
         'screenshots/Hadith-Chatbot/01_home_page.png',
         'screenshots/Hadith-Chatbot/03_query1_response.png',
         'screenshots/Hadith-Chatbot/06_query2_response.png',
         'screenshots/Hadith-Chatbot/conversation_response.png',
-        'screenshots/Hadith-Chatbot/source_details.png'
-      ]
+        'screenshots/Hadith-Chatbot/source_details.png',
+      ],
     },
     {
-      id: "04", name: "Face Recognition Attendance", tag: "Vision", year: "2025",
-      blurb: "Real-time facial recognition with anti-spoofing blink detection.",
-      tech: ["Python", "OpenCV", "Dlib", "NumPy", "scipy"],
+      id: '04',
+      name: 'Face Recognition Attendance',
+      tag: 'Vision',
+      year: '2025',
+      blurb: 'Real-time facial recognition with anti-spoofing blink detection.',
+      tech: ['Python', 'OpenCV', 'Dlib', 'NumPy', 'scipy'],
       desc: "Attendance system combining computer vision with anti-spoofing. Detects faces via dlib's frontal detector, encodes 128-d ResNet descriptors, and matches against registered faces with a 0.5 Euclidean distance threshold. Eye Aspect Ratio (EAR) blink detection across 3 consecutive frames ensures only live people are marked, defeating photo and video spoofing attacks. Multi-expression registration (neutral, smile, left/right turns) improves accuracy. Confirmed matches logged to JSON with timestamps.",
-      role: "Solo build — recognition pipeline, EAR liveness, logging.",
+      role: 'Solo build — recognition pipeline, EAR liveness, logging.',
       links: [],
-      screenshots: []
+      screenshots: [],
     },
     {
-      id: "05", name: "Tic-Tac-Toe AI", tag: "RL", year: "2024",
-      blurb: "DQN agent trained over 100k episodes with a Flask play UI.",
-      tech: ["Python", "PyTorch", "Flask", "NumPy", "DQN"],
-      desc: "DQN Tic-Tac-Toe agent trained in PyTorch over 100,000 self-play episodes to a win/draw rate above 98%, benchmarked against a minimax solver with no catastrophic forgetting. Balanced curriculum: 50% random / 50% optimal play, 30% games with randomized starting positions, and bidirectional learning as both X and O against mixed opponents (60% self-play, 40% smart rule-based). Uses a 100k experience-replay buffer and epsilon-greedy exploration decaying to 0.05, with rewards of +1.0 win / +0.5 draw / -1.0 loss. Flask web interface provides real-time gameplay with score tracking and animated UI.",
-      role: "Solo build — DQN architecture, training curriculum, Flask interface.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/tic-tac-toe-Deep-Q-learning" }],
+      id: '05',
+      name: 'Tic-Tac-Toe AI',
+      tag: 'RL',
+      year: '2024',
+      blurb: 'DQN agent trained over 100k episodes with a Flask play UI.',
+      tech: ['Python', 'PyTorch', 'Flask', 'NumPy', 'DQN'],
+      desc: 'DQN Tic-Tac-Toe agent trained in PyTorch over 100,000 self-play episodes to a win/draw rate above 98%, benchmarked against a minimax solver with no catastrophic forgetting. Balanced curriculum: 50% random / 50% optimal play, 30% games with randomized starting positions, and bidirectional learning as both X and O against mixed opponents (60% self-play, 40% smart rule-based). Uses a 100k experience-replay buffer and epsilon-greedy exploration decaying to 0.05, with rewards of +1.0 win / +0.5 draw / -1.0 loss. Flask web interface provides real-time gameplay with score tracking and animated UI.',
+      role: 'Solo build — DQN architecture, training curriculum, Flask interface.',
+      links: [
+        { label: 'GitHub', url: 'https://github.com/MuhammadMaheem/tic-tac-toe-Deep-Q-learning' },
+      ],
       screenshots: [
         'screenshots/tic-tac-toe-Deep-Q-learning-Web-App/01_home_page.png',
         'screenshots/tic-tac-toe-Deep-Q-learning-Web-App/02_game_started.png',
         'screenshots/tic-tac-toe-Deep-Q-learning-Web-App/04_mid_game.png',
-        'screenshots/tic-tac-toe-Deep-Q-learning-Web-App/06_game_over.png'
-      ]
+        'screenshots/tic-tac-toe-Deep-Q-learning-Web-App/06_game_over.png',
+      ],
     },
     {
-      id: "06", name: "Personality Prediction", tag: "ML", year: "2024",
-      blurb: "Introvert/Extrovert classification with an OOP SVM pipeline.",
-      tech: ["Python", "Scikit-learn", "SVM", "Pandas", "Seaborn", "Matplotlib", "Pickle"],
-      desc: "Console ML app predicting Introvert/Extrovert from behavioral data using an OOP SVM pipeline. Analyzes 7 features: time spent alone, stage fear, social event attendance, social media frequency, friend circle size, energy drain, and outdoor preference. OOP design with dedicated Personality class, training module, and data utilities. StandardScaler normalization with 80/20 split; model persisted via Pickle for reuse. Seaborn and Matplotlib visualizations explain each classification.",
-      role: "Solo build — OOP pipeline, SVM training, visualization.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Personality-Prediction-Model" }],
+      id: '06',
+      name: 'Personality Prediction',
+      tag: 'ML',
+      year: '2024',
+      blurb: 'Introvert/Extrovert classification with an OOP SVM pipeline.',
+      tech: ['Python', 'Scikit-learn', 'SVM', 'Pandas', 'Seaborn', 'Matplotlib', 'Pickle'],
+      desc: 'Console ML app predicting Introvert/Extrovert from behavioral data using an OOP SVM pipeline. Analyzes 7 features: time spent alone, stage fear, social event attendance, social media frequency, friend circle size, energy drain, and outdoor preference. OOP design with dedicated Personality class, training module, and data utilities. StandardScaler normalization with 80/20 split; model persisted via Pickle for reuse. Seaborn and Matplotlib visualizations explain each classification.',
+      role: 'Solo build — OOP pipeline, SVM training, visualization.',
+      links: [
+        { label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Personality-Prediction-Model' },
+      ],
       screenshots: [
         'screenshots/Personality-Prediction-Model/01_cli_both_profiles.png',
-        'screenshots/Personality-Prediction-Model/02_introvert_result.png'
-      ]
+        'screenshots/Personality-Prediction-Model/02_introvert_result.png',
+      ],
     },
     {
-      id: "07", name: "SaaS Management App", tag: "Web", year: "2024",
-      blurb: "Full-stack dashboard with NextAuth, React Query, and multi-entity CRUD.",
-      tech: ["Next.js 15", "React 19", "TypeScript", "Material-UI", "TanStack React Query", "NextAuth.js", "Axios", "Zod", "React Hook Form", "Docker"],
-      desc: "Production SaaS admin dashboard built with Next.js 15 App Router and React 19. NextAuth.js credentials provider with JWT sessions and middleware route protection. TanStack React Query handles data fetching with configurable caching and background updates. GenericDataTable and GenericForm components cover full CRUD across Users, Projects, Inventory, Staff, Clients, and Affiliates. Axios interceptors inject Bearer tokens automatically; forms validated with Zod + React Hook Form. Docker multi-stage build with standalone output.",
-      role: "Full-stack — auth flow, generic CRUD components, API integration.",
+      id: '07',
+      name: 'SaaS Management App',
+      tag: 'Web',
+      year: '2024',
+      blurb: 'Full-stack dashboard with NextAuth, React Query, and multi-entity CRUD.',
+      tech: [
+        'Next.js 15',
+        'React 19',
+        'TypeScript',
+        'Material-UI',
+        'TanStack React Query',
+        'NextAuth.js',
+        'Axios',
+        'Zod',
+        'React Hook Form',
+        'Docker',
+      ],
+      desc: 'Production SaaS admin dashboard built with Next.js 15 App Router and React 19. NextAuth.js credentials provider with JWT sessions and middleware route protection. TanStack React Query handles data fetching with configurable caching and background updates. GenericDataTable and GenericForm components cover full CRUD across Users, Projects, Inventory, Staff, Clients, and Affiliates. Axios interceptors inject Bearer tokens automatically; forms validated with Zod + React Hook Form. Docker multi-stage build with standalone output.',
+      role: 'Full-stack — auth flow, generic CRUD components, API integration.',
       links: [],
       screenshots: [
         'screenshots/NextjsV3-updated/03_dashboard.png',
         'screenshots/NextjsV3-updated/07_dashboard_projects.png',
         'screenshots/NextjsV3-updated/10_dashboard_inventory.png',
         'screenshots/NextjsV3-updated/15_dashboard_staff_users.png',
-        'screenshots/NextjsV3-updated/16_dashboard_staff_designations.png'
-      ]
+        'screenshots/NextjsV3-updated/16_dashboard_staff_designations.png',
+      ],
     },
     {
-      id: "08", name: "Bank Management System", tag: "FinTech", year: "2023",
-      blurb: "OOP-based finance app with dual admin/customer dashboards.",
-      tech: ["Python", "Streamlit", "OOP", "Pandas", "Plotly", "File I/O"],
-      desc: "Streamlit banking app demonstrating all four OOP pillars — inheritance, encapsulation, polymorphism, abstraction — through a Person/Admin/Customer class hierarchy. Dual role-based dashboards: admin can create/remove customers and accounts, view balance trends with Plotly; users can deposit, withdraw, and update PIN. Auto-generated customer IDs and 5-digit account numbers. Data persists in structured text files with transaction logs. Time-series balance charts built with Plotly.",
-      role: "Solo build — class design, role-based dashboards, file persistence.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Bank-Management-System" }],
+      id: '08',
+      name: 'Bank Management System',
+      tag: 'FinTech',
+      year: '2023',
+      blurb: 'OOP-based finance app with dual admin/customer dashboards.',
+      tech: ['Python', 'Streamlit', 'OOP', 'Pandas', 'Plotly', 'File I/O'],
+      desc: 'Streamlit banking app demonstrating all four OOP pillars — inheritance, encapsulation, polymorphism, abstraction — through a Person/Admin/Customer class hierarchy. Dual role-based dashboards: admin can create/remove customers and accounts, view balance trends with Plotly; users can deposit, withdraw, and update PIN. Auto-generated customer IDs and 5-digit account numbers. Data persists in structured text files with transaction logs. Time-series balance charts built with Plotly.',
+      role: 'Solo build — class design, role-based dashboards, file persistence.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Bank-Management-System' }],
       screenshots: [
         'screenshots/Bank-Management-System/01_login_page.png',
         'screenshots/Bank-Management-System/03_admin_dashboard.png',
         'screenshots/Bank-Management-System/07_admin_balance_result.png',
         'screenshots/Bank-Management-System/19_user_deposit_result.png',
-        'screenshots/Bank-Management-System/22_user_total_balance.png'
-      ]
+        'screenshots/Bank-Management-System/22_user_total_balance.png',
+      ],
     },
     {
-      id: "09", name: "Value Notes", tag: "Web", year: "2023",
-      blurb: "Chrome extension for notes, links & snippets with Firebase sync.",
-      tech: ["React 18", "TypeScript", "Tailwind CSS", "Framer Motion", "Firebase Auth", "Firebase Firestore", "Vite", "Chrome Extension API"],
-      desc: "Local-first Chrome extension (Manifest V3) for notes, links, and code snippets with Framer Motion animations. Stores data in Chrome Storage API for instant offline access, with optional Firebase Auth + Firestore sync across devices. Real-time search across titles, content, and tags. Custom tags, favorites, syntax-highlighted code snippets with language labels, and JSON backup/restore. Built with React 18, TypeScript, Tailwind CSS, and Vite.",
-      role: "Solo build — extension architecture, local-first storage, Firebase sync.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Vault-Notes" }],
+      id: '09',
+      name: 'Value Notes',
+      tag: 'Web',
+      year: '2023',
+      blurb: 'Chrome extension for notes, links & snippets with Firebase sync.',
+      tech: [
+        'React 18',
+        'TypeScript',
+        'Tailwind CSS',
+        'Framer Motion',
+        'Firebase Auth',
+        'Firebase Firestore',
+        'Vite',
+        'Chrome Extension API',
+      ],
+      desc: 'Local-first Chrome extension (Manifest V3) for notes, links, and code snippets with Framer Motion animations. Stores data in Chrome Storage API for instant offline access, with optional Firebase Auth + Firestore sync across devices. Real-time search across titles, content, and tags. Custom tags, favorites, syntax-highlighted code snippets with language labels, and JSON backup/restore. Built with React 18, TypeScript, Tailwind CSS, and Vite.',
+      role: 'Solo build — extension architecture, local-first storage, Firebase sync.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Vault-Notes' }],
       screenshots: [
         'screenshots/Value-notes/01_home_empty.png',
         'screenshots/Value-notes/02_after_new_click.png',
         'screenshots/Value-notes/03_note_filled.png',
         'screenshots/Value-notes/05_links_tab.png',
-        'screenshots/Value-notes/06_snippets_tab.png'
-      ]
+        'screenshots/Value-notes/06_snippets_tab.png',
+      ],
     },
     {
-      id: "10", name: "Heart Attack Prediction", tag: "Health", year: "2023",
-      blurb: "99% accurate cardiovascular risk model on real clinical data.",
-      tech: ["Python", "Scikit-learn", "Pandas", "Seaborn", "Matplotlib", "NumPy"],
-      desc: "ML model predicting heart attack risk from clinical data collected at Zheen Hospital, Erbil, Iraq (Jan–May 2019). Analyzes 9 features — age, gender, heart rate, systolic and diastolic blood pressure, blood sugar, CK-MB, and troponin — for binary classification. Gender normalized to 0/1, glucose binarized at 120 mg/dL threshold. Compares Random Forest, Gradient Boosting, and SVM; achieves 99% accuracy. Comprehensive EDA with feature-importance analysis and real-time risk scoring.",
-      role: "Solo build — data analysis, multi-algorithm comparison, evaluation.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/Heart-Attack-Prediction" }],
+      id: '10',
+      name: 'Heart Attack Prediction',
+      tag: 'Health',
+      year: '2023',
+      blurb: '99% accurate cardiovascular risk model on real clinical data.',
+      tech: ['Python', 'Scikit-learn', 'Pandas', 'Seaborn', 'Matplotlib', 'NumPy'],
+      desc: 'ML model predicting heart attack risk from clinical data collected at Zheen Hospital, Erbil, Iraq (Jan–May 2019). Analyzes 9 features — age, gender, heart rate, systolic and diastolic blood pressure, blood sugar, CK-MB, and troponin — for binary classification. Gender normalized to 0/1, glucose binarized at 120 mg/dL threshold. Compares Random Forest, Gradient Boosting, and SVM; achieves 99% accuracy. Comprehensive EDA with feature-importance analysis and real-time risk scoring.',
+      role: 'Solo build — data analysis, multi-algorithm comparison, evaluation.',
+      links: [
+        { label: 'GitHub', url: 'https://github.com/MuhammadMaheem/Heart-Attack-Prediction' },
+      ],
       screenshots: [
         'screenshots/Heart-Attack-Prediction/01_home_empty_form.png',
         'screenshots/Heart-Attack-Prediction/02_form_filled_high_risk.png',
         'screenshots/Heart-Attack-Prediction/03_result_high_risk.png',
         'screenshots/Heart-Attack-Prediction/04_form_filled_low_risk.png',
-        'screenshots/Heart-Attack-Prediction/05_result_low_risk.png'
-      ]
+        'screenshots/Heart-Attack-Prediction/05_result_low_risk.png',
+      ],
     },
     {
-      id: "11", name: "CKD Prediction Model", tag: "Health", year: "2024",
-      blurb: "Streamlit ML app predicting Chronic Kidney Disease from 12 clinical features on a 1,659-patient dataset.",
-      tech: ["Python", "Streamlit", "Scikit-learn", "Random Forest", "Pandas", "Seaborn", "Matplotlib", "Pickle"],
-      desc: "Interactive Streamlit app predicting Chronic Kidney Disease (CKD) from 12 key clinical features — age, BMI, blood pressure, HbA1c, serum creatinine, BUN levels, GFR, protein in urine, hemoglobin, and cholesterol — using a Random Forest classifier trained on 1,659 patients. OOP design with a CKDPredictor class handling data analysis (pie charts, feature distributions, importance), form input, and prediction. Modular codebase separates training, utilities, and UI. Achieves 96% accuracy with 0.95/0.98 precision across CKD/non-CKD classes.",
-      role: "Solo build — dataset pipeline, Random Forest training, Streamlit UI, visualization.",
+      id: '11',
+      name: 'CKD Prediction Model',
+      tag: 'Health',
+      year: '2024',
+      blurb:
+        'Streamlit ML app predicting Chronic Kidney Disease from 12 clinical features on a 1,659-patient dataset.',
+      tech: [
+        'Python',
+        'Streamlit',
+        'Scikit-learn',
+        'Random Forest',
+        'Pandas',
+        'Seaborn',
+        'Matplotlib',
+        'Pickle',
+      ],
+      desc: 'Interactive Streamlit app predicting Chronic Kidney Disease (CKD) from 12 key clinical features — age, BMI, blood pressure, HbA1c, serum creatinine, BUN levels, GFR, protein in urine, hemoglobin, and cholesterol — using a Random Forest classifier trained on 1,659 patients. OOP design with a CKDPredictor class handling data analysis (pie charts, feature distributions, importance), form input, and prediction. Modular codebase separates training, utilities, and UI. Achieves 96% accuracy with 0.95/0.98 precision across CKD/non-CKD classes.',
+      role: 'Solo build — dataset pipeline, Random Forest training, Streamlit UI, visualization.',
       links: [
-        { label: "GitHub", url: "https://github.com/MuhammadMaheem/CDK---Prediction-Model" },
-        { label: "Live Demo", url: "https://ckd-prediction-model-sfyp.streamlit.app/" }
+        { label: 'GitHub', url: 'https://github.com/MuhammadMaheem/CDK---Prediction-Model' },
+        { label: 'Live Demo', url: 'https://ckd-prediction-model-sfyp.streamlit.app/' },
       ],
       screenshots: [
         'screenshots/CKD-Prediction-Model/01_home_data_exploration.png',
         'screenshots/CKD-Prediction-Model/02_prediction_tab_empty.png',
         'screenshots/CKD-Prediction-Model/04_form_filled_middle.png',
-        'screenshots/CKD-Prediction-Model/05_prediction_result.png'
-      ]
+        'screenshots/CKD-Prediction-Model/05_prediction_result.png',
+      ],
     },
     {
-      id: "12", name: "KRR Application", tag: "RAG", year: "2025",
-      blurb: "Full-stack AI research platform for PDF ingestion, structured summarization, cross-paper analysis, and semantic search.",
-      tech: ["FastAPI", "Next.js 14", "PostgreSQL", "pgvector", "Groq (Llama 3.3 70B)", "sentence-transformers", "JWT", "SSE", "Docker", "Alembic"],
-      desc: "Knowledge Repository and Review (KRR) — AI-assisted research paper workflow platform. Uploads PDFs into a background processing pipeline: text extraction with two-column layout detection, Groq-powered structured AI summaries, and sentence-transformer embeddings stored in pgvector for semantic search. Supports comparative analysis across selected papers and synthetic literature review generation. Paper-grounded chat with SSE token streaming. Full JWT auth, per-user paper isolation, and CI pipeline with backend integration tests.",
-      role: "Full-stack — FastAPI backend, Next.js frontend, RAG pipeline, pgvector search, Docker.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/KRR-Application" }],
+      id: '12',
+      name: 'KRR Application',
+      tag: 'RAG',
+      year: '2025',
+      blurb:
+        'Full-stack AI research platform for PDF ingestion, structured summarization, cross-paper analysis, and semantic search.',
+      tech: [
+        'FastAPI',
+        'Next.js 14',
+        'PostgreSQL',
+        'pgvector',
+        'Groq (Llama 3.3 70B)',
+        'sentence-transformers',
+        'JWT',
+        'SSE',
+        'Docker',
+        'Alembic',
+      ],
+      desc: 'Knowledge Repository and Review (KRR) — AI-assisted research paper workflow platform. Uploads PDFs into a background processing pipeline: text extraction with two-column layout detection, Groq-powered structured AI summaries, and sentence-transformer embeddings stored in pgvector for semantic search. Supports comparative analysis across selected papers and synthetic literature review generation. Paper-grounded chat with SSE token streaming. Full JWT auth, per-user paper isolation, and CI pipeline with backend integration tests.',
+      role: 'Full-stack — FastAPI backend, Next.js frontend, RAG pipeline, pgvector search, Docker.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/KRR-Application' }],
       screenshots: [
         'screenshots/KRR-APP/0.png',
         'screenshots/KRR-APP/1.png',
         'screenshots/KRR-APP/2.png',
         'screenshots/KRR-APP/3.png',
-        'screenshots/KRR-APP/4.png'
-      ]
+        'screenshots/KRR-APP/4.png',
+      ],
     },
     {
-      id: "13", name: "AI-Powered Summarizer", tag: "NLP", year: "2024",
-      blurb: "Multi-algorithm extractive and abstractive summarizer with BART, TF-IDF, and multi-document support.",
-      tech: ["Python", "Flask", "NLTK", "scikit-learn (TF-IDF)", "BART (facebook/bart-large-cnn)", "spaCy", "pdfplumber", "reportlab", "langdetect", "Chart.js"],
-      desc: "Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16+ languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.",
-      role: "Solo build — 4 NLP algorithms, abstractive BART pipeline, multi-document, Flask architecture.",
-      links: [{ label: "GitHub", url: "https://github.com/MuhammadMaheem/AI-Powered-Document-Summarization-System" }],
+      id: '13',
+      name: 'AI-Powered Summarizer',
+      tag: 'NLP',
+      year: '2024',
+      blurb:
+        'Multi-algorithm extractive and abstractive summarizer with BART, TF-IDF, and multi-document support.',
+      tech: [
+        'Python',
+        'Flask',
+        'NLTK',
+        'scikit-learn (TF-IDF)',
+        'BART (facebook/bart-large-cnn)',
+        'spaCy',
+        'pdfplumber',
+        'reportlab',
+        'langdetect',
+        'Chart.js',
+      ],
+      desc: 'Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16+ languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.',
+      role: 'Solo build — 4 NLP algorithms, abstractive BART pipeline, multi-document, Flask architecture.',
+      links: [
+        {
+          label: 'GitHub',
+          url: 'https://github.com/MuhammadMaheem/AI-Powered-Document-Summarization-System',
+        },
+      ],
       screenshots: [
         'screenshots/Ai-powered%20summerizer/1.png',
         'screenshots/Ai-powered%20summerizer/1.1.png',
         'screenshots/Ai-powered%20summerizer/1.2.png',
         'screenshots/Ai-powered%20summerizer/1.3.png',
-        'screenshots/Ai-powered%20summerizer/1.4.png'
-      ]
-    }
+        'screenshots/Ai-powered%20summerizer/1.4.png',
+      ],
+    },
   ],
 
   // EXPERIENCE — "changelog"
   changelog: [
-    { v: "v3.x", date: "Jun 2026 — Present", role: "AI Engineer Intern", org: "TEYZIX CORE", note: "Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16+ languages." },
-    { v: "v2.x", date: "Mar 2026 — May 2026", role: "AI Developer Intern", org: "Punjab Skill Development Authority (PSDA)", note: "Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma specs to production — public site, admin dashboard, a 3-role permission system across 8+ REST endpoints, and a Gemini-powered OCR document parser." },
-    { v: "v1.x", date: "Sep 2025 — Jan 2026", role: "Software Engineer Intern", org: "Artificial Automation Business Solutions (AABS)", note: "Built a RAG-based PDF chatbot with embedding-model selection, ChromaDB indexing, and grounded retrieval — improving answer grounding over a keyword-search baseline. Developed responsive SaaS dashboard UI in Next.js 15 / React 19 / TypeScript, including authentication, analytics visualizations, and subscription-management interfaces." },
-    { v: "v0.x", date: "2024 — 2028", role: "BSc Artificial Intelligence", org: "Superior University, Lahore", note: "Currently in the 4th semester with a CGPA of 3.58 / 4.0. Coursework spans machine learning, deep learning, computer vision, NLP, and the math underneath it all." }
+    {
+      v: 'v3.x',
+      date: 'Jun 2026 — Present',
+      role: 'AI Engineer Intern',
+      org: 'TEYZIX CORE',
+      note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16+ languages.',
+    },
+    {
+      v: 'v2.x',
+      date: 'Mar 2026 — May 2026',
+      role: 'AI Developer Intern',
+      org: 'Punjab Skill Development Authority (PSDA)',
+      note: 'Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma specs to production — public site, admin dashboard, a 3-role permission system across 8+ REST endpoints, and a Gemini-powered OCR document parser.',
+    },
+    {
+      v: 'v1.x',
+      date: 'Sep 2025 — Jan 2026',
+      role: 'Software Engineer Intern',
+      org: 'Artificial Automation Business Solutions (AABS)',
+      note: 'Built a RAG-based PDF chatbot with embedding-model selection, ChromaDB indexing, and grounded retrieval — improving answer grounding over a keyword-search baseline. Developed responsive SaaS dashboard UI in Next.js 15 / React 19 / TypeScript, including authentication, analytics visualizations, and subscription-management interfaces.',
+    },
+    {
+      v: 'v0.x',
+      date: '2024 — 2028',
+      role: 'BSc Artificial Intelligence',
+      org: 'Superior University, Lahore',
+      note: 'Currently in the 4th semester with a CGPA of 3.58 / 4.0. Coursework spans machine learning, deep learning, computer vision, NLP, and the math underneath it all.',
+    },
   ],
 
   // WRITING — "transmissions" (placeholder posts until real ones exist)
   writing: [
-    { title: "Your RAG pipeline is lying to you", date: "May 2025", read: "9 min", tag: "Essay", excerpt: "Retrieval looks great in the demo and falls apart in prod. Here's the failure taxonomy I keep running into — and the cheap fixes." },
-    { title: "Evals before models", date: "Feb 2025", read: "6 min", tag: "Playbook", excerpt: "If you can't measure it, you're not engineering — you're gambling with extra steps. A practical eval-first workflow." },
-    { title: "Agents that know when to stop", date: "Nov 2024", read: "11 min", tag: "Deep-dive", excerpt: "Most agent failures aren't bad reasoning — they're missing stop conditions. A design pattern for graceful give-up." },
-    { title: "pgvector vs ChromaDB: a practitioner's take", date: "Aug 2024", read: "7 min", tag: "Notes", excerpt: "I've shipped both in production RAG systems. When to reach for each, where they hurt, and what the benchmarks miss." }
+    {
+      title: 'Your RAG pipeline is lying to you',
+      date: 'May 2025',
+      read: '9 min',
+      tag: 'Essay',
+      excerpt:
+        "Retrieval looks great in the demo and falls apart in prod. Here's the failure taxonomy I keep running into — and the cheap fixes.",
+    },
+    {
+      title: 'Evals before models',
+      date: 'Feb 2025',
+      read: '6 min',
+      tag: 'Playbook',
+      excerpt:
+        "If you can't measure it, you're not engineering — you're gambling with extra steps. A practical eval-first workflow.",
+    },
+    {
+      title: 'Agents that know when to stop',
+      date: 'Nov 2024',
+      read: '11 min',
+      tag: 'Deep-dive',
+      excerpt:
+        "Most agent failures aren't bad reasoning — they're missing stop conditions. A design pattern for graceful give-up.",
+    },
+    {
+      title: "pgvector vs ChromaDB: a practitioner's take",
+      date: 'Aug 2024',
+      read: '7 min',
+      tag: 'Notes',
+      excerpt:
+        "I've shipped both in production RAG systems. When to reach for each, where they hurt, and what the benchmarks miss.",
+    },
   ],
 
   socials: [
-    { label: "GitHub", handle: "@MuhammadMaheem", url: "https://github.com/MuhammadMaheem" },
-    { label: "LinkedIn", handle: "/in/muhammad-maheem", url: "https://www.linkedin.com/in/muhammad-maheem-453369245/" },
-    { label: "Email", handle: "mirza.muhammad.maheem@gmail.com", url: "mailto:mirza.muhammad.maheem@gmail.com" },
-    { label: "Phone", handle: "+92 300-8714141", url: "tel:+923008714141" }
-  ]
+    { label: 'GitHub', handle: '@MuhammadMaheem', url: 'https://github.com/MuhammadMaheem' },
+    {
+      label: 'LinkedIn',
+      handle: '/in/muhammad-maheem',
+      url: 'https://www.linkedin.com/in/muhammad-maheem-453369245/',
+    },
+    {
+      label: 'Email',
+      handle: 'mirza.muhammad.maheem@gmail.com',
+      url: 'mailto:mirza.muhammad.maheem@gmail.com',
+    },
+    { label: 'Phone', handle: '+92 300-8714141', url: 'tel:+923008714141' },
+  ],
 };
