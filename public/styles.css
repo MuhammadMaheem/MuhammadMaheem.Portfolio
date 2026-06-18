@@ -748,6 +748,8 @@ section {
   align-items: center;
 }
 
+}
+
 .about-copy p {
   font-size: clamp(16px, 1.6vw, 20px);
   color: var(--text-dim);
