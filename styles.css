@@ -769,7 +769,7 @@ section {
 
 /* ---------- generic section spacing ---------- */
 .band {
-  padding: clamp(90px, 13vh, 170px) 0;
+  padding: clamp(60px, 8vh, 120px) 0;
 }
 
 /* ---------- ABOUT ---------- */
@@ -2012,8 +2012,8 @@ section {
 /* ---------- FOOTER ---------- */
 .footer {
   border-top: 1px solid var(--line);
-  padding: 60px 0 50px;
-  margin-top: 60px;
+  padding: 50px 0 40px;
+  margin-top: 40px;
 }
 
 .footer-grid {
@@ -2301,7 +2301,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .band {
-    padding: 64px 0;
+    padding: 48px 0;
   }
 
   .section-head {
