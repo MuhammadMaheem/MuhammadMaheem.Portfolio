@@ -28,7 +28,7 @@ window.SITE = {
       { k: 'Focus', v: 'Applied AI / LLM systems' },
       { k: 'Stack', v: 'Python · TypeScript · FastAPI' },
       { k: 'Based in', v: 'Lahore, Pakistan' },
-      { k: 'Education', v: 'BSc AI (5th sem) · CGPA 3.58' },
+      { k: 'Education', v: 'Bachelor of Science in Artificial Intelligence (5th sem)' },
       { k: 'Status', v: 'Open to internships & roles' },
     ],
   },
@@ -38,7 +38,6 @@ window.SITE = {
     { label: 'Projects shipped', value: 13, suffix: '' },
     { label: 'Hadiths indexed', value: 39, suffix: 'k' },
     { label: 'Heart-risk accuracy', value: 99, suffix: '%' },
-    { label: 'CGPA', value: 3.58, suffix: '' },
   ],
 
   // SKILLS — grouped "core modules"
@@ -452,9 +451,9 @@ window.SITE = {
     {
       v: 'v0.x',
       date: '2024 — 2028',
-      role: 'BSc Artificial Intelligence',
+      role: 'Bachelor of Science in Artificial Intelligence',
       org: 'Superior University, Lahore',
-      note: 'Currently in the 5th semester with a CGPA of 3.58 / 4.0. Coursework spans machine learning, deep learning, computer vision, NLP, and the math underneath it all.',
+      note: 'Currently in the 5th semester. Coursework spans machine learning, deep learning, computer vision, NLP, and the math underneath it all.',
     },
   ],
 
