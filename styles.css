@@ -2133,7 +2133,7 @@ html.js-ready body.booted .scroll-cue {
     display: none;
   }
 
-  .resume-btn {
+  .nav-right .resume-btn {
     display: none;
   }
 
