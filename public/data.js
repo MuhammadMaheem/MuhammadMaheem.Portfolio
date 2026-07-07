@@ -11,13 +11,13 @@ window.SITE = {
     role: 'AI Engineer & ML Systems Builder',
     // one-liner under the name
     tagline:
-      'Production AI systems. RAG pipelines, eval frameworks, and full-stack SaaS — built and shipped.',
+      'Production AI systems. RAG pipelines, eval frameworks, and full-stack SaaS. Built and shipped.',
     location: 'Lahore, Pakistan',
     status: 'Open to internships & roles',
     // short human intro for the About section
     bio: [
       "I'm an AI engineer and ML systems builder from Lahore, currently completing my BSc in Artificial Intelligence with a focus on production-grade AI systems. I specialize in building the infrastructure that makes AI actually work: RAG pipelines, evaluation frameworks, and the full-stack systems that move from research to real users.",
-      'My core work lives at the intersection of models and product. I design retrieval systems that stay grounded to source material, build eval harnesses that enforce quality gates before deployment, and craft the UIs that make complex AI feel effortless. As the sole engineer at PSDA, I shipped a full-stack SaaS platform from design to production — handling everything from FastAPI backends to Next.js frontends, database architecture to DevOps.',
+      'My core work lives at the intersection of models and product. I design retrieval systems that stay grounded to source material, build eval harnesses that enforce quality gates before deployment, and craft the UIs that make complex AI feel effortless. As the sole engineer at PSDA, I shipped a full-stack SaaS platform from design to production, handling everything from FastAPI backends to Next.js frontends, database architecture to DevOps.',
       "I'm deeply invested in making AI systems reliable and measurable. Whether it's RAGAS-based quality evaluation, vector database optimization, or agentic system design, the principle is the same: if you can't measure it, it's not engineering. Outside of building, I'm sketching, exploring datasets, or diving into whatever new model architecture just landed.",
     ],
     quote: {
@@ -35,7 +35,7 @@ window.SITE = {
 
   // Quick numbers (unused in hero by design; kept for reference)
   metrics: [
-    { label: 'Projects shipped', value: 13, suffix: '' },
+    { label: 'Projects shipped', value: 15, suffix: '' },
     { label: 'Hadiths indexed', value: 39, suffix: 'k' },
     { label: 'Heart-risk accuracy', value: 99, suffix: '%' },
   ],
@@ -96,7 +96,7 @@ window.SITE = {
     },
   ],
 
-  // PROJECTS — 13 deployments.
+  // PROJECTS — 15 deployments.
   projects: [
     {
       id: '01',
@@ -421,6 +421,72 @@ window.SITE = {
         'screenshots/Ai-powered%20summerizer/1.2.png',
         'screenshots/Ai-powered%20summerizer/1.3.png',
         'screenshots/Ai-powered%20summerizer/1.4.png',
+        'screenshots/Ai-powered%20summerizer/1.5.png',
+      ],
+    },
+    {
+      id: '14',
+      name: 'Legal Document Risk Analyzer',
+      tag: 'LegalTech',
+      year: '2026',
+      featured: true,
+      blurb:
+        'AI contract-risk analyzer with OCR ingestion, RAG Q&A, and an explainable compliance score.',
+      tech: [
+        'Python',
+        'FastAPI',
+        'Next.js 15',
+        'SQLAlchemy 2.0 (async)',
+        'Groq (Llama 3.3 70B)',
+        'ChromaDB',
+        'sentence-transformers',
+        'Tesseract OCR',
+        'reportlab',
+        'python-docx',
+        'JWT',
+      ],
+      desc: 'Production-oriented legal-tech system that ingests contracts (PDF/DOCX/TXT, including scanned PDFs via a Tesseract OCR fallback) through a 7-stage async pipeline — parse, chunk/embed/index, extract, detect risk, summarize, score, persist — where every stage degrades gracefully so a document always lands in a terminal status instead of hanging mid-process. Extracts contract type, parties, dates, and clauses; flags missing clauses, high-risk conditions, ambiguous language, and legal red flags, each with a confidence score and plain-English explanation. Semantic search and RAG-grounded Q&A run over every document via ChromaDB + sentence-transformers, a deterministic weighted compliance score aggregates risk severity × confidence, and full risk-assessment reports export as PDF (reportlab) or DOCX. Role-based JWT auth (admin/user) ships with an admin panel for usage monitoring, audit logs, and cross-user document oversight. 23 backend tests cover auth, upload validation, compliance scoring, and a full pipeline run against a mocked Groq client.',
+      role: 'Full-stack — FastAPI backend, 7-stage async AI pipeline, RAG search, Next.js 15 frontend, admin panel.',
+      links: [],
+      screenshots: [
+        'screenshots/Legal-Doc-Analyzer/03_dashboard_populated.png',
+        'screenshots/Legal-Doc-Analyzer/05_document_overview.png',
+        'screenshots/Legal-Doc-Analyzer/06_risk_findings.png',
+        'screenshots/Legal-Doc-Analyzer/08_compliance.png',
+        'screenshots/Legal-Doc-Analyzer/09_semantic_search.png',
+        'screenshots/Legal-Doc-Analyzer/11_admin_users.png',
+      ],
+    },
+    {
+      id: '15',
+      name: 'RecruitAI — AI Resume Screener',
+      tag: 'HR Tech',
+      year: '2026',
+      featured: true,
+      blurb:
+        'Explainable resume-screening engine that ranks candidates against a job description on a 100-point scale.',
+      tech: [
+        'Python',
+        'FastAPI',
+        'SQLModel',
+        'Next.js 15',
+        'TypeScript',
+        'Groq (Llama 3.3 70B)',
+        'ChromaDB',
+        'sentence-transformers',
+        'pdfplumber',
+        'Recharts',
+      ],
+      desc: 'Recruitment platform that parses uploaded PDF resumes with Groq-driven extraction, then ranks candidates against a job description on an explainable 100-point scale: skills match (35 pts, exact set-intersection plus ChromaDB semantic similarity so "ReactJS" matches "React"), experience years (25 pts), education level (15 pts), certification keyword match (10 pts), and an AI holistic fit assessment (15 pts) from Groq. Every dimension returns a human-readable reasoning string shown in the dashboard alongside matched/missing skill lists. Supports side-by-side candidate comparison, AI-generated interview questions, and CSV export. FastAPI + SQLModel backend, Next.js 15 + TypeScript frontend with a custom design system and Recharts visualizations; deployed on Vercel (frontend) and Railway (backend).',
+      role: 'Full-stack — FastAPI backend, explainable scoring engine, ChromaDB semantic matching, Next.js 15 frontend.',
+      links: [{ label: 'GitHub', url: 'https://github.com/MuhammadMaheem/RecruitAI' }],
+      screenshots: [
+        'screenshots/RecruitAI/01_dashboard.png',
+        'screenshots/RecruitAI/02_upload.png',
+        'screenshots/RecruitAI/03_jobs.png',
+        'screenshots/RecruitAI/04_rankings.png',
+        'screenshots/RecruitAI/05_compare.png',
+        'screenshots/RecruitAI/06_rankings_expanded.png',
       ],
     },
   ],
