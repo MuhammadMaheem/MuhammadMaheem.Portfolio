@@ -67,9 +67,9 @@
 
   // accent palette per tag for canvas thumbnails
   const TAG_HUE = {
-    'LLM Eval':'#C6FF3A', RAG:'#54B7FF', NLP:'#34d399', Vision:'#FF6A2B',
+    'LLM Eval':'#00d4ff', RAG:'#54B7FF', NLP:'#34d399', Vision:'#FF6A2B',
     RL:'#a78bfa', ML:'#fbbf24', Web:'#60a5fa', FinTech:'#4ade80',
-    Health:'#f472b6'
+    Health:'#f472b6', LegalTech:'#f5a623', 'HR Tech':'#2dd4bf'
   };
 
   function drawThumb(canvas, project, slideIdx) {
