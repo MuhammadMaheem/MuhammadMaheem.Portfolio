@@ -35,7 +35,7 @@ window.SITE = {
 
   // Quick numbers (unused in hero by design; kept for reference)
   metrics: [
-    { label: 'Projects shipped', value: 15, suffix: '' },
+    { label: 'Projects shipped', value: 16, suffix: '' },
     { label: 'Hadiths indexed', value: 39, suffix: 'k' },
     { label: 'Heart-risk accuracy', value: 99, suffix: '%' },
   ],
@@ -96,7 +96,7 @@ window.SITE = {
     },
   ],
 
-  // PROJECTS — 15 deployments.
+  // PROJECTS — 16 deployments.
   projects: [
     {
       id: '01',
@@ -487,6 +487,41 @@ window.SITE = {
         'screenshots/RecruitAI/04_rankings.png',
         'screenshots/RecruitAI/05_compare.png',
         'screenshots/RecruitAI/06_rankings_expanded.png',
+      ],
+    },
+    {
+      id: '16',
+      name: 'Autonomous Research Agent Swarm',
+      tag: 'Multi-Agent',
+      year: '2026',
+      featured: true,
+      blurb:
+        'Multi-agent research system with DAG planning, parallel specialist agents, and self-auditing citations.',
+      tech: [
+        'Python',
+        'LangGraph',
+        'Groq (gpt-oss-120b)',
+        'FastAPI',
+        'SSE',
+        'Next.js 15',
+        'React Flow',
+        'SQLite',
+        'BM25',
+        'pysbd',
+      ],
+      desc: 'LangGraph-orchestrated multi-agent system where a Planner decomposes a research question into a DAG of 3–6 sub-questions, validated by topological sort. A scheduler dispatches every ready sub-question in parallel LangGraph Send() waves to specialist agents — web search (DuckDuckGo/Tavily), a sandboxed Python executor (import allowlist, CPU/memory rlimits, network isolation via unshare -rn), and a BM25 RAG agent over a local corpus — each citing evidence by ID. A Synthesizer writes the cited report; a Citation-Checker re-reads it sentence by sentence (pysbd-based splitting) and judges each claim against only its cited evidence, producing a coverage score. Below a 0.75 threshold, a Critic diagnoses the gaps and loops back to the Planner (max 2 iterations, best-coverage draft wins — reflection can regress). Every node emits typed trace events to SQLite and SSE, powering a live agent-execution-trace UI built with Next.js 15 and React Flow. Ships with a 30-question eval harness (web / computational / multi-hop / adversarial splits) comparing the full swarm against a no-critic ablation and a single-agent ReAct baseline, with paired sign-test significance and citation-coverage metrics.',
+      role: 'Solo build — LangGraph multi-agent graph, sandboxed code execution, citation-audit pipeline, FastAPI SSE backend, Next.js trace UI, eval harness.',
+      links: [
+        {
+          label: 'GitHub',
+          url: 'https://github.com/MuhammadMaheem/Autonomous-Research-Agent-Swarm',
+        },
+      ],
+      screenshots: [
+        'screenshots/Research-Agent-Swarm/01-query-input.png',
+        'screenshots/Research-Agent-Swarm/02-live-trace.png',
+        'screenshots/Research-Agent-Swarm/03-final-report.png',
+        'screenshots/Research-Agent-Swarm/04-citation-audit.png',
       ],
     },
   ],
