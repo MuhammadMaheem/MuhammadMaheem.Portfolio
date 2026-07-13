@@ -84,8 +84,22 @@
 
   /* ---------- mobile menu ---------- */
   const menu = $('#mobileMenu');
-  function closeMenu() { menu && menu.classList.remove('open'); }
-  $('#burger') && $('#burger').addEventListener('click', () => menu.classList.toggle('open'));
+  const burger = $('#burger');
+  function setMenu(open) {
+    if (!menu) { return; }
+    menu.classList.toggle('open', open);
+    if (burger) {
+      burger.textContent = open ? '✕' : '☰';
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    }
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  function closeMenu() { setMenu(false); }
+  burger && burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu && menu.classList.contains('open')) { closeMenu(); }
+  });
 
   /* ---------- codename scramble (subtle) ---------- */
   const codeEl = $('#codename');
