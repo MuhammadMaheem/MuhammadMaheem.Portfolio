@@ -2288,7 +2288,7 @@ html.js-ready body.booted .scroll-cue {
     font-size: clamp(36px, 14vw, 72px);
   }
 
-  .mobile-menu a {
+  .mobile-menu > a {
     font-size: 28px;
   }
 
@@ -2354,7 +2354,7 @@ html.js-ready body.booted .scroll-cue {
     font-size: clamp(20px, 6vw, 28px);
   }
 
-  .mobile-menu a {
+  .mobile-menu > a {
     font-size: 24px;
   }
 }
@@ -2391,14 +2391,14 @@ html.js-ready body.booted .scroll-cue {
   transform: none;
 }
 
-.mobile-menu a {
+.mobile-menu > a {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 36px;
   color: var(--text);
 }
 
-.mobile-menu a:hover {
+.mobile-menu > a:hover {
   color: var(--accent);
 }
 
@@ -2406,6 +2406,11 @@ html.js-ready body.booted .scroll-cue {
   margin-top: 30px;
   display: flex;
   gap: 14px;
+}
+
+.mobile-menu .mm-foot .resume-btn {
+  font-size: 13px;
+  padding: 11px 18px;
 }
 
 /* ============================================================

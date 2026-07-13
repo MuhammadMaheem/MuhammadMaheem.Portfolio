@@ -530,7 +530,7 @@ window.SITE = {
   changelog: [
     {
       v: 'v3.x',
-      date: 'Jun 2026 — Present',
+      date: 'Jun 2026 — Jul 2026',
       role: 'AI Engineer Intern',
       org: 'TEYZIX CORE',
       note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16+ languages.',
