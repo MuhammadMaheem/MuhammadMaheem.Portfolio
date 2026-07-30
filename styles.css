@@ -2289,7 +2289,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .mobile-menu > a {
-    font-size: 28px;
+    font-size: 19px;
   }
 
   /* modal stacks on small phones */
@@ -2355,7 +2355,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .mobile-menu > a {
-    font-size: 24px;
+    font-size: 17px;
   }
 }
 
@@ -2377,14 +2377,15 @@ html.js-ready body.booted .scroll-cue {
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: var(--void);
+  background: color-mix(in srgb, var(--void) 96%, transparent);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  padding: var(--gutter);
+  gap: 4px;
+  padding: 90px clamp(24px, 6vw, 40px) 40px;
   transform: translateY(-100%);
-  transition: transform 0.5s var(--ease);
+  transition: transform 0.45s var(--ease);
 }
 
 .mobile-menu.open {
@@ -2393,24 +2394,33 @@ html.js-ready body.booted .scroll-cue {
 
 .mobile-menu > a {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 36px;
+  font-weight: 600;
+  font-size: clamp(17px, 4.5vw, 20px);
+  letter-spacing: 0.02em;
   color: var(--text);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.25s var(--ease), padding-left 0.25s var(--ease);
 }
 
-.mobile-menu > a:hover {
+.mobile-menu > a:hover,
+.mobile-menu > a:focus-visible {
   color: var(--accent);
+  padding-left: 6px;
 }
 
 .mobile-menu .mm-foot {
-  margin-top: 30px;
+  margin-top: 24px;
   display: flex;
   gap: 14px;
 }
 
 .mobile-menu .mm-foot .resume-btn {
   font-size: 13px;
-  padding: 11px 18px;
+  padding: 11px 20px;
 }
 
 /* ============================================================
@@ -2758,12 +2768,12 @@ html.js-ready body.booted .scroll-cue {
 
   /* Mobile menu refinements */
   .mobile-menu {
-    padding: 20px;
+    padding: 80px 24px 32px;
   }
 
   .mobile-menu > a {
-    font-size: 28px;
-    padding: 8px 0;
+    font-size: 18px;
+    padding: 10px 0;
     min-height: 44px;
     display: flex;
     align-items: center;
@@ -2902,7 +2912,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .mobile-menu > a {
-    font-size: 24px;
+    font-size: 17px;
   }
 }
 
