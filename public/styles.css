@@ -2289,7 +2289,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .mobile-menu > a {
-    font-size: 28px;
+    font-size: 15px;
   }
 
   /* modal stacks on small phones */
@@ -2355,7 +2355,7 @@ html.js-ready body.booted .scroll-cue {
   }
 
   .mobile-menu > a {
-    font-size: 24px;
+    font-size: 14px;
   }
 }
 
@@ -2377,14 +2377,15 @@ html.js-ready body.booted .scroll-cue {
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: var(--void);
+  background: color-mix(in srgb, var(--void) 96%, transparent);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  padding: var(--gutter);
+  gap: 4px;
+  padding: 90px clamp(24px, 6vw, 40px) 40px;
   transform: translateY(-100%);
-  transition: transform 0.5s var(--ease);
+  transition: transform 0.45s var(--ease);
 }
 
 .mobile-menu.open {
@@ -2393,24 +2394,33 @@ html.js-ready body.booted .scroll-cue {
 
 .mobile-menu > a {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 36px;
+  font-weight: 600;
+  font-size: clamp(14px, 4vw, 16px);
+  letter-spacing: 0.02em;
   color: var(--text);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.25s var(--ease), padding-left 0.25s var(--ease);
 }
 
-.mobile-menu > a:hover {
+.mobile-menu > a:hover,
+.mobile-menu > a:focus-visible {
   color: var(--accent);
+  padding-left: 6px;
 }
 
 .mobile-menu .mm-foot {
-  margin-top: 30px;
+  margin-top: 24px;
   display: flex;
   gap: 14px;
 }
 
 .mobile-menu .mm-foot .resume-btn {
   font-size: 13px;
-  padding: 11px 18px;
+  padding: 11px 20px;
 }
 
 /* ============================================================
@@ -2517,5 +2527,549 @@ html.js-ready body.booted .scroll-cue {
   .pm-tech span,
   .pm-link {
     font-size: 13px;
+  }
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS FIXES
+   Targeted improvements for small screens — overflow prevention,
+   better touch targets, and layout refinements.
+   ============================================================ */
+
+/* --- Prevent any horizontal overflow globally on mobile --- */
+@media (max-width: 720px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Reduce main container side margins for more usable width */
+  main {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  /* Ensure about terminal doesn't overflow */
+  .about-terminal {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .at-body {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .at-row {
+    word-break: break-word;
+  }
+
+  /* Ensure spec list values don't overflow */
+  .spec-list .row {
+    gap: 4px 8px;
+  }
+
+  .spec-list .row .v {
+    font-size: 12px;
+    text-align: left;
+  }
+
+  /* Project card content tightening */
+  .proj-content {
+    padding: 14px 16px 16px;
+  }
+
+  .proj .pblurb {
+    max-width: none;
+  }
+
+  .proj .ptech {
+    gap: 4px;
+  }
+
+  .proj .ptech span {
+    font-size: 10px;
+  }
+
+  /* Project modal mobile refinements */
+  .proj-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .pm-panel {
+    max-height: 100vh;
+    max-height: 100dvh;
+    border-radius: 0;
+    grid-template-rows: 220px 1fr;
+  }
+
+  .pm-body {
+    padding: 20px 16px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pm-desc {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .pm-role {
+    font-size: 14px;
+  }
+
+  .pm-tech span {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .pm-link {
+    font-size: 12px;
+    padding: 10px 16px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .pm-close {
+    width: 48px;
+    height: 48px;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    z-index: 20;
+  }
+
+  .pm-slider-nav {
+    padding: 10px 14px;
+  }
+
+  .pm-prev,
+  .pm-next {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Timeline adjustments */
+  .timeline {
+    margin-left: 0;
+  }
+
+  .tl-item {
+    padding-left: 24px;
+  }
+
+  .tl-item p {
+    max-width: none;
+    font-size: 14px;
+  }
+
+  /* Contact section */
+  .uplink-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+    gap: 28px;
+  }
+
+  .uplink h2 {
+    font-size: clamp(28px, 8vw, 44px);
+  }
+
+  .social {
+    font-size: 12px;
+    padding: 13px 0;
+    gap: 8px;
+  }
+
+  .social .h {
+    font-size: 11px;
+  }
+
+  /* Contact form touch targets */
+  .field input,
+  .field textarea {
+    font-size: 16px; /* prevents iOS zoom on focus */
+    padding: 14px 14px;
+    min-height: 48px;
+  }
+
+  .form .send {
+    min-height: 48px;
+    padding: 14px 24px;
+    font-size: 13px;
+  }
+
+  /* Nav adjustments */
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .brand {
+    font-size: 15px;
+    gap: 8px;
+  }
+
+  /* Hero mobile refinements */
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .hero-codename {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-role {
+    font-size: 12px;
+  }
+
+  .hero-tagline {
+    font-size: 14.5px;
+    margin-bottom: 24px;
+  }
+
+  /* CTA buttons with proper touch targets */
+  .hero-cta .btn {
+    min-height: 48px;
+    padding: 13px 20px;
+    font-size: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Filter buttons touch targets */
+  .filter {
+    min-height: 44px;
+    padding: 9px 14px;
+  }
+
+  /* Writing section */
+  .post {
+    padding: 20px 0;
+  }
+
+  .post h3 {
+    font-size: clamp(18px, 5.5vw, 26px);
+  }
+
+  .post .pex {
+    font-size: 13.5px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 36px 0 28px;
+  }
+
+  .footer .big {
+    font-size: clamp(32px, 12vw, 56px);
+  }
+
+  /* Mobile menu refinements */
+  .mobile-menu {
+    padding: 80px 24px 32px;
+  }
+
+  .mobile-menu > a {
+    font-size: 15px;
+    padding: 10px 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-menu .mm-foot {
+    margin-top: 24px;
+  }
+
+  .mobile-menu .mm-foot .resume-btn {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    padding: 12px 18px;
+  }
+
+  /* Module cards */
+  .module {
+    padding: 20px 18px;
+  }
+
+  .module .tags {
+    gap: 5px;
+    margin-top: 16px;
+  }
+
+  .module .tags li {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* Project grid single-column */
+  .proj-grid {
+    gap: 14px;
+  }
+
+  /* Prevent images from overflowing cards */
+  .proj .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Scroll cue positioning */
+  .scroll-cue {
+    left: 16px;
+    bottom: 24px;
+    font-size: 10px;
+  }
+}
+
+/* --- Extra small phones: 480px and below --- */
+@media (max-width: 480px) {
+  main {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .wrap {
+    padding: 0 clamp(14px, 3vw, 24px);
+  }
+
+  .nav {
+    padding: 10px 12px;
+  }
+
+  .hero {
+    padding-top: 90px;
+    min-height: 82svh;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 10vw, 50px);
+  }
+
+  .section-head h2 {
+    font-size: clamp(26px, 8vw, 38px);
+  }
+
+  .band {
+    padding: 40px 0;
+  }
+
+  .proj .thumb {
+    height: 140px;
+  }
+
+  .proj.featured .thumb {
+    height: 160px;
+  }
+
+  .proj h3 {
+    font-size: clamp(17px, 5vw, 24px);
+  }
+
+  .tl-item {
+    padding-bottom: 32px;
+  }
+
+  .tl-item h3 {
+    font-size: clamp(18px, 5vw, 26px);
+    margin-top: 8px;
+  }
+
+  .uplink-card {
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+
+  /* Modal full-screen on tiny phones */
+  .pm-panel {
+    grid-template-rows: 180px 1fr;
+  }
+
+  .pm-body {
+    padding: 16px 14px 20px;
+  }
+
+  .pm-name {
+    font-size: clamp(19px, 5.5vw, 26px);
+  }
+
+  .pm-desc {
+    font-size: 13.5px;
+  }
+
+  .pm-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pm-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-menu > a {
+    font-size: 13.5px;
+  }
+}
+
+/* --- Very small phones: 360px and below --- */
+@media (max-width: 360px) {
+  main {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 9.5vw, 42px);
+  }
+
+  .hero-codename {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    margin-bottom: 16px;
+  }
+
+  .section-head h2 {
+    font-size: clamp(22px, 7.5vw, 32px);
+  }
+
+  .section-head {
+    margin-bottom: 24px;
+  }
+
+  .proj-content {
+    padding: 12px 14px 14px;
+  }
+
+  .social {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-size: 11px;
+  }
+
+  .social .h {
+    font-size: 10px;
+    text-align: left;
+  }
+}
+
+/* --- Fix for iOS Safari 100vh issue --- */
+@supports (height: 100dvh) {
+  .hero {
+    min-height: 100dvh;
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      min-height: 88dvh;
+    }
+  }
+}
+
+/* --- Landscape phone refinements --- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding-top: 70px;
+    padding-bottom: 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 6vh, 48px);
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  .drag-hint {
+    display: none;
+  }
+
+  /* Modal adjustments for landscape */
+  .pm-panel {
+    grid-template-rows: 180px 1fr;
+    max-height: 98vh;
+  }
+}
+
+/* --- Touch device improvements --- */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects that don't work well on touch */
+  .module:hover {
+    transform: none;
+  }
+
+  .proj:hover {
+    transform: none;
+  }
+
+  .proj:hover .thumb {
+    transform: none;
+  }
+
+  .social:hover {
+    padding-left: 0;
+  }
+
+  .post:hover {
+    padding-left: 0;
+  }
+
+  /* Ensure module card glow doesn't get stuck */
+  .module::before {
+    display: none;
+  }
+
+  /* Bigger touch targets for slider nav */
+  .pm-dot::after {
+    inset: -12px;
+  }
+}
+
+/* --- Print styles for main site --- */
+@media print {
+  .nav,
+  #bg-canvas,
+  .grid-overlay,
+  .noise,
+  .mobile-menu,
+  .scroll-cue,
+  .drag-hint,
+  .hero-cta,
+  .proj-controls,
+  .form,
+  .proj-modal,
+  .footer {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  main {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 40px 0;
+  }
+
+  .band {
+    padding: 20px 0;
+  }
+
+  .proj,
+  .module {
+    break-inside: avoid;
+    border: 1px solid #ccc;
   }
 }

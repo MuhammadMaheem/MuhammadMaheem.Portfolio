@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Muhammad Maheem — Resume</title>
+<style>
+  @page {
+    size: A4;
+    margin: 11mm 15mm 9mm 15mm;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Liberation Sans', Arial, Helvetica, sans-serif;
+    color: #16181c;
+    font-size: 9.3pt;
+    line-height: 1.28;
+  }
+  a { color: #16181c; text-decoration: none; }
+
+  header.h-block { text-align: center; margin-bottom: 5pt; }
+  h1.name {
+    margin: 0;
+    font-size: 20pt;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #0a0a0a;
+  }
+  .role {
+    margin: 2pt 0 3pt;
+    font-size: 10.3pt;
+    font-weight: 600;
+    color: #33383f;
+  }
+  .contact {
+    font-size: 8.7pt;
+    color: #33383f;
+  }
+  .contact span.sep { color: #9aa0a8; }
+  .contact span.citem { white-space: nowrap; }
+
+  h2.sec {
+    font-size: 10.1pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1pt solid #16181c;
+    padding-bottom: 1.5pt;
+    margin: 6.5pt 0 3pt;
+  }
+  section:first-of-type h2.sec { margin-top: 0; }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+  }
+  .row .left { font-weight: 700; font-size: 9.8pt; }
+  .row .right { font-size: 9pt; color: #40454c; white-space: nowrap; }
+  .org {
+    font-size: 9.3pt;
+    font-style: italic;
+    color: #33383f;
+    margin-bottom: 2pt;
+  }
+  .edu-school { font-weight: 700; font-size: 9.8pt; }
+
+  ul.bullets {
+    margin: 1pt 0 4pt 0;
+    padding-left: 13pt;
+  }
+  ul.bullets li {
+    margin-bottom: 1pt;
+    text-align: left;
+  }
+  .exp-block { margin-bottom: 4pt; }
+  .exp-block:last-child { margin-bottom: 0; }
+
+  .proj { margin-bottom: 2.5pt; }
+  .proj:last-child { margin-bottom: 0; }
+  .proj .pname { font-weight: 700; }
+  .proj .pstack { color: #40454c; }
+
+  .skillrow { display: flex; margin-bottom: 1.5pt; }
+  .skillrow .cat {
+    font-weight: 700;
+    width: 118pt;
+    flex: 0 0 118pt;
+  }
+  .skillrow .vals { flex: 1 1 auto; }
+
+  section { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+  <header class="h-block">
+    <h1 class="name">MUHAMMAD MAHEEM</h1>
+    <div class="role">AI Engineer &amp; Full-Stack Machine Learning Developer</div>
+    <div class="contact">
+      <span class="citem"><a href="mailto:mirza.muhammad.maheem@gmail.com">mirza.muhammad.maheem@gmail.com</a></span> <span class="sep">•</span> <span class="citem"><a href="tel:+923008714141">+92&nbsp;300-8714141</a></span> <span class="sep">•</span> <span class="citem"><a href="https://www.linkedin.com/in/muhammad-maheem-453369245/">linkedin.com/in/muhammad-maheem</a></span> <span class="sep">•</span> <span class="citem"><a href="https://github.com/MuhammadMaheem">github.com/MuhammadMaheem</a></span> <span class="sep">•</span> <span class="citem">Lahore, Pakistan</span>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="sec">Summary</h2>
+    <div>AI engineer focused on production LLM systems — RAG pipelines, evaluation frameworks, and full-stack AI products built with FastAPI and Next.js. Shipped 15+ projects spanning legal-tech contract analysis, HR resume screening, document intelligence, and computer vision, owning each system end-to-end from retrieval/model design through deployment and observability.</div>
+  </section>
+
+  <section>
+    <h2 class="sec">Education</h2>
+    <div class="row">
+      <div class="edu-school">Superior University, Lahore — BS Artificial Intelligence</div>
+      <div class="right">2024 – 2028</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Experience</h2>
+
+    <div class="exp-block">
+      <div class="row"><div class="left">AI Engineer Intern</div><div class="right">Jun 2026 – Jul 2026 | Remote</div></div>
+      <div class="org">TEYZIX CORE</div>
+      <ul class="bullets">
+        <li>Built a legal-tech contract-risk analyzer: a 7-stage async pipeline (FastAPI + Next.js 15) that extracts clauses, flags risk with confidence-scored explanations, answers questions via RAG over ChromaDB, and computes an explainable compliance score — shipped with role-based auth and an admin panel.</li>
+        <li>Built TEYZIX, an AI document summarizer combining extractive scoring (frequency, TF-IDF, positional ranking) with abstractive BART (facebook/bart-large-cnn), adding multi-document batching and auto-detection across 16+ languages.</li>
+      </ul>
+    </div>
+
+    <div class="exp-block">
+      <div class="row"><div class="left">AI Developer Intern</div><div class="right">Mar 2026 – May 2026 | Paid | Remote</div></div>
+      <div class="org">Punjab Skill Development Authority (PSDA)</div>
+      <ul class="bullets">
+        <li>Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma specs to production — public site, admin dashboard, and a 3-role permission system across 8+ REST API endpoints.</li>
+        <li>Built an OCR document parser using the Gemini API to extract and structure text from multi-page uploads, integrated into the SaaS backend pipeline.</li>
+      </ul>
+    </div>
+
+    <div class="exp-block">
+      <div class="row"><div class="left">Software Engineer Intern</div><div class="right">Sep 2025 – Jan 2026 | Part-time | Remote</div></div>
+      <div class="org">Artificial Automation Business Solutions (AABS)</div>
+      <ul class="bullets">
+        <li>Built a RAG-based PDF chatbot with embedding-model selection, ChromaDB vector indexing, and retrieval-augmented generation, improving answer grounding over a naive keyword-search baseline.</li>
+        <li>Developed a responsive SaaS dashboard UI in Next.js 15 / React 19 / TypeScript, including authentication, analytics visualizations, and subscription-management interfaces.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Projects</h2>
+
+    <div class="proj"><span class="pname">Quality Evaluation PDF Chatbot</span> — Production RAG pipeline with a hard RAGAS quality gate, hybrid search (dense + BM25 + reranking), and Prometheus observability. <span class="pstack">Python, FastAPI, ChromaDB, Groq/Llama 3.</span></div>
+
+    <div class="proj"><span class="pname">Legal Document Risk Analyzer</span> — Contract-risk analyzer with OCR ingestion, clause/risk extraction, RAG-grounded Q&amp;A, and an explainable compliance score, behind role-based auth with an admin panel. <span class="pstack">FastAPI, Next.js 15, ChromaDB, Groq.</span></div>
+
+    <div class="proj"><span class="pname">RecruitAI</span> — Explainable resume-screening engine ranking candidates on a 100-point rubric (skills, experience, education, AI fit) with ChromaDB semantic skill matching. <span class="pstack">FastAPI, Next.js 15, Groq.</span></div>
+
+    <div class="proj"><span class="pname">Agentic RAG PDF Chatbot</span> — Full-stack PDF chatbot with agentic multi-query RAG, SSE token streaming, JWT per-user workspaces, and page-level citations. <span class="pstack">FastAPI, Next.js, Groq, pgvector.</span></div>
+
+    <div class="proj"><span class="pname">Hadith Chatbot</span> — 39,038 authentic Hadiths served via a two-stage BM25 → FAISS semantic re-ranking pipeline with LangChain orchestration for precise cross-Hadith attribution.</div>
+
+    <div class="proj"><span class="pname">KRR Application</span> — AI research platform for PDF ingestion, structured summarization, cross-paper analysis, and pgvector semantic search. <span class="pstack">FastAPI, Next.js, Groq, Docker.</span></div>
+  </section>
+
+  <section>
+    <h2 class="sec">Technical Skills</h2>
+    <div class="skillrow"><div class="cat">AI &amp; Machine Learning</div><div class="vals">Python • PyTorch • Scikit-learn • OpenCV • RAG Systems • LangChain • LangGraph • ChromaDB • FAISS • pgvector • Sentence Transformers • Groq API • Gemini API • OpenAI API • LLM Evaluation (RAGAS) • Prompt Engineering</div></div>
+    <div class="skillrow"><div class="cat">Web &amp; Backend</div><div class="vals">Next.js • React • FastAPI • TypeScript • JavaScript • Tailwind CSS • PostgreSQL • SQLAlchemy • JWT Auth • Firebase • Streamlit • REST APIs</div></div>
+    <div class="skillrow"><div class="cat">Tools</div><div class="vals">Git/GitHub • Linux • Docker • CI/CD • OCR (Tesseract) • Claude Code • Data Structures</div></div>
+  </section>
+
+</body>
+</html>
