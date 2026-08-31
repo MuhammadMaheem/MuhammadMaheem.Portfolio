@@ -1,174 +1,706 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Muhammad Maheem — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   @page {
-    size: A4;
-    margin: 11mm 15mm 9mm 15mm;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    font-family: 'Liberation Sans', Arial, Helvetica, sans-serif;
-    color: #16181c;
-    font-size: 9.3pt;
-    line-height: 1.28;
-  }
-  a { color: #16181c; text-decoration: none; }
-
-  header.h-block { text-align: center; margin-bottom: 5pt; }
-  h1.name {
+    size: A4 portrait;
     margin: 0;
-    font-size: 20pt;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    color: #0a0a0a;
   }
-  .role {
-    margin: 2pt 0 3pt;
-    font-size: 10.3pt;
-    font-weight: 600;
-    color: #33383f;
-  }
-  .contact {
-    font-size: 8.7pt;
-    color: #33383f;
-  }
-  .contact span.sep { color: #9aa0a8; }
-  .contact span.citem { white-space: nowrap; }
 
-  h2.sec {
-    font-size: 10.1pt;
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    font-size: 13px;
+    line-height: 1.38;
+    background: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ============ A4 PAGE CONTAINER ============ */
+  .cv-page {
+    width: 210mm;
+    height: 297mm;
+    max-height: 297mm;
+    margin: 20px auto;
+    background: #ffffff;
+    display: grid;
+    grid-template-columns: 66mm 1fr;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    background: #002B5C;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 16mm 6mm 8mm 7mm;
+    overflow: hidden;
+  }
+
+  .sb-header {
+    margin-bottom: 5mm;
+  }
+
+  .sb-header h1 {
+    font-size: 19pt;
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.3px;
+    color: #ffffff;
+  }
+
+  .sb-role {
+    font-size: 9.5pt;
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 500;
+    line-height: 1.35;
+    margin-top: 2mm;
+  }
+
+  .sb-section {
+    margin-bottom: 4.8mm;
+  }
+
+  .sb-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .sb-title {
+    font-size: 7.8pt;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 2.2mm;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 1mm;
+  }
+
+  /* Contact Items */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2mm;
+  }
+
+  .ci {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.2mm;
+    font-size: 8.1pt;
+    line-height: 1.32;
+  }
+
+  .ci-ico {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    margin-top: 1px;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .ci-ico svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+
+  .ci-val {
+    color: rgba(255, 255, 255, 0.9);
+    word-break: break-all;
+    font-size: 8pt;
+  }
+
+  .ci-val a:hover {
+    text-decoration: underline;
+  }
+
+  /* Technical Skills */
+  .sk-grp {
+    margin-bottom: 2.5mm;
+  }
+
+  .sk-grp:last-child {
+    margin-bottom: 0;
+  }
+
+  .sk-label {
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 0.8mm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .sk-list {
+    font-size: 7.6pt;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.4;
+  }
+
+  /* Languages */
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2mm 0;
+    font-size: 8.1pt;
+  }
+
+  .lang-row + .lang-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .lang-nm {
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 500;
+  }
+
+  .lang-lv {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 7.6pt;
+  }
+
+  /* ============ MAIN CONTENT ============ */
+  .main {
+    padding: 12mm 8mm 6mm 8mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sec {
+    margin-bottom: 3.8mm;
+  }
+
+  .sec:last-child {
+    margin-bottom: 0;
+  }
+
+  .sec-hd {
+    font-size: 9.8pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
-    border-bottom: 1pt solid #16181c;
-    padding-bottom: 1.5pt;
-    margin: 6.5pt 0 3pt;
+    letter-spacing: 1.1px;
+    color: #002B5C;
+    border-bottom: 1.5px solid #002B5C;
+    padding-bottom: 1mm;
+    margin-bottom: 2mm;
   }
-  section:first-of-type h2.sec { margin-top: 0; }
 
-  .row {
+  /* Profile */
+  .profile-text {
+    font-size: 8.4pt;
+    color: #334155;
+    line-height: 1.46;
+  }
+
+  /* Work Experience */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6mm;
+  }
+
+  .exp {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-top {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 8pt;
+    gap: 6px;
+    margin-bottom: 0.5mm;
   }
-  .row .left { font-weight: 700; font-size: 9.8pt; }
-  .row .right { font-size: 9pt; color: #40454c; white-space: nowrap; }
-  .org {
-    font-size: 9.3pt;
-    font-style: italic;
-    color: #33383f;
-    margin-bottom: 2pt;
-  }
-  .edu-school { font-weight: 700; font-size: 9.8pt; }
 
-  ul.bullets {
-    margin: 1pt 0 4pt 0;
-    padding-left: 13pt;
-  }
-  ul.bullets li {
-    margin-bottom: 1pt;
-    text-align: left;
-  }
-  .exp-block { margin-bottom: 4pt; }
-  .exp-block:last-child { margin-bottom: 0; }
-
-  .proj { margin-bottom: 2.5pt; }
-  .proj:last-child { margin-bottom: 0; }
-  .proj .pname { font-weight: 700; }
-  .proj .pstack { color: #40454c; }
-
-  .skillrow { display: flex; margin-bottom: 1.5pt; }
-  .skillrow .cat {
+  .exp-role {
+    font-size: 9pt;
     font-weight: 700;
-    width: 118pt;
-    flex: 0 0 118pt;
+    color: #0f172a;
   }
-  .skillrow .vals { flex: 1 1 auto; }
 
-  section { margin-bottom: 0; }
+  .exp-date {
+    font-size: 8pt;
+    color: #0066cc;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .exp-org {
+    font-size: 8.2pt;
+    color: #64748b;
+    margin-bottom: 1mm;
+  }
+
+  .exp-org .loc {
+    color: #94a3b8;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9mm;
+  }
+
+  .exp-bullets li {
+    position: relative;
+    padding-left: 3.4mm;
+    font-size: 8.1pt;
+    color: #334155;
+    line-height: 1.38;
+  }
+
+  .exp-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #0066cc;
+  }
+
+  /* Education */
+  .edu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .edu-deg {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .edu-sch {
+    font-size: 8.2pt;
+    color: #475569;
+    margin-top: 0.4mm;
+  }
+
+  .edu-det {
+    font-size: 7.8pt;
+    color: #64748b;
+    margin-top: 0.6mm;
+    line-height: 1.36;
+  }
+
+  /* Projects Grid */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2mm;
+  }
+
+  .proj-card {
+    padding: 1.8mm 2.4mm;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0.8mm;
+  }
+
+  .proj-nm {
+    font-size: 8.2pt;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .proj-tag {
+    font-size: 6.4pt;
+    padding: 1px 4px;
+    border-radius: 2px;
+    background: #002B5C;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .proj-desc {
+    font-size: 7.4pt;
+    color: #475569;
+    line-height: 1.32;
+    margin-bottom: 1.6mm;
+  }
+
+  .proj-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 3px;
+  }
+
+  .proj-tech span {
+    font-size: 6.8pt;
+    padding: 1px 4px;
+    border-radius: 2px;
+    background: #f1f5f9;
+    color: #475569;
+    font-weight: 500;
+  }
+
+  /* ============ PRINT STYLES ============ */
+  @media print {
+    html, body {
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cv-page {
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      margin: 0;
+      box-shadow: none;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .sidebar {
+      page-break-inside: avoid;
+      break-inside: avoid;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    .main {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .proj-card, .proj-tag, .proj-tech span, .exp-bullets li::before {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+  }
+
+  /* ============ RESPONSIVE (SCREEN VIEW) ============ */
+  @media screen and (max-width: 840px) {
+    body {
+      padding: 10px;
+    }
+
+    .cv-page {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      margin: 0 auto;
+      grid-template-columns: 240px 1fr;
+    }
+
+    .sidebar {
+      padding: 24px 16px;
+    }
+
+    .main {
+      padding: 24px 20px;
+    }
+  }
+
+  @media screen and (max-width: 680px) {
+    .cv-page {
+      grid-template-columns: 1fr;
+    }
+
+    .proj-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 </head>
 <body>
 
-  <header class="h-block">
-    <h1 class="name">MUHAMMAD MAHEEM</h1>
-    <div class="role">AI Engineer &amp; Full-Stack Machine Learning Developer</div>
-    <div class="contact">
-      <span class="citem"><a href="mailto:mirza.muhammad.maheem@gmail.com">mirza.muhammad.maheem@gmail.com</a></span> <span class="sep">•</span> <span class="citem"><a href="tel:+923008714141">+92&nbsp;300-8714141</a></span> <span class="sep">•</span> <span class="citem"><a href="https://www.linkedin.com/in/muhammad-maheem-453369245/">linkedin.com/in/muhammad-maheem</a></span> <span class="sep">•</span> <span class="citem"><a href="https://github.com/MuhammadMaheem">github.com/MuhammadMaheem</a></span> <span class="sep">•</span> <span class="citem">Lahore, Pakistan</span>
-    </div>
-  </header>
+<div class="cv-page">
 
-  <section>
-    <h2 class="sec">Summary</h2>
-    <div>AI engineer focused on production LLM systems — RAG pipelines, evaluation frameworks, and full-stack AI products built with FastAPI and Next.js. Shipped 15+ projects spanning legal-tech contract analysis, HR resume screening, document intelligence, and computer vision, owning each system end-to-end from retrieval/model design through deployment and observability.</div>
-  </section>
-
-  <section>
-    <h2 class="sec">Education</h2>
-    <div class="row">
-      <div class="edu-school">Superior University, Lahore — BS Artificial Intelligence</div>
-      <div class="right">2024 – 2028</div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="sec">Experience</h2>
-
-    <div class="exp-block">
-      <div class="row"><div class="left">AI Engineer Intern</div><div class="right">Jun 2026 – Jul 2026 | Remote</div></div>
-      <div class="org">TEYZIX CORE</div>
-      <ul class="bullets">
-        <li>Built a legal-tech contract-risk analyzer: a 7-stage async pipeline (FastAPI + Next.js 15) that extracts clauses, flags risk with confidence-scored explanations, answers questions via RAG over ChromaDB, and computes an explainable compliance score — shipped with role-based auth and an admin panel.</li>
-        <li>Built TEYZIX, an AI document summarizer combining extractive scoring (frequency, TF-IDF, positional ranking) with abstractive BART (facebook/bart-large-cnn), adding multi-document batching and auto-detection across 16+ languages.</li>
-      </ul>
+  <!-- ====== SIDEBAR ====== -->
+  <aside class="sidebar">
+    <div class="sb-header">
+      <h1>Muhammad<br />Maheem</h1>
+      <div class="sb-role">AI Engineer &amp; ML Systems Builder</div>
     </div>
 
-    <div class="exp-block">
-      <div class="row"><div class="left">AI Developer Intern</div><div class="right">Mar 2026 – May 2026 | Paid | Remote</div></div>
-      <div class="org">Punjab Skill Development Authority (PSDA)</div>
-      <ul class="bullets">
-        <li>Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma specs to production — public site, admin dashboard, and a 3-role permission system across 8+ REST API endpoints.</li>
-        <li>Built an OCR document parser using the Gemini API to extract and structure text from multi-page uploads, integrated into the SaaS backend pipeline.</li>
-      </ul>
+    <div class="sb-section">
+      <div class="sb-title">Contact</div>
+      <div class="contact-list">
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="mailto:mirza.muhammad.maheem@gmail.com">mirza.muhammad.maheem@gmail.com</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="tel:+923008714141">+92 300-8714141</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="ci-val">
+            <span>Lahore, Pakistan</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="https://github.com/MuhammadMaheem" target="_blank" rel="noopener">github.com/MuhammadMaheem</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="https://linkedin.com/in/muhammad-maheem-453369245/" target="_blank" rel="noopener">linkedin.com/in/muhammad-maheem</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="exp-block">
-      <div class="row"><div class="left">Software Engineer Intern</div><div class="right">Sep 2025 – Jan 2026 | Part-time | Remote</div></div>
-      <div class="org">Artificial Automation Business Solutions (AABS)</div>
-      <ul class="bullets">
-        <li>Built a RAG-based PDF chatbot with embedding-model selection, ChromaDB vector indexing, and retrieval-augmented generation, improving answer grounding over a naive keyword-search baseline.</li>
-        <li>Developed a responsive SaaS dashboard UI in Next.js 15 / React 19 / TypeScript, including authentication, analytics visualizations, and subscription-management interfaces.</li>
-      </ul>
+    <div class="sb-section">
+      <div class="sb-title">Technical Skills</div>
+      <div class="sk-grp">
+        <div class="sk-label">Languages</div>
+        <div class="sk-list">Python · TypeScript · JavaScript · SQL · HTML · CSS</div>
+      </div>
+      <div class="sk-grp">
+        <div class="sk-label">AI / ML</div>
+        <div class="sk-list">RAG · LLM Eval (RAGAS) · Multi agent · Vector DBs · LangChain · LangGraph · PyTorch · scikit-learn · OpenCV</div>
+      </div>
+      <div class="sk-grp">
+        <div class="sk-label">Frameworks</div>
+        <div class="sk-list">FastAPI · Next.js · React · Tailwind · Streamlit · REST · JWT</div>
+      </div>
+      <div class="sk-grp">
+        <div class="sk-label">Tools</div>
+        <div class="sk-list">Git · Linux · Docker · CI/CD · PostgreSQL · ChromaDB · FAISS · pgvector · Groq · Gemini · OpenAI</div>
+      </div>
     </div>
-  </section>
 
-  <section>
-    <h2 class="sec">Projects</h2>
+    <div class="sb-section">
+      <div class="sb-title">Languages</div>
+      <div class="lang-row">
+        <span class="lang-nm">English</span>
+        <span class="lang-lv">Fluent</span>
+      </div>
+      <div class="lang-row">
+        <span class="lang-nm">Urdu</span>
+        <span class="lang-lv">Fluent</span>
+      </div>
+      <div class="lang-row">
+        <span class="lang-nm">Punjabi</span>
+        <span class="lang-lv">Native</span>
+      </div>
+    </div>
+  </aside>
 
-    <div class="proj"><span class="pname">Quality Evaluation PDF Chatbot</span> — Production RAG pipeline with a hard RAGAS quality gate, hybrid search (dense + BM25 + reranking), and Prometheus observability. <span class="pstack">Python, FastAPI, ChromaDB, Groq/Llama 3.</span></div>
+  <!-- ====== MAIN CONTENT ====== -->
+  <main class="main">
 
-    <div class="proj"><span class="pname">Legal Document Risk Analyzer</span> — Contract-risk analyzer with OCR ingestion, clause/risk extraction, RAG-grounded Q&amp;A, and an explainable compliance score, behind role-based auth with an admin panel. <span class="pstack">FastAPI, Next.js 15, ChromaDB, Groq.</span></div>
+    <section class="sec">
+      <div class="sec-hd">Profile</div>
+      <p class="profile-text">AI engineer focused on production LLM systems, RAG pipelines, evaluation frameworks, and full-stack AI products built with FastAPI and Next.js. Shipped 16+ projects spanning legal tech, HR AI, multi-agent research, and computer vision, owning each system end to end from retrieval design through deployment and observability.</p>
+    </section>
 
-    <div class="proj"><span class="pname">RecruitAI</span> — Explainable resume-screening engine ranking candidates on a 100-point rubric (skills, experience, education, AI fit) with ChromaDB semantic skill matching. <span class="pstack">FastAPI, Next.js 15, Groq.</span></div>
+    <section class="sec">
+      <div class="sec-hd">Work Experience</div>
+      <div class="exp-list">
 
-    <div class="proj"><span class="pname">Agentic RAG PDF Chatbot</span> — Full-stack PDF chatbot with agentic multi-query RAG, SSE token streaming, JWT per-user workspaces, and page-level citations. <span class="pstack">FastAPI, Next.js, Groq, pgvector.</span></div>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">AI Engineer Intern</span>
+            <span class="exp-date">Jun – Jul 2026</span>
+          </div>
+          <div class="exp-org">TEYZIX CORE <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Built a legal tech contract risk analyzer: 7 stage async pipeline extracting clauses, flagging risk with confidence scores, and computing an explainable compliance score via RAG over ChromaDB.</li>
+            <li>Built TEYZIX summarizer combining extractive scoring (TF-IDF, positional) with abstractive BART, multi document batching, and auto detection across 16+ languages.</li>
+          </ul>
+        </div>
 
-    <div class="proj"><span class="pname">Hadith Chatbot</span> — 39,038 authentic Hadiths served via a two-stage BM25 → FAISS semantic re-ranking pipeline with LangChain orchestration for precise cross-Hadith attribution.</div>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">AI Developer Intern</span>
+            <span class="exp-date">Mar – May 2026</span>
+          </div>
+          <div class="exp-org">Punjab Skill Development Authority (PSDA) <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma to production, including public site, admin dashboard, and a 3 role permission system across 8+ REST endpoints.</li>
+            <li>Built an OCR document parser using Gemini API to extract and structure text from multi page uploads.</li>
+          </ul>
+        </div>
 
-    <div class="proj"><span class="pname">KRR Application</span> — AI research platform for PDF ingestion, structured summarization, cross-paper analysis, and pgvector semantic search. <span class="pstack">FastAPI, Next.js, Groq, Docker.</span></div>
-  </section>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">Software Engineer Intern</span>
+            <span class="exp-date">Sep 2025 – Jan 2026</span>
+          </div>
+          <div class="exp-org">Artificial Automation Business Solutions (AABS) <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Built a RAG PDF chatbot with embedding model selection, ChromaDB indexing, and grounded retrieval, improving answer grounding over a keyword search baseline.</li>
+            <li>Developed responsive SaaS dashboard in Next.js 15 / React 19 / TypeScript with auth, analytics visualizations, and subscription management.</li>
+          </ul>
+        </div>
 
-  <section>
-    <h2 class="sec">Technical Skills</h2>
-    <div class="skillrow"><div class="cat">AI &amp; Machine Learning</div><div class="vals">Python • PyTorch • Scikit-learn • OpenCV • RAG Systems • LangChain • LangGraph • ChromaDB • FAISS • pgvector • Sentence Transformers • Groq API • Gemini API • OpenAI API • LLM Evaluation (RAGAS) • Prompt Engineering</div></div>
-    <div class="skillrow"><div class="cat">Web &amp; Backend</div><div class="vals">Next.js • React • FastAPI • TypeScript • JavaScript • Tailwind CSS • PostgreSQL • SQLAlchemy • JWT Auth • Firebase • Streamlit • REST APIs</div></div>
-    <div class="skillrow"><div class="cat">Tools</div><div class="vals">Git/GitHub • Linux • Docker • CI/CD • OCR (Tesseract) • Claude Code • Data Structures</div></div>
-  </section>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-hd">Education</div>
+      <div class="edu-top">
+        <span class="edu-deg">BSc Artificial Intelligence</span>
+        <span class="exp-date">2024 – 2028</span>
+      </div>
+      <div class="edu-sch">Superior University, Lahore</div>
+      <div class="edu-det">5th semester. ML, Deep Learning, Computer Vision, NLP, Linear Algebra, Data Structures &amp; Algorithms.</div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-hd">Projects</div>
+      <div class="proj-grid">
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Quality Eval PDF Chatbot</span>
+              <span class="proj-tag">LLM Eval</span>
+            </div>
+            <div class="proj-desc">Production RAG with RAGAS quality gate, hybrid search (dense + BM25 + reranking), and Prometheus observability.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>Groq</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Research Agent Swarm</span>
+              <span class="proj-tag">Multi-Agent</span>
+            </div>
+            <div class="proj-desc">LangGraph multi-agent system with DAG planning, parallel specialist agents, and self auditing citations.</div>
+          </div>
+          <div class="proj-tech">
+            <span>LangGraph</span><span>Groq</span><span>FastAPI</span><span>React Flow</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Legal Doc Risk Analyzer</span>
+              <span class="proj-tag">LegalTech</span>
+            </div>
+            <div class="proj-desc">7 stage async pipeline for contract analysis with OCR, clause extraction, RAG Q&amp;A, and compliance scoring.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>OCR</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">RecruitAI Screener</span>
+              <span class="proj-tag">HR Tech</span>
+            </div>
+            <div class="proj-desc">Explainable resume screening on a 100-point scale with ChromaDB semantic skill matching and CSV export.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>Groq</span><span>ChromaDB</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Agentic RAG Chatbot</span>
+              <span class="proj-tag">RAG</span>
+            </div>
+            <div class="proj-desc">Multi query RAG with SSE token streaming, JWT workspaces, and page level citations over pgvector.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>pgvector</span><span>Groq</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Hadith Chatbot</span>
+              <span class="proj-tag">NLP</span>
+            </div>
+            <div class="proj-desc">39k authenticated Hadiths via BM25 → FAISS two-stage retrieval with bilingual attribution.</div>
+          </div>
+          <div class="proj-tech">
+            <span>Flask</span><span>FAISS</span><span>LangChain</span><span>Groq</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
 
 </body>
 </html>
