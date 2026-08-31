@@ -4,143 +4,161 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Muhammad Maheem — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   @page {
     size: A4 portrait;
     margin: 0;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    color: #1a1a1a;
-    font-size: 15.5px;
-    line-height: 1.42;
-    background: #e8e8e8;
-    -webkit-font-smoothing: antialiased;
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
-  a { color: inherit; text-decoration: none; }
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    font-size: 13px;
+    line-height: 1.38;
+    background: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-  /* ============ A4 PAGE ============ */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ============ A4 PAGE CONTAINER ============ */
   .cv-page {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     max-height: 297mm;
-    margin: 0 auto;
-    background: #fff;
+    margin: 20px auto;
+    background: #ffffff;
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 66mm 1fr;
     overflow: hidden;
-    box-shadow: 0 2px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   }
 
   /* ============ SIDEBAR ============ */
   .sidebar {
     background: #002B5C;
-    color: #fff;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
+    padding: 16mm 6mm 8mm 7mm;
     overflow: hidden;
   }
 
   .sb-header {
-    padding: 20px 16px 16px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    flex-shrink: 0;
-  }
-
-  .sb-initials {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.12);
-    border: 2px solid rgba(255,255,255,0.25);
-    margin: 0 auto 10px;
-    display: grid;
-    place-items: center;
-    font-size: 22px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 2px;
+    margin-bottom: 5mm;
   }
 
   .sb-header h1 {
-    font-size: 18px;
+    font-size: 19pt;
     font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 4px;
+    line-height: 1.12;
+    letter-spacing: -0.3px;
+    color: #ffffff;
   }
 
   .sb-role {
-    font-size: 11.5px;
-    color: rgba(255,255,255,0.65);
+    font-size: 9.5pt;
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 500;
     line-height: 1.35;
+    margin-top: 2mm;
   }
 
   .sb-section {
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 4.8mm;
   }
 
-  .sb-section:last-child { border-bottom: none; }
+  .sb-section:last-child {
+    margin-bottom: 0;
+  }
 
   .sb-title {
-    font-size: 9.5px;
+    font-size: 7.8pt;
     font-weight: 700;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 2.2mm;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 1mm;
   }
 
-  /* Contact */
+  /* Contact Items */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2mm;
+  }
+
   .ci {
     display: flex;
     align-items: flex-start;
-    gap: 7px;
-    margin-bottom: 6px;
-    font-size: 11px;
-    line-height: 1.35;
+    gap: 2.2mm;
+    font-size: 8.1pt;
+    line-height: 1.32;
   }
 
-  .ci:last-child { margin-bottom: 0; }
-
   .ci-ico {
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     flex-shrink: 0;
     display: grid;
     place-items: center;
-    font-size: 10px;
     margin-top: 1px;
-    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .ci-ico svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
   }
 
   .ci-val {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.9);
     word-break: break-all;
+    font-size: 8pt;
   }
 
-  /* Skills — compact inline lists */
-  .sk-grp { margin-bottom: 8px; }
-  .sk-grp:last-child { margin-bottom: 0; }
+  .ci-val a:hover {
+    text-decoration: underline;
+  }
+
+  /* Technical Skills */
+  .sk-grp {
+    margin-bottom: 2.5mm;
+  }
+
+  .sk-grp:last-child {
+    margin-bottom: 0;
+  }
 
   .sk-label {
-    font-size: 10px;
+    font-size: 7.5pt;
     font-weight: 700;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 3px;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 0.8mm;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.5px;
   }
 
   .sk-list {
-    font-size: 10px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.5;
+    font-size: 7.6pt;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.4;
   }
 
   /* Languages */
@@ -148,126 +166,127 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3px 0;
-    font-size: 11px;
+    padding: 1.2mm 0;
+    font-size: 8.1pt;
   }
 
   .lang-row + .lang-row {
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .lang-nm { color: rgba(255,255,255,0.9); font-weight: 500; }
-  .lang-lv { color: rgba(255,255,255,0.45); font-size: 10px; }
-
-  /* Status */
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    color: #4ade80;
-    margin-top: 6px;
+  .lang-nm {
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 500;
   }
 
-  .status::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #4ade80;
+  .lang-lv {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 7.6pt;
   }
 
   /* ============ MAIN CONTENT ============ */
   .main {
-    padding: 20px 24px;
+    padding: 12mm 8mm 6mm 8mm;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
 
   .sec {
-    margin-bottom: 14px;
+    margin-bottom: 3.8mm;
   }
 
-  .sec:last-child { margin-bottom: 0; }
+  .sec:last-child {
+    margin-bottom: 0;
+  }
 
   .sec-hd {
-    font-size: 12px;
+    font-size: 9.8pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.1px;
     color: #002B5C;
     border-bottom: 1.5px solid #002B5C;
-    padding-bottom: 4px;
-    margin-bottom: 10px;
+    padding-bottom: 1mm;
+    margin-bottom: 2mm;
   }
 
-  /* Summary */
-  .summary {
-    font-size: 12.5px;
-    color: #444;
-    line-height: 1.55;
+  /* Profile */
+  .profile-text {
+    font-size: 8.4pt;
+    color: #334155;
+    line-height: 1.46;
   }
 
-  /* Experience */
-  .exp { margin-bottom: 10px; }
-  .exp:last-child { margin-bottom: 0; }
+  /* Work Experience */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6mm;
+  }
+
+  .exp {
+    display: flex;
+    flex-direction: column;
+  }
 
   .exp-top {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 8px;
-    margin-bottom: 1px;
+    gap: 6px;
+    margin-bottom: 0.5mm;
   }
 
   .exp-role {
-    font-size: 12.5px;
+    font-size: 9pt;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #0f172a;
   }
 
   .exp-date {
-    font-size: 10px;
-    color: #006ED6;
+    font-size: 8pt;
+    color: #0066cc;
     font-weight: 600;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
   .exp-org {
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 4px;
+    font-size: 8.2pt;
+    color: #64748b;
+    margin-bottom: 1mm;
   }
 
   .exp-org .loc {
-    color: #999;
+    color: #94a3b8;
   }
 
   .exp-bullets {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9mm;
   }
 
   .exp-bullets li {
     position: relative;
-    padding-left: 10px;
-    margin-bottom: 2px;
-    font-size: 11px;
-    color: #444;
-    line-height: 1.5;
+    padding-left: 3.4mm;
+    font-size: 8.1pt;
+    color: #334155;
+    line-height: 1.38;
   }
 
   .exp-bullets li::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 6px;
+    top: 5px;
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: #006ED6;
+    background: #0066cc;
   }
 
   /* Education */
@@ -275,58 +294,69 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 8px;
+    gap: 6px;
   }
 
   .edu-deg {
-    font-size: 12.5px;
+    font-size: 9pt;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #0f172a;
   }
 
   .edu-sch {
-    font-size: 11px;
-    color: #555;
-    margin-top: 1px;
+    font-size: 8.2pt;
+    color: #475569;
+    margin-top: 0.4mm;
   }
 
   .edu-det {
-    font-size: 10.5px;
-    color: #666;
-    margin-top: 2px;
-    line-height: 1.45;
+    font-size: 7.8pt;
+    color: #64748b;
+    margin-top: 0.6mm;
+    line-height: 1.36;
   }
 
-  /* Projects — compact 2-column grid */
+  /* Projects Grid */
   .proj-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 2.2mm;
   }
 
-  .proj {
-    padding: 7px 8px;
-    border: 1px solid #e8edf2;
+  .proj-card {
+    padding: 1.8mm 2.4mm;
+    border: 1px solid #e2e8f0;
     border-radius: 4px;
-    background: #fafbfc;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0.8mm;
   }
 
   .proj-nm {
-    font-size: 11px;
+    font-size: 8.2pt;
     font-weight: 700;
-    color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 3px;
+    color: #0f172a;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .proj-tag {
-    font-size: 8.5px;
-    padding: 1px 6px;
+    font-size: 6.4pt;
+    padding: 1px 4px;
     border-radius: 2px;
     background: #002B5C;
-    color: #fff;
+    color: #ffffff;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3px;
@@ -335,94 +365,31 @@
   }
 
   .proj-desc {
-    font-size: 10.5px;
-    color: #555;
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 7.4pt;
+    color: #475569;
+    line-height: 1.32;
+    margin-bottom: 1.6mm;
   }
 
   .proj-tech {
     display: flex;
     flex-wrap: wrap;
-    gap: 3px;
-    margin-top: 4px;
+    gap: 2px 3px;
   }
 
   .proj-tech span {
-    font-size: 8.5px;
-    padding: 1px 6px;
+    font-size: 6.8pt;
+    padding: 1px 4px;
     border-radius: 2px;
-    background: #e8edf2;
-    color: #555;
+    background: #f1f5f9;
+    color: #475569;
+    font-weight: 500;
   }
 
-  /* ============ RESPONSIVE ============ */
-
-  /* Tablets */
-  @media (max-width: 800px) {
-    html, body { background: #fff; }
-
-    .cv-page {
-      width: 100%;
-      min-height: auto;
-      max-height: none;
-      box-shadow: none;
-    }
-
-    .main { padding: 20px 18px; }
-  }
-
-  /* Phones — stack sidebar on top */
-  @media (max-width: 600px) {
-    .cv-page {
-      grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-      flex-direction: column;
-    }
-
-    .sb-header {
-      padding: 24px 18px 18px;
-    }
-
-    .sb-initials {
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-    }
-
-    .sb-header h1 { font-size: 18px; }
-
-    .sb-section { padding: 14px 18px; }
-
-    .main { padding: 18px; }
-
-    .sec { margin-bottom: 16px; }
-
-    .proj-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .exp-top { flex-wrap: wrap; }
-  }
-
-  /* Small phones */
-  @media (max-width: 400px) {
-    .sb-header h1 { font-size: 16px; }
-    .sb-role { font-size: 10px; }
-    .sec-hd { font-size: 10px; }
-    .exp-role { font-size: 11px; }
-    .main { padding: 14px; }
-  }
-
-  /* ============ PRINT — forces single A4 page ============ */
+  /* ============ PRINT STYLES ============ */
   @media print {
     html, body {
-      background: #fff;
+      background: #ffffff;
       margin: 0;
       padding: 0;
     }
@@ -434,15 +401,16 @@
       max-height: 297mm;
       margin: 0;
       box-shadow: none;
-      /* CRITICAL: prevent page break inside the grid */
       page-break-inside: avoid;
       break-inside: avoid;
     }
 
-    /* Keep sidebar and main together — never split */
     .sidebar {
       page-break-inside: avoid;
       break-inside: avoid;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
     }
 
     .main {
@@ -450,26 +418,43 @@
       break-inside: avoid;
     }
 
-    /* Keep each entry from splitting */
-    .exp, .proj, .edu-det {
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    /* Force background colors to print */
-    .sidebar,
-    .sb-initials,
-    .proj-tag,
-    .proj-tech span,
-    .status::before {
+    .proj-card, .proj-tag, .proj-tech span, .exp-bullets li::before {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
       color-adjust: exact !important;
     }
+  }
 
-    .proj {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+  /* ============ RESPONSIVE (SCREEN VIEW) ============ */
+  @media screen and (max-width: 840px) {
+    body {
+      padding: 10px;
+    }
+
+    .cv-page {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      margin: 0 auto;
+      grid-template-columns: 240px 1fr;
+    }
+
+    .sidebar {
+      padding: 24px 16px;
+    }
+
+    .main {
+      padding: 24px 20px;
+    }
+  }
+
+  @media screen and (max-width: 680px) {
+    .cv-page {
+      grid-template-columns: 1fr;
+    }
+
+    .proj-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
@@ -481,31 +466,53 @@
   <!-- ====== SIDEBAR ====== -->
   <aside class="sidebar">
     <div class="sb-header">
-      <h1>Muhammad Maheem</h1>
-      <div class="sb-role">AI Engineer &amp; ML Systems Builder</div>
+      <h1>Muhammad<br />Maheem</h1>
+      <div class="sb-role">AI Engineer &amp; Full-Stack ML Developer</div>
     </div>
 
     <div class="sb-section">
       <div class="sb-title">Contact</div>
-      <div class="ci">
-        <div class="ci-ico">✉</div>
-        <a href="mailto:mirza.muhammad.maheem@gmail.com" class="ci-val">mirza.muhammad.maheem@gmail.com</a>
-      </div>
-      <div class="ci">
-        <div class="ci-ico">☎</div>
-        <a href="tel:+923008714141" class="ci-val">+92 300-8714141</a>
-      </div>
-      <div class="ci">
-        <div class="ci-ico">⌂</div>
-        <span class="ci-val">Lahore, Pakistan</span>
-      </div>
-      <div class="ci">
-        <div class="ci-ico">◆</div>
-        <a href="https://github.com/MuhammadMaheem" class="ci-val">github.com/MuhammadMaheem</a>
-      </div>
-      <div class="ci">
-        <div class="ci-ico">■</div>
-        <a href="https://linkedin.com/in/muhammad-maheem-453369245/" class="ci-val">linkedin.com/in/muhammad-maheem</a>
+      <div class="contact-list">
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="mailto:mirza.muhammad.maheem@gmail.com">mirza.muhammad.maheem@gmail.com</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="tel:+923008714141">+92 300-8714141</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="ci-val">
+            <span>Lahore, Pakistan</span>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="https://github.com/MuhammadMaheem" target="_blank" rel="noopener">github.com/MuhammadMaheem</a>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </div>
+          <div class="ci-val">
+            <a href="https://www.linkedin.com/in/muhammad-maheem/" target="_blank" rel="noopener">linkedin.com/in/muhammad-maheem</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -546,59 +553,62 @@
     </div>
   </aside>
 
-  <!-- ====== MAIN ====== -->
-  <div class="main">
+  <!-- ====== MAIN CONTENT ====== -->
+  <main class="main">
 
     <section class="sec">
       <div class="sec-hd">Profile</div>
-      <p class="summary">AI engineer focused on production LLM systems, RAG pipelines, evaluation frameworks, and full-stack AI products built with FastAPI and Next.js. Shipped 16+ projects spanning legal tech, HR AI, multi-agent research, and computer vision, owning each system end to end from retrieval design through deployment and observability.</p>
+      <p class="profile-text">AI engineer focused on production LLM systems, RAG pipelines, evaluation frameworks, and full-stack AI products built with FastAPI and Next.js. Shipped 16+ projects spanning legal tech, HR AI, multi-agent research, and computer vision, owning each system end to end from retrieval design through deployment and observability.</p>
     </section>
 
     <section class="sec">
       <div class="sec-hd">Work Experience</div>
+      <div class="exp-list">
 
-      <div class="exp">
-        <div class="exp-top">
-          <div class="exp-role">AI Engineer Intern</div>
-          <div class="exp-date">Jun – Jul 2026</div>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">AI Engineer Intern</span>
+            <span class="exp-date">Jun – Jul 2026</span>
+          </div>
+          <div class="exp-org">TEYZIX CORE <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Built a legal tech contract risk analyzer: 7 stage async pipeline extracting clauses, flagging risk with confidence scores, and computing an explainable compliance score via RAG over ChromaDB.</li>
+            <li>Built TEYZIX summarizer combining extractive scoring (TF-IDF, positional) with abstractive BART, multi document batching, and auto detection across 16+ languages.</li>
+          </ul>
         </div>
-        <div class="exp-org">TEYZIX CORE <span class="loc">· Remote</span></div>
-        <ul class="exp-bullets">
-          <li>Built a legal tech contract risk analyzer: 7 stage async pipeline extracting clauses, flagging risk with confidence scores, and computing an explainable compliance score via RAG over ChromaDB.</li>
-          <li>Built TEYZIX summarizer combining extractive scoring (TF-IDF, positional) with abstractive BART, multi document batching, and auto detection across 16+ languages.</li>
-        </ul>
-      </div>
 
-      <div class="exp">
-        <div class="exp-top">
-          <div class="exp-role">AI Developer Intern</div>
-          <div class="exp-date">Mar – May 2026</div>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">AI Developer Intern</span>
+            <span class="exp-date">Mar – May 2026</span>
+          </div>
+          <div class="exp-org">Punjab Skill Development Authority (PSDA) <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma to production, including public site, admin dashboard, and a 3 role permission system across 8+ REST endpoints.</li>
+            <li>Built an OCR document parser using Gemini API to extract and structure text from multi page uploads.</li>
+          </ul>
         </div>
-        <div class="exp-org">Punjab Skill Development Authority (PSDA) <span class="loc">· Remote</span></div>
-        <ul class="exp-bullets">
-          <li>Sole engineer delivering a full-stack SaaS platform (Next.js + Tailwind + PostgreSQL) from Figma to production, including public site, admin dashboard, and a 3 role permission system across 8+ REST endpoints.</li>
-          <li>Built an OCR document parser using Gemini API to extract and structure text from multi page uploads.</li>
-        </ul>
-      </div>
 
-      <div class="exp">
-        <div class="exp-top">
-          <div class="exp-role">Software Engineer Intern</div>
-          <div class="exp-date">Sep 2025 – Jan 2026</div>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">Software Engineer Intern</span>
+            <span class="exp-date">Sep 2025 – Nov 2025</span>
+          </div>
+          <div class="exp-org">Artificial Automation Business Solutions (AABS) <span class="loc">· Remote</span></div>
+          <ul class="exp-bullets">
+            <li>Built a RAG PDF chatbot with embedding model selection, ChromaDB indexing, and grounded retrieval, improving answer grounding over a keyword search baseline.</li>
+            <li>Developed responsive SaaS dashboard in Next.js 15 / React 19 / TypeScript with auth, analytics visualizations, and subscription management.</li>
+          </ul>
         </div>
-        <div class="exp-org">Artificial Automation Business Solutions (AABS) <span class="loc">· Remote</span></div>
-        <ul class="exp-bullets">
-          <li>Built a RAG PDF chatbot with embedding model selection, ChromaDB indexing, and grounded retrieval, improving answer grounding over a keyword search baseline.</li>
-          <li>Developed responsive SaaS dashboard in Next.js 15 / React 19 / TypeScript with auth, analytics visualizations, and subscription management.</li>
-        </ul>
+
       </div>
     </section>
 
     <section class="sec">
       <div class="sec-hd">Education</div>
       <div class="edu-top">
-        <div class="edu-deg">BSc Artificial Intelligence</div>
-        <div class="exp-date">2024 – 2028</div>
+        <span class="edu-deg">BSc Artificial Intelligence</span>
+        <span class="exp-date">2024 – 2028</span>
       </div>
       <div class="edu-sch">Superior University, Lahore</div>
       <div class="edu-det">5th semester. ML, Deep Learning, Computer Vision, NLP, Linear Algebra, Data Structures &amp; Algorithms.</div>
@@ -608,46 +618,88 @@
       <div class="sec-hd">Projects</div>
       <div class="proj-grid">
 
-        <div class="proj">
-          <div class="proj-nm">Quality Eval PDF Chatbot <span class="proj-tag">LLM Eval</span></div>
-          <div class="proj-desc">Production RAG with RAGAS quality gate, hybrid search (dense + BM25 + reranking), and Prometheus observability.</div>
-          <div class="proj-tech"><span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>Groq</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Quality Eval PDF Chatbot</span>
+              <span class="proj-tag">LLM Eval</span>
+            </div>
+            <div class="proj-desc">Production RAG with RAGAS quality gate, hybrid search (dense + BM25 + reranking), and Prometheus observability.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>Groq</span>
+          </div>
         </div>
 
-        <div class="proj">
-          <div class="proj-nm">Research Agent Swarm <span class="proj-tag">Multi-Agent</span></div>
-          <div class="proj-desc">LangGraph multi-agent system with DAG planning, parallel specialist agents, and self auditing citations.</div>
-          <div class="proj-tech"><span>LangGraph</span><span>Groq</span><span>FastAPI</span><span>React Flow</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Research Agent Swarm</span>
+              <span class="proj-tag">Multi-Agent</span>
+            </div>
+            <div class="proj-desc">LangGraph multi-agent system with DAG planning, parallel specialist agents, and self auditing citations.</div>
+          </div>
+          <div class="proj-tech">
+            <span>LangGraph</span><span>Groq</span><span>FastAPI</span><span>React Flow</span>
+          </div>
         </div>
 
-        <div class="proj">
-          <div class="proj-nm">Legal Doc Risk Analyzer <span class="proj-tag">LegalTech</span></div>
-          <div class="proj-desc">7 stage async pipeline for contract analysis with OCR, clause extraction, RAG Q&amp;A, and compliance scoring.</div>
-          <div class="proj-tech"><span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>OCR</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Legal Doc Risk Analyzer</span>
+              <span class="proj-tag">LegalTech</span>
+            </div>
+            <div class="proj-desc">7 stage async pipeline for contract analysis with OCR, clause extraction, RAG Q&amp;A, and compliance scoring.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>ChromaDB</span><span>OCR</span>
+          </div>
         </div>
 
-        <div class="proj">
-          <div class="proj-nm">RecruitAI Screener <span class="proj-tag">HR Tech</span></div>
-          <div class="proj-desc">Explainable resume screening on a 100-point scale with ChromaDB semantic skill matching and CSV export.</div>
-          <div class="proj-tech"><span>FastAPI</span><span>Next.js</span><span>Groq</span><span>ChromaDB</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">RecruitAI Screener</span>
+              <span class="proj-tag">HR Tech</span>
+            </div>
+            <div class="proj-desc">Explainable resume screening on a 100-point scale with ChromaDB semantic skill matching and CSV export.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>Groq</span><span>ChromaDB</span>
+          </div>
         </div>
 
-        <div class="proj">
-          <div class="proj-nm">Agentic RAG Chatbot <span class="proj-tag">RAG</span></div>
-          <div class="proj-desc">Multi query RAG with SSE token streaming, JWT workspaces, and page level citations over pgvector.</div>
-          <div class="proj-tech"><span>FastAPI</span><span>Next.js</span><span>pgvector</span><span>Groq</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Agentic RAG Chatbot</span>
+              <span class="proj-tag">RAG</span>
+            </div>
+            <div class="proj-desc">Multi query RAG with SSE token streaming, JWT workspaces, and page level citations over pgvector.</div>
+          </div>
+          <div class="proj-tech">
+            <span>FastAPI</span><span>Next.js</span><span>pgvector</span><span>Groq</span>
+          </div>
         </div>
 
-        <div class="proj">
-          <div class="proj-nm">Hadith Chatbot <span class="proj-tag">NLP</span></div>
-          <div class="proj-desc">39k authenticated Hadiths via BM25 → FAISS two-stage retrieval with bilingual attribution.</div>
-          <div class="proj-tech"><span>Flask</span><span>FAISS</span><span>LangChain</span><span>Groq</span></div>
+        <div class="proj-card">
+          <div>
+            <div class="proj-header">
+              <span class="proj-nm">Hadith Chatbot</span>
+              <span class="proj-tag">NLP</span>
+            </div>
+            <div class="proj-desc">39k authenticated Hadiths via BM25 → FAISS two-stage retrieval with bilingual attribution.</div>
+          </div>
+          <div class="proj-tech">
+            <span>Flask</span><span>FAISS</span><span>LangChain</span><span>Groq</span>
+          </div>
         </div>
 
       </div>
     </section>
 
-  </div>
+  </main>
 </div>
 
 </body>
