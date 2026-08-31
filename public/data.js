@@ -8,7 +8,7 @@ window.SITE = {
   identity: {
     codename: 'MHM.DEV',
     name: 'Muhammad Maheem',
-    role: 'AI Engineer & ML Systems Builder',
+    role: 'AI Engineer | Machine Learning Engineer | Full-Stack AI Developer',
     // one-liner under the name
     tagline:
       'Production AI systems. RAG pipelines, eval frameworks, and full-stack SaaS. Built and shipped.',
@@ -544,7 +544,7 @@ window.SITE = {
     },
     {
       v: 'v1.x',
-      date: 'Sep 2025 — Jan 2026',
+      date: 'Sep 2025 — Nov 2025',
       role: 'Software Engineer Intern',
       org: 'Artificial Automation Business Solutions (AABS)',
       note: 'Built a RAG-based PDF chatbot with embedding-model selection, ChromaDB indexing, and grounded retrieval — improving answer grounding over a keyword-search baseline. Developed responsive SaaS dashboard UI in Next.js 15 / React 19 / TypeScript, including authentication, analytics visualizations, and subscription-management interfaces.',
@@ -599,7 +599,7 @@ window.SITE = {
     {
       label: 'LinkedIn',
       handle: '/in/muhammad-maheem',
-      url: 'https://www.linkedin.com/in/muhammad-maheem-453369245/',
+      url: 'https://www.linkedin.com/in/muhammad-maheem/',
     },
     {
       label: 'Email',
