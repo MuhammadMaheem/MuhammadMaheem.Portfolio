@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Muhammad Maheem - Resume (V1)</title>
+<meta name="author" content="Muhammad Maheem" />
+<meta name="keywords" content="AI Engineer, Machine Learning, Large Language Models, LLM, Generative AI, RAG, NLP, Python, FastAPI, LangChain, LangGraph, AI Agents" />
+<title>Muhammad Maheem - AI Engineer Resume</title>
 <style>
   @page { size: A4 portrait; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 9.4pt;
-    line-height: 1.27;
+    font-size: 9.3pt;
+    line-height: 1.26;
     color: #000;
     background: #fff;
   }
@@ -20,33 +22,29 @@
     height: 297mm;
     overflow: hidden;
     margin: 0 auto;
-    padding: 9mm 14mm 5mm 14mm;
+    padding: 9mm 13mm 5mm 13mm;
     background: #fff;
   }
   h1 { font-size: 18pt; font-weight: bold; text-align: center; }
-  .role { text-align: center; font-size: 10.5pt; margin-top: 1mm; }
-  .contact { text-align: center; font-size: 9.5pt; margin-top: 1.5mm; }
+  .role { text-align: center; font-size: 10.5pt; font-weight: bold; margin-top: 0.8mm; }
+  .contact { text-align: center; font-size: 9.2pt; margin-top: 1mm; }
   h2 {
-    font-size: 11pt;
+    font-size: 10.8pt;
     font-weight: bold;
     text-transform: uppercase;
     border-bottom: 1px solid #000;
-    padding-bottom: 0.6mm;
-    margin: 3mm 0 1.4mm;
+    padding-bottom: 0.5mm;
+    margin: 2.4mm 0 1.2mm;
   }
   .row { display: flex; justify-content: space-between; gap: 8px; }
-  .row b { font-size: 10.3pt; }
+  .row b { font-size: 10pt; }
   .date { white-space: nowrap; }
-  .sub { font-style: italic; }
-  .item { margin-bottom: 1.8mm; }
+  .item { margin-bottom: 1.6mm; }
   .item:last-child { margin-bottom: 0; }
-  ul { margin: 0.8mm 0 0 5mm; }
-  li { margin-bottom: 0.3mm; }
+  ul { margin: 0.6mm 0 0 5mm; }
+  li { margin-bottom: 0.25mm; }
   p { margin: 0; }
-  .tech { font-style: italic; font-weight: normal; }
-  @media print {
-    .page { margin: 0; }
-  }
+  .skills p { margin-bottom: 0.3mm; }
 </style>
 </head>
 <body>
@@ -55,13 +53,12 @@
   <h1>Muhammad Maheem</h1>
   <div class="role">AI Engineer</div>
   <div class="contact">
-    Lahore, Pakistan &nbsp;|&nbsp;
-    <a href="tel:+923008714141">+92 300-8714141</a> &nbsp;|&nbsp;
+    Lahore, Pakistan &nbsp;|&nbsp; +92 300-8714141 &nbsp;|&nbsp;
     <a href="mailto:mirza.muhammad.maheem@gmail.com">mirza.muhammad.maheem@gmail.com</a>
   </div>
   <div class="contact">
-    <a href="https://github.com/MuhammadMaheem">github.com/MuhammadMaheem</a> &nbsp;|&nbsp;
-    <a href="https://www.linkedin.com/in/muhammad-maheem/">linkedin.com/in/muhammad-maheem</a>
+    <a href="https://www.linkedin.com/in/muhammad-maheem/">linkedin.com/in/muhammad-maheem</a> &nbsp;|&nbsp;
+    <a href="https://github.com/MuhammadMaheem">github.com/MuhammadMaheem</a>
   </div>
   <div class="contact">
     Portfolio: <a href="https://muhammadmaheem.github.io/MuhammadMaheem.Portfolio/">muhammadmaheem.github.io/MuhammadMaheem.Portfolio</a>
@@ -69,9 +66,9 @@
 
   <h2>Education</h2>
   <div class="item">
-    <div class="row"><b>Bachelor of Science in Artificial Intelligence</b><span class="date">2024 - 2028</span></div>
-    <div class="row"><span class="sub">Superior University, Lahore</span><span>5th semester, CGPA 3.56</span></div>
-    <p>Main subjects: Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Data Structures and Algorithms.</p>
+    <div class="row"><b>Bachelor of Science in Artificial Intelligence</b><span class="date">Sep 2024 - Expected 2028</span></div>
+    <div class="row"><span>Superior University, Lahore, Pakistan</span><span>CGPA: 3.56 / 4.00</span></div>
+    <p>Relevant coursework: Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Data Structures and Algorithms.</p>
   </div>
 
   <h2>Profile</h2>
@@ -80,57 +77,71 @@
   <h2>Work History</h2>
 
   <div class="item">
-    <div class="row"><b>AI Engineer Intern</b><span class="date">Jun 2026 - Jul 2026</span></div>
-    <div class="sub">TEYZIX CORE, Remote</div>
+    <div class="row"><b>AI Engineer Intern | TEYZIX CORE | Remote</b><span class="date">Jun 2026 - Jul 2026</span></div>
     <ul>
-      <li>Built a contract review tool in Python that reads legal contracts, points out risky clauses and gives each contract an overall score, so reviewers know where to look first.</li>
-      <li>Built a document summarizer that turns long documents into short, readable summaries and recognises 16 languages, including English, French, German, Spanish, Arabic and Russian.</li>
+      <li>Built a contract review tool in Python that reads legal contracts, flags risky clauses and gives each contract an overall compliance score, so legal reviewers know where to look first.</li>
+      <li>Added question answering over contracts using RAG and a ChromaDB vector database.</li>
+      <li>Built a document summarizer using Natural Language Processing (NLP) and a Hugging Face BART model that turns long documents into short summaries, and automatically detects 16 languages, including English, French, German, Spanish, Arabic and Russian.</li>
     </ul>
   </div>
 
   <div class="item">
-    <div class="row"><b>AI Developer Intern</b><span class="date">Mar 2026 - May 2026</span></div>
-    <div class="sub">Punjab Skill Development Authority (PSDA), Remote</div>
+    <div class="row"><b>AI Developer Intern | Punjab Skill Development Authority (PSDA) | Remote</b><span class="date">Mar 2026 - May 2026</span></div>
     <ul>
-      <li>Built the organisation's web platform on my own, from design files to the live website, using Next.js and PostgreSQL: a public website, an admin dashboard and separate access levels for different staff roles.</li>
-      <li>Added a feature that uses Google's Gemini AI to read scanned documents and turn them into organised, editable text.</li>
+      <li>Delivered the full-stack web platform as the sole engineer, from Figma designs to production (Next.js, PostgreSQL).</li>
+      <li>Built a public website, an admin dashboard and REST APIs with role-based access for 3 types of staff users.</li>
+      <li>Added Optical Character Recognition (OCR) with the Google Gemini API to turn scanned multi-page documents into organised, searchable text.</li>
     </ul>
   </div>
 
   <div class="item">
-    <div class="row"><b>Software Engineer Intern</b><span class="date">Sep 2025 - Nov 2025</span></div>
-    <div class="sub">Artificial Automation Business Solutions (AABS), Remote</div>
+    <div class="row"><b>Software Engineer Intern | Artificial Automation Business Solutions (AABS) | Remote</b><span class="date">Sep 2025 - Nov 2025</span></div>
     <ul>
-      <li>Built an AI chatbot that answers questions using the content of uploaded PDF files, giving more accurate answers than a simple keyword search.</li>
-      <li>Built the screens of a web dashboard in Next.js and React, including login, usage charts and subscription management.</li>
+      <li>Built an AI chatbot that answers questions from uploaded PDF files using RAG and ChromaDB, giving more accurate answers than the earlier keyword search.</li>
+      <li>Built a SaaS dashboard in Next.js, React and TypeScript with user login, data charts and subscription management.</li>
     </ul>
   </div>
 
   <h2>Projects</h2>
 
   <div class="item">
-    <div class="row"><b>INKWAKE, Android Game <span class="tech">(TypeScript, Capacitor, Android)</span></b><span class="date">2026</span></div>
+    <div class="row"><b>INKWAKE, Android Mobile Game | TypeScript, WebGL, Capacitor, Android</b><span class="date">2026</span></div>
     <ul>
-      <li>Designed and built a mobile action game for Android phones in which the player draws circles with an ink trail to wipe out every enemy inside, across five seasons and twenty stages, each season ending with a boss fight.</li>
-      <li>Prepared it for the Google Play Store with one-thumb touch controls, offline play, and support for Google Play Games achievements, leaderboards and cloud saves.</li>
+      <li>Designed and built a mobile action game in which the player draws circles with an ink trail to wipe out every enemy inside, across five seasons and twenty stages, each ending with a boss fight.</li>
+      <li>Built for Android with one-thumb touch controls, six heroes, eight weapons, offline play, and Google Play Games achievements, leaderboards and cloud saves; tested with automated unit and end-to-end tests.</li>
     </ul>
   </div>
 
-  <div class="item"><p><b><a href="https://github.com/MuhammadMaheem/Autonomous-Research-Agent-Swarm">Research Agent Swarm</a> <span class="tech">(Python, LangGraph, Next.js)</span></b>: An AI research assistant in which several AI agents split a hard question into smaller parts, research them at the same time, and check that every sentence of the final report is backed by a source.</p></div>
+  <div class="item">
+    <div class="row"><b>Autonomous Research Agent Swarm | Python, LangGraph, FastAPI, Next.js</b><span class="date">2026</span></div>
+    <ul>
+      <li>Built a multi-agent AI system in which AI agents split a hard question into smaller parts, research them in parallel, and check that every sentence of the final report is backed by a cited source; measured against a single-agent baseline on a 30-question test set.</li>
+    </ul>
+  </div>
 
-  <div class="item"><p><b><a href="https://github.com/MuhammadMaheem/Contact-Risk-Analyzer">Contract Risk Analyzer</a> <span class="tech">(Python, FastAPI, Next.js)</span></b>: Reads contracts, including scanned copies, highlights risky clauses, suggests fixes and answers questions about the document.</p></div>
+  <div class="item">
+    <div class="row"><b>RecruitAI, AI Resume Screener | Python, FastAPI, Next.js, ChromaDB</b><span class="date">2026</span></div>
+    <ul>
+      <li>Built and deployed a recruitment tool that reads PDF resumes, ranks candidates against a job description with a score out of 100, and explains the reason behind each score.</li>
+    </ul>
+  </div>
 
-  <div class="item"><p><b><a href="https://recruit-ai-mu.vercel.app">RecruitAI</a> <span class="tech">(Python, FastAPI, Next.js)</span></b>: Ranks job applicants against a job description with a score out of 100 and explains the reason behind each score. Live online.</p></div>
+  <div class="item">
+    <div class="row"><b>DocuQuery, Quality-Tested PDF Chatbot | Python, FastAPI, Next.js, RAGAS</b><span class="date">2026</span></div>
+    <ul>
+      <li>Built a RAG chatbot for PDF files that tests its own answers for accuracy before each release and blocks any new version whose answers get worse.</li>
+    </ul>
+  </div>
 
-  <div class="item"><p><b><a href="https://github.com/MuhammadMaheem/Quality-Evaluation-RAG-chatbot">DocuQuery PDF Chatbot</a> <span class="tech">(Python, FastAPI, Next.js)</span></b>: A chatbot that answers questions from PDF files and tests itself automatically, so a new version is stopped from release if its answers get worse.</p></div>
-
-  <div class="item"><p><b><a href="https://github.com/MuhammadMaheem/Hadith-Chatbot">Hadith Chatbot</a> <span class="tech">(Python, Flask, LangChain)</span></b>: Lets users search more than 39,000 authentic hadiths by meaning instead of exact words, and shows the source of each one.</p></div>
-
-  <h2>Skills</h2>
-  <p><b>Programming:</b> Python, TypeScript, JavaScript, SQL, HTML, CSS</p>
-  <p><b>AI:</b> AI chatbots over documents (RAG), AI agents, LangChain, LangGraph, PyTorch, scikit-learn, OpenCV, OpenAI, Gemini, Groq</p>
-  <p><b>Web and Tools:</b> FastAPI, Next.js, React, Tailwind CSS, PostgreSQL, Docker, Git, Linux</p>
-  <p><b>Languages:</b> English (fluent), Urdu (fluent), Punjabi (native)</p>
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <p><b>Programming Languages:</b> Python, TypeScript, JavaScript, SQL, HTML, CSS</p>
+    <p><b>AI and Machine Learning:</b> Generative AI, Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), AI Agents, Multi-Agent Systems, Prompt Engineering, Natural Language Processing (NLP), Computer Vision, Deep Learning, LLM Evaluation</p>
+    <p><b>AI Frameworks and Tools:</b> LangChain, LangGraph, PyTorch, scikit-learn, Hugging Face Transformers, OpenCV, Pandas, NumPy, OpenAI API, Google Gemini API, Groq, ChromaDB, FAISS, pgvector</p>
+    <p><b>Web Development:</b> FastAPI, Flask, REST APIs, Next.js, React, Tailwind CSS, Streamlit</p>
+    <p><b>Databases and Tools:</b> PostgreSQL, Docker, Git, GitHub, Linux, CI/CD, Vercel, Railway</p>
+    <p><b>Languages:</b> English (Fluent), Urdu (Fluent), Punjabi (Native)</p>
+  </div>
 
 </div>
 </body>
