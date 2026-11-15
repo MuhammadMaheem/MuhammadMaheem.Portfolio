@@ -407,7 +407,7 @@ window.SITE = {
         'langdetect',
         'Chart.js',
       ],
-      desc: 'Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16+ languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.',
+      desc: 'Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16 languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.',
       role: 'Solo build — 4 NLP algorithms, abstractive BART pipeline, multi-document, Flask architecture.',
       links: [
         {
@@ -556,7 +556,7 @@ window.SITE = {
       date: 'Jun 2026 — Jul 2026',
       role: 'AI Engineer Intern',
       org: 'TEYZIX CORE',
-      note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16+ languages.',
+      note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16 languages.',
     },
     {
       v: 'v2.x',
