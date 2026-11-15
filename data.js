@@ -35,7 +35,7 @@ window.SITE = {
 
   // Quick numbers (unused in hero by design; kept for reference)
   metrics: [
-    { label: 'Projects shipped', value: 16, suffix: '' },
+    { label: 'Projects shipped', value: 17, suffix: '' },
     { label: 'Hadiths indexed', value: 39, suffix: 'k' },
     { label: 'Heart-risk accuracy', value: 99, suffix: '%' },
   ],
@@ -96,7 +96,7 @@ window.SITE = {
     },
   ],
 
-  // PROJECTS — 16 deployments.
+  // PROJECTS — 17 deployments.
   projects: [
     {
       id: '01',
@@ -407,7 +407,7 @@ window.SITE = {
         'langdetect',
         'Chart.js',
       ],
-      desc: 'Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16+ languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.',
+      desc: 'Web summarizer (TEYZIX) implementing 4 algorithms: frequency-based scoring, TF-IDF, a combined ranker with positional bias for first/last sentences, and abstractive BART (facebook/bart-large-cnn, hierarchical chunking for long docs). Auto-detects 16 languages and applies multilingual stopword removal. Multi-document mode combines or individually summarizes up to 10 uploaded files. PDF/TXT upload and export via reportlab. Modular Flask architecture with Blueprint-based feature separation. Chart.js analytics for word frequency and sentence scoring.',
       role: 'Solo build — 4 NLP algorithms, abstractive BART pipeline, multi-document, Flask architecture.',
       links: [
         {
@@ -524,6 +524,29 @@ window.SITE = {
         'screenshots/Research-Agent-Swarm/04-citation-audit.png',
       ],
     },
+    {
+      id: '17',
+      name: 'INKWAKE — Android Game',
+      tag: 'Game',
+      year: '2026',
+      featured: true,
+      blurb:
+        'Mobile action game where you draw circles with your ink trail to wipe out every enemy inside.',
+      tech: ['TypeScript', 'WebGL', 'Web Audio', 'Vite', 'Capacitor', 'Android', 'Google Play Games', 'Vitest', 'Playwright'],
+      desc: 'A single-player action game for Android phones, played in portrait with one thumb. Your hero leaves a trail of wet ink; cross your own trail and the loop closes into a circle that erases every enemy inside it. Each enemy you erase leaves a permanent stain, so every run ends as a painting you keep in a gallery. The game runs through five seasons and twenty stages (Spring, Summer, Autumn, Winter and the Red Sun), and each season ends with a boss fight. Between stages you pick new brushes and skills to build your own play style, and unlock new heroes. All art and sound are made in code. The web game is wrapped as a native Android app with Capacitor, works fully offline, and supports Google Play Games achievements, leaderboards and cloud saves. Tested with automated unit tests and browser tests that play the first stage frame by frame.',
+      role: 'Solo build — game design, gameplay code, art and sound in code, Android packaging for Google Play.',
+      links: [],
+      screenshots: [
+        'screenshots/INKWAKE/00-feature.jpg',
+        'screenshots/INKWAKE/01-title.jpg',
+        'screenshots/INKWAKE/02-draw-the-circle.jpg',
+        'screenshots/INKWAKE/03-erase.jpg',
+        'screenshots/INKWAKE/04-evolve.jpg',
+        'screenshots/INKWAKE/05-guardian.jpg',
+        'screenshots/INKWAKE/06-journey.jpg',
+        'screenshots/INKWAKE/07-stage-cleared.jpg',
+      ],
+    },
   ],
 
   // EXPERIENCE — "changelog"
@@ -533,7 +556,7 @@ window.SITE = {
       date: 'Jun 2026 — Jul 2026',
       role: 'AI Engineer Intern',
       org: 'TEYZIX CORE',
-      note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16+ languages.',
+      note: 'Built TEYZIX — an AI-powered document summarizer combining extractive scoring (frequency, TF-IDF, positional) with abstractive BART, plus multi-document support and auto-detection of 16 languages.',
     },
     {
       v: 'v2.x',
