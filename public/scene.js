@@ -135,7 +135,10 @@
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   let burst = 0; // explode-on-grab energy
 
+  // clicks on controls belong to the page, not the core
+  const UI = 'a, button, input, textarea, select, label, .ask, .proj-modal, .mobile-menu';
   function onDown(e) {
+    if (e.target.closest && e.target.closest(UI)) { return; }
     dragging = true;
     const p = e.touches ? e.touches[0] : e;
     lastX = p.clientX; lastY = p.clientY;
@@ -156,6 +159,9 @@
   function onUp() { dragging = false; document.body.classList.remove('grabbing'); }
 
   window.addEventListener('pointerdown', onDown);
+  // the hero panel makes the core pulse while it "thinks" and "speaks"
+  window.addEventListener('ask:think', () => { if (!reduceMotion) { burst = Math.max(burst, 0.55); } });
+  window.addEventListener('ask:token', () => { if (!reduceMotion) { burst = Math.max(burst, 0.12); } });
   window.addEventListener('pointermove', onMove, { passive: true });
   window.addEventListener('pointerup', onUp);
   window.addEventListener('pointerleave', onUp);

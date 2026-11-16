@@ -5,6 +5,39 @@
    Everything reads --accent, so the accent stays swappable.
    ============================================================ */
 
+/* ---------- TOKENS: type, measure, spacing ----------
+   Display: Space Grotesk. Text: Inter. Code and data: JetBrains Mono.
+   Type scale is a major third (1.25) on a 16px base; spacing sits on
+   an 8px grid. Cyan marks structure, amber marks live activity. */
+:root {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --signal: #ffb454;
+  --signal-glow: rgba(255, 180, 84, 0.4);
+
+  --maxw: 1200px;
+  --gutter: clamp(20px, 4vw, 40px);
+
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-lead: clamp(16px, 1.3vw, 18px);
+  --fs-h3: clamp(20px, 2vw, 25px);
+  --fs-h2: clamp(32px, 4.4vw, 56px);
+  --fs-hero: clamp(44px, 7.6vw, 104px);
+
+  --sp-section: clamp(72px, 9vw, 128px);
+  --sp-head: clamp(32px, 4vw, 56px);
+}
+
+main {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 /* ---------- shared: cursor spotlight + lit edge ---------- */
 .show::before,
 .proj::before {
@@ -650,4 +683,700 @@
   .browser {
     transition: none;
   }
+}
+
+/* ============================================================
+   V2 — type system, hero with the Ask panel, section rhythm
+   ============================================================ */
+
+/* ---------- type ---------- */
+body {
+  font-size: var(--fs-base);
+  line-height: 1.6;
+}
+
+.eyebrow {
+  gap: 0;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--accent);
+}
+
+.eyebrow::before,
+.section-index {
+  display: none;
+}
+
+.section-head {
+  margin-bottom: var(--sp-head);
+}
+
+.section-head h2,
+#uplink h2 {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.section-head .sub,
+#uplink .sub {
+  max-width: 56ch;
+  margin-top: 16px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+}
+
+.band {
+  padding: var(--sp-section) 0;
+}
+
+.module h3,
+.tl-item h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.proj h3 {
+  font-size: clamp(20px, 1.9vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.proj .pblurb,
+.module .mblurb,
+.tl-item p,
+.post .pex {
+  font-family: var(--font-ui);
+  line-height: 1.6;
+}
+
+.show h3 {
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: -0.035em;
+}
+
+.more-head h3 {
+  font-size: clamp(22px, 2.4vw, 31px);
+}
+
+.footer .big {
+  letter-spacing: -0.04em;
+}
+
+/* nav lines up with the 1200px column */
+.nav {
+  padding-left: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)));
+  padding-right: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)));
+}
+
+/* ---------- HERO: identity on the left, the Ask panel on the right ---------- */
+.hero {
+  padding-top: clamp(104px, 14vh, 150px);
+  padding-bottom: clamp(72px, 10vh, 112px);
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.hero-codename {
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+}
+
+.hero h1 {
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: var(--fs-hero);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.hero-role {
+  margin-bottom: 16px;
+  font-size: clamp(13px, 1.1vw, 15px);
+}
+
+.hero-tagline {
+  max-width: 40ch;
+  margin-bottom: 32px;
+  font-size: var(--fs-lead);
+  color: var(--text-dim);
+}
+
+/* the panel */
+.ask {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--void-2) 78%, transparent);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    0 40px 90px -40px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  font-family: var(--font-ui);
+}
+
+html.js-ready .ask {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+html.js-ready body.booted .ask {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--ease) 0.45s,
+    transform 0.8s var(--ease) 0.45s;
+}
+
+.ask-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ask-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  transition:
+    background 0.3s,
+    box-shadow 0.3s;
+}
+
+.ask.is-busy .ask-dot {
+  background: var(--signal);
+  box-shadow: 0 0 14px var(--signal-glow);
+}
+
+.ask-title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.ask-note {
+  margin-left: auto;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+.ask-log {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: clamp(220px, 32vh, 300px);
+  padding: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.ask-log:focus-visible,
+.ask-form input:focus-visible,
+.ask-chip:focus-visible,
+.ask-ref:focus-visible,
+.ask-act:focus-visible,
+.ask-form button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ask-q {
+  align-self: flex-end;
+  max-width: 85%;
+  padding: 9px 14px;
+  border-radius: 16px 16px 4px 16px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.ask-a {
+  display: grid;
+  gap: 10px;
+}
+
+/* reasoning trace: a lattice that ripples while "thinking", then settles */
+.ask-thought {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--signal);
+}
+
+.ask-thought.done {
+  color: var(--text-faint);
+}
+
+.ask-lattice {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background:
+    radial-gradient(circle, currentColor 1.4px, transparent 1.6px) 0 0 / 7px 7px;
+  animation: lattice 0.9s ease-in-out infinite;
+}
+
+.ask-thought.done .ask-lattice {
+  animation: none;
+  opacity: 0.6;
+}
+
+@keyframes lattice {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.ask-clock {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  opacity: 0.8;
+}
+
+.ask-text {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.ask-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ask-ref,
+.ask-act,
+.ask-chip {
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  line-height: 1.2;
+  border-radius: 99px;
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    color 0.25s,
+    background 0.25s;
+}
+
+/* a source, like a citation in a retrieval answer */
+.ask-ref {
+  padding: 5px 10px 5px 8px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+}
+
+.ask-ref::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  vertical-align: 1px;
+}
+
+.ask-ref:hover {
+  border-color: var(--signal);
+  color: var(--text);
+}
+
+.ask-act {
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+.ask-act:hover {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.ask-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 18px 14px;
+}
+
+.ask-chip {
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+}
+
+.ask-chip:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.ask-chip.used {
+  opacity: 0.5;
+}
+
+.ask-chip:disabled {
+  cursor: default;
+}
+
+.ask-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--void) 70%, transparent);
+  transition: border-color 0.25s;
+}
+
+.ask-form:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.ask-form input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+
+.ask-form input::placeholder {
+  color: var(--text-faint);
+}
+
+.ask-form button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+  transition:
+    opacity 0.25s,
+    transform 0.25s var(--ease);
+}
+
+.ask-form button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.ask-form button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ask-foot {
+  padding: 10px 18px 14px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-faint);
+}
+
+.ask-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* the panel sits where this hint used to float; dragging still works */
+.drag-hint {
+  display: none;
+}
+
+/* decrypting headings keep their box while the letters settle */
+.decrypting {
+  font-variant-ligatures: none;
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 0;
+    padding-bottom: 56px;
+  }
+
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .ask {
+    max-width: 560px;
+  }
+
+  .scroll-cue,
+  .drag-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 104px;
+  }
+
+  .hero-tagline {
+    margin-bottom: 24px;
+  }
+
+  .ask-log {
+    height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ask-lattice {
+    animation: none;
+  }
+
+  html.js-ready body.booted .ask {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   MOTION — scroll-driven pieces
+   ============================================================ */
+
+/* hero eases away as you leave it */
+.hero-inner {
+  opacity: calc(1 - var(--hp, 0) * 0.9);
+  transform: translateY(calc(var(--hp, 0) * -36px)) scale(calc(1 - var(--hp, 0) * 0.04));
+  transform-origin: 50% 40%;
+}
+
+/* featured panels: artwork drifts against the scroll */
+.phones,
+.browser {
+  translate: 0 calc(var(--par, 0) * 26px);
+}
+
+.show--game .show-banner {
+  translate: 0 calc(var(--par, 0) * -14px);
+}
+
+/* flow diagram: a signal runs along the rail and lights each step */
+.flow-track {
+  --p: 0;
+  position: relative;
+}
+
+.flow-rail {
+  position: absolute;
+  top: 21px;
+  left: 22px;
+  right: 0;
+  height: 2px;
+  background: var(--line);
+}
+
+.flow-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--accent), var(--signal));
+  transform: scaleX(var(--p));
+  transform-origin: 0 50%;
+}
+
+.flow-dot {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--p) * 100%);
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow:
+    0 0 18px 4px var(--signal-glow),
+    0 0 0 4px color-mix(in srgb, var(--signal) 18%, transparent);
+}
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+}
+
+.flow-step {
+  position: relative;
+  padding-top: 68px;
+  opacity: 0.38;
+  transform: translateY(10px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+.flow-step.on {
+  opacity: 1;
+  transform: none;
+}
+
+.flow-num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--void);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-faint);
+  transition:
+    border-color 0.5s,
+    color 0.5s,
+    box-shadow 0.5s;
+}
+
+.flow-step.on .flow-num {
+  border-color: var(--signal);
+  color: var(--signal);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--signal) 13%, transparent);
+}
+
+.flow-step h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  letter-spacing: -0.02em;
+}
+
+.flow-step p {
+  margin-top: 8px;
+  max-width: 30ch;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+@media (max-width: 760px) {
+  .flow-rail {
+    top: 22px;
+    bottom: 0;
+    left: 21px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .flow-fill {
+    background: linear-gradient(180deg, var(--accent), var(--signal));
+    transform: scaleY(var(--p));
+    transform-origin: 50% 0;
+  }
+
+  .flow-dot {
+    top: calc(var(--p) * 100%);
+    left: 50%;
+  }
+
+  .flow-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .flow-step {
+    min-height: 44px;
+    padding: 0 0 0 68px;
+  }
+
+  .flow-step p {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-inner {
+    opacity: 1;
+    transform: none;
+  }
+
+  .phones,
+  .browser,
+  .show--game .show-banner {
+    translate: none;
+  }
+
+  .flow-step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .flow-dot {
+    display: none;
+  }
+}
+
+/* ---------- GUTTERS ----------
+   Every section keeps the same side padding at every width, so nothing
+   touches the screen edge. (The base stylesheet zeroed it on sections and
+   relied on a fixed page margin instead.) */
+.wrap,
+.band.wrap,
+.hero.wrap,
+.footer.wrap {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.timeline {
+  margin-left: 10px;
+}
+
+.flow-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }

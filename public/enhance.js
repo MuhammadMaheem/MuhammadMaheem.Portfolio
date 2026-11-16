@@ -77,6 +77,111 @@
     });
   }
 
+  /* ---------- section headings resolve from scrambled letters, once ---------- */
+  if (!reduce && 'IntersectionObserver' in window) {
+    const glyphs = 'abcdefghknopqrsuvxyz';
+    const decrypt = (h) => {
+      // work on the text nodes only, so <br> and <em> inside the heading survive
+      const nodes = [];
+      const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) { nodes.push(walker.currentNode); }
+      const finals = nodes.map((n) => n.nodeValue);
+      const total = finals.reduce((sum, t) => sum + t.length, 0);
+      if (!total) { return; }
+      h.style.minHeight = h.offsetHeight + 'px';
+      h.classList.add('decrypting');
+      const start = performance.now();
+      const dur = 520 + total * 9;
+      (function frame(now) {
+        const shown = Math.floor(Math.min(1, (now - start) / dur) * total);
+        let seenChars = 0;
+        nodes.forEach((n, i) => {
+          let out = '';
+          const t = finals[i];
+          for (let c = 0; c < t.length; c++) {
+            const ch = t[c];
+            if (seenChars < shown || !/[A-Za-z]/.test(ch)) { out += ch; }
+            else {
+              const g = glyphs[(Math.random() * glyphs.length) | 0];
+              out += ch === ch.toUpperCase() ? g.toUpperCase() : g;
+            }
+            seenChars++;
+          }
+          n.nodeValue = out;
+        });
+        if (shown < total) { requestAnimationFrame(frame); }
+        else {
+          nodes.forEach((n, i) => { n.nodeValue = finals[i]; });
+          h.classList.remove('decrypting');
+          h.style.minHeight = '';
+        }
+      })(start);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) { return; }
+        io.unobserve(en.target);
+        decrypt(en.target);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.section-head h2, #uplink h2').forEach((h) => io.observe(h));
+  }
+
+  /* ---------- staggered entrances (anime.js), each group plays once ----------
+     Only children are animated: the .reveal parents are already driven by the
+     scroll in interactions.js, and two scripts must not fight over one element. */
+  if (!reduce && window.anime && 'IntersectionObserver' in window) {
+    const groups = [
+      ['.module', '.tags li', { translateY: [10, 0], scale: [0.9, 1] }, 28],
+      ['.show', '.show-body > *', { translateY: [22, 0] }, 70],
+      ['.show--game', '.phones', { translateY: ['30%', 0] }, 0],
+      ['.show--web', '.browser', { translateX: [60, 0] }, 140],
+      ['.spec-list', '.row', { translateX: [-18, 0] }, 60],
+      ['.tl-item', 'h3, p', { translateX: [-18, 0] }, 90],
+      ['.socials', '.social', { translateX: [-18, 0] }, 60],
+    ];
+    const jobs = new Map();
+    groups.forEach(([parentSel, childSel, props, gap]) => {
+      document.querySelectorAll(parentSel).forEach((parent) => {
+        const kids = Array.from(parent.querySelectorAll(childSel));
+        if (!kids.length) { return; }
+        kids.forEach((k) => { k.style.opacity = '0'; });
+        const list = jobs.get(parent) || [];
+        list.push({ kids, props, gap });
+        jobs.set(parent, list);
+      });
+    });
+    const play = (parent) => {
+      (jobs.get(parent) || []).forEach((job) => {
+        anime(Object.assign({
+          targets: job.kids,
+          opacity: [0, 1],
+          delay: anime.stagger(job.gap, { start: 80 }),
+          duration: 760,
+          easing: 'cubicBezier(0.16, 1, 0.3, 1)',
+          // hand the element back to the stylesheet, so hover transforms still work
+          complete: () => job.kids.forEach((k) => { k.style.transform = ''; k.style.opacity = ''; }),
+        }, job.props));
+      });
+      jobs.delete(parent);
+    };
+    const enter = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) { return; }
+        enter.unobserve(en.target);
+        play(en.target);
+      });
+    }, { threshold: 0.18 });
+    jobs.forEach((_, parent) => enter.observe(parent));
+    // safety net: never leave content hidden if the observer does not fire
+    setTimeout(() => {
+      jobs.forEach((_, parent) => {
+        const r = parent.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) { enter.unobserve(parent); play(parent); }
+      });
+    }, 2500);
+  }
+
   /* ---------- nav marker + experience line (one throttled scroll pass) ---------- */
   const links = Array.from(document.querySelectorAll('#navLinks a'));
   const sections = links.map((a) => document.querySelector(a.getAttribute('href')));
@@ -84,6 +189,11 @@
   const timeline = document.getElementById('timeline');
   const tlItems = timeline ? Array.from(timeline.querySelectorAll('.tl-item')) : [];
   let active = -2;
+  const flow = document.getElementById('flowTrack');
+  const flowSteps = flow ? Array.from(flow.querySelectorAll('.flow-step')) : [];
+  const hero = document.getElementById('hero');
+  const heroInner = hero ? hero.querySelector('.hero-inner') : null;
+  const shows = Array.from(document.querySelectorAll('.show'));
 
   function setActive(i) {
     if (i === active) { return; }
@@ -103,6 +213,33 @@
       if (sections[k] && sections[k].getBoundingClientRect().top <= vh * 0.45) { current = k; }
     }
     setActive(current);
+
+    // flow diagram: the signal advances with the scroll and lights each step
+    if (flow) {
+      const r = flow.getBoundingClientRect();
+      const span = Math.max(r.height, vh * 0.45);
+      const p = reduce ? 1 : Math.max(0, Math.min(1, (vh * 0.78 - r.top) / span));
+      flow.style.setProperty('--p', p.toFixed(3));
+      for (let k = 0; k < flowSteps.length; k++) {
+        flowSteps[k].classList.toggle('on', p >= k / flowSteps.length + 0.03);
+      }
+    }
+
+    // hero eases away as the next section arrives
+    if (heroInner && !reduce) {
+      const hp = Math.max(0, Math.min(1, 1 - hero.getBoundingClientRect().bottom / (vh * 0.45)));
+      heroInner.style.setProperty('--hp', hp.toFixed(3));
+    }
+
+    // featured panels: the artwork drifts a little against the scroll
+    if (!reduce) {
+      for (let k = 0; k < shows.length; k++) {
+        const r = shows[k].getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) { continue; }
+        const off = (r.top + r.height / 2 - vh / 2) / vh;
+        shows[k].style.setProperty('--par', Math.max(-1, Math.min(1, off)).toFixed(3));
+      }
+    }
 
     if (timeline) {
       const r = timeline.getBoundingClientRect();

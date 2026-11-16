@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css?v=14" />
@@ -93,6 +93,24 @@
               <a href="#uplink" class="btn btn-ghost" data-cursor="talk">Establish uplink</a>
             </div>
           </div>
+          <aside class="ask" id="ask" aria-label="Ask my portfolio">
+            <header class="ask-head">
+              <span class="ask-dot" aria-hidden="true"></span>
+              <h2 class="ask-title" id="askTitle">Ask my portfolio</h2>
+              <span class="ask-note" id="askNote">Scripted demo</span>
+            </header>
+            <div class="ask-log" id="askLog" tabindex="0" aria-labelledby="askTitle"></div>
+            <div class="ask-label" id="askLive" aria-live="polite"></div>
+            <div class="ask-chips" id="askChips"></div>
+            <form class="ask-form" id="askForm" autocomplete="off">
+              <label class="ask-label" for="askInput">Ask a question about Muhammad Maheem</label>
+              <input id="askInput" type="text" maxlength="120" />
+              <button type="submit" id="askSend" aria-label="Send question">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+              </button>
+            </form>
+            <p class="ask-foot" id="askFoot"></p>
+          </aside>
         </div>
         <div class="scroll-cue"><span class="line"></span> Scroll to boot</div>
         <div class="drag-hint" id="dragHint">⟲ drag the core</div>
@@ -133,6 +151,19 @@
             </div>
             <div class="spec-list" id="specList"></div>
           </div>
+        </div>
+      </section>
+
+      <!-- FLOW (scroll-driven diagram) -->
+      <section class="band wrap" id="flow">
+        <div class="section-head reveal">
+          <span class="eyebrow" id="flowLabel"></span>
+          <h2 id="flowTitle"></h2>
+          <p class="sub" id="flowSub"></p>
+        </div>
+        <div class="flow-track" id="flowTrack">
+          <div class="flow-rail" aria-hidden="true"><div class="flow-fill"></div><span class="flow-dot"></span></div>
+          <ol class="flow-steps" id="flowSteps"></ol>
         </div>
       </section>
 
@@ -285,5 +316,6 @@
     <script src="/render.js?v=14"></script>
     <script src="/interactions.js?v=14"></script>
     <script src="/enhance.js?v=14"></script>
+    <script src="/ask.js?v=14"></script>
   </body>
 </html>

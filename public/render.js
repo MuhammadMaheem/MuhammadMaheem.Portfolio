@@ -41,6 +41,20 @@
     sl.appendChild(r);
   });
 
+  // ---- flow diagram ----
+  if (S.flow && $('flowSteps')) {
+    $('flowLabel').textContent = S.flow.label;
+    $('flowTitle').textContent = S.flow.title;
+    $('flowSub').textContent = S.flow.sub;
+    S.flow.steps.forEach((st, i) => {
+      const li = el('li', 'flow-step');
+      li.appendChild(el('span', 'flow-num', String(i + 1)));
+      const h = el('h3'); h.textContent = st.t; li.appendChild(h);
+      const p = el('p'); p.textContent = st.d; li.appendChild(p);
+      $('flowSteps').appendChild(li);
+    });
+  }
+
   // ---- modules ----
   const mg = $('moduleGrid');
   S.modules.forEach((mod, i) => {

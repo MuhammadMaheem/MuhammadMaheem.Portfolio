@@ -33,6 +33,40 @@ window.SITE = {
     ],
   },
 
+  // "Ask my portfolio" panel in the hero. It is a scripted demo, not a live
+  // model: each answer is assembled in ask.js from the data in this file, and
+  // `source` names the page section the answer came from.
+  ask: {
+    title: 'Ask my portfolio',
+    note: 'Scripted demo',
+    foot: 'Answers are pulled from this page. No live AI model is called.',
+    placeholder: 'Ask about my work, skills or experience',
+    fallback:
+      "I can only answer from what's on this page. Try asking about projects, experience, skills, education or how to get in touch.",
+    // order here is the order of the suggestion buttons; the first one plays on load
+    questions: [
+      { id: 'build', q: 'What does Maheem build?' },
+      { id: 'projects', q: 'Show me his best projects' },
+      { id: 'experience', q: 'Where has he worked?' },
+      { id: 'hire', q: 'Is he available to hire?' },
+    ],
+    build:
+      'Maheem builds AI systems that stay grounded in source documents and are measured before they ship: retrieval (RAG) chatbots, evaluation pipelines and multi-agent tools, plus the full-stack apps around them.',
+  },
+
+  // The animated "how it works" strip. A real sequence, so the steps are numbered.
+  flow: {
+    label: 'How it works',
+    title: 'From a question to a checked answer.',
+    sub: 'The pattern behind most of what I build: answers that come from your own documents and are tested before anyone sees them.',
+    steps: [
+      { t: 'Ask', d: 'Someone asks a question in plain language.' },
+      { t: 'Retrieve', d: 'The system finds the passages in the documents that matter.' },
+      { t: 'Generate', d: 'A language model writes the answer from those passages only.' },
+      { t: 'Check', d: 'The answer is tested against its sources before it ships.' },
+    ],
+  },
+
   // Tech names for the scrolling strip under the hero.
   marquee: [
     'Python', 'FastAPI', 'LangGraph', 'LangChain', 'RAG', 'AI Agents', 'PyTorch', 'Hugging Face',
