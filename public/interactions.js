@@ -338,20 +338,12 @@
     if (p) { openModal(p); }
   });
 
+  window._openProject = openModal;
+
   pmBackdrop && pmBackdrop.addEventListener('click', closeModal);
   pmClose && pmClose.addEventListener('click', closeModal);
 
-  /* ---------- active nav link on scroll ---------- */
-  const sections = ['about','modules','work','changelog','writing','uplink'];
-  const navLinks = $$('.nav-links a');
-  const secIO = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) { return; }
-      const id = e.target.id;
-      navLinks.forEach((l) => l.style.color = l.getAttribute('href') === '#' + id ? 'var(--text)' : '');
-    });
-  }, { threshold: 0.4 });
-  sections.forEach((id) => { const s = document.getElementById(id); if (s) secIO.observe(s); });
+  /* active nav link on scroll now lives in enhance.js (pill indicator) */
 
   // expose closeMenu for anchor handler
   window.closeMenu = closeMenu;

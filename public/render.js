@@ -55,8 +55,60 @@
     mg.appendChild(c);
   });
 
+  // ---- tech strip under the hero ----
+  const strip = $('stripTrack');
+  if (strip && S.marquee) {
+    // two identical halves so the loop is seamless
+    const half = S.marquee.map((t) => '<span class="strip-item">' + t + '</span>').join('');
+    strip.innerHTML = '<div class="strip-half">' + half + '</div><div class="strip-half" aria-hidden="true">' + half + '</div>';
+  }
+
+  // ---- featured showcase (large panels above the grid) ----
+  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const showcased = S.projects.filter((p) => p.showcase).sort((x, y) => x.showcase.order - y.showcase.order);
+  const gridProjects = S.projects.filter((p) => !p.showcase);
+  const sw = $('showcase');
+  if (sw) {
+    showcased.forEach((p, i) => {
+      const sc = p.showcase;
+      const c = el('article', 'show reveal show--' + sc.kind);
+      c.setAttribute('data-cursor', 'view');
+      let media = '';
+      if (sc.kind === 'game') {
+        media =
+          '<img class="show-banner" src="' + sc.banner + '" alt="' + esc(sc.title) + ' cover art" loading="lazy">' +
+          '<div class="phones">' +
+          sc.shots.map((src, k) => '<div class="phone phone-' + (k + 1) + '"><img src="' + src + '" alt="' + esc(sc.title) + ' gameplay screen ' + (k + 1) + '" loading="lazy"></div>').join('') +
+          '</div>';
+      } else {
+        media = sc.shots.slice(0, 2).reverse().map((src, k, arr) =>
+          '<div class="browser browser-' + (arr.length - k) + '"><div class="bbar"><i></i><i></i><i></i></div>' +
+          '<img src="' + src + '" alt="' + esc(sc.title) + ' screen" loading="lazy"></div>').join('');
+      }
+      const source = (p.links || []).find((l) => /github/i.test(l.label));
+      c.innerHTML =
+        '<div class="show-media"><div class="show-stage">' + media + '</div></div>' +
+        '<div class="show-body">' +
+          '<span class="show-kicker"><b>0' + (i + 1) + '</b> Featured · ' + sc.kicker + '</span>' +
+          '<h3>' + sc.title + '</h3>' +
+          '<p class="show-pitch">' + sc.pitch + '</p>' +
+          '<ul class="show-points">' + sc.points.map((t) => '<li>' + t + '</li>').join('') + '</ul>' +
+          '<div class="show-tech">' + p.tech.slice(0, 6).map((t) => '<span>' + t + '</span>').join('') + '</div>' +
+          '<div class="show-cta">' +
+            '<button type="button" class="btn btn-primary show-open">View project <span class="arrow">→</span></button>' +
+            (source ? '<a class="btn btn-ghost" href="' + source.url + '" target="_blank" rel="noopener">Source code ↗</a>' : '') +
+          '</div>' +
+        '</div>';
+      c.addEventListener('click', (e) => {
+        if (e.target.closest('a')) { return; }
+        if (window._openProject) { window._openProject(p); }
+      });
+      sw.appendChild(c);
+    });
+  }
+
   // ---- projects + filters ----
-  const tags = ['All', ...Array.from(new Set(S.projects.map((p) => p.tag)))];
+  const tags = ['All', ...Array.from(new Set(gridProjects.map((p) => p.tag)))];
   const pf = $('projFilters');
   tags.forEach((t, i) => {
     const b = el('button', 'filter' + (i === 0 ? ' active' : ''), t);
@@ -143,7 +195,7 @@
   }
 
   const pg = $('projGrid');
-  S.projects.forEach((p) => {
+  gridProjects.forEach((p) => {
     const c = el('article', 'proj reveal' + (p.featured ? ' featured' : ''));
     c.dataset.tag = p.tag;
     c.setAttribute('data-cursor', 'view');
@@ -170,6 +222,37 @@
   });
   window._drawThumb = drawThumb;
 
+  // show the first six, the rest behind a "show all" button
+  const FIRST = 6;
+  const more = $('projMore');
+  let expanded = gridProjects.length <= FIRST;
+  function syncCollapse(tag) {
+    const collapse = !expanded && tag === 'All';
+    pg.classList.toggle('collapsed', collapse);
+    if (more) { more.style.display = (tag === 'All' && gridProjects.length > FIRST) ? '' : 'none'; }
+    const mb = more && more.querySelector('button');
+    if (mb) {
+      mb.innerHTML = expanded ? 'Show fewer <span class="arrow">↑</span>' : 'Show all ' + gridProjects.length + ' projects <span class="arrow">↓</span>';
+      mb.setAttribute('aria-expanded', String(expanded));
+    }
+  }
+  if (more && gridProjects.length > FIRST) {
+    const mb = el('button', 'btn btn-ghost');
+    mb.type = 'button';
+    more.appendChild(mb);
+    mb.addEventListener('click', () => {
+      expanded = !expanded;
+      syncCollapse('All');
+      if (expanded && window.anime) {
+        anime({ targets: pg.querySelectorAll('.proj:nth-child(n+' + (FIRST + 1) + ')'), opacity: [0, 1], translateY: [16, 0], delay: anime.stagger(45), duration: 520, easing: 'easeOutQuad' });
+      }
+      if (!expanded) { $('work').querySelector('.more-head').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  }
+  syncCollapse('All');
+  const mc = $('moreCount');
+  if (mc) { mc.textContent = gridProjects.length + ' builds'; }
+
   // filter behaviour
   pf.addEventListener('click', (e) => {
     const b = e.target.closest('.filter');
@@ -177,6 +260,7 @@
     pf.querySelectorAll('.filter').forEach((f) => f.classList.remove('active'));
     b.classList.add('active');
     const tag = b.dataset.tag;
+    syncCollapse(tag);
     pg.querySelectorAll('.proj').forEach((card) => {
       const show = tag === 'All' || card.dataset.tag === tag;
       card.classList.toggle('hide', !show);

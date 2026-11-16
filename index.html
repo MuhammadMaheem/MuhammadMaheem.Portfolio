@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css?v=14" />
+    <link rel="stylesheet" href="/redesign.css?v=14" />
   </head>
   <body class="has-cursor">
     <!-- background webgl -->
@@ -28,7 +29,8 @@
       <a class="brand" href="#top" data-cursor="home">
         <span class="dot"></span>MHM<span style="color: var(--accent)">.DEV</span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
+        <span class="nav-ind" id="navInd" aria-hidden="true"></span>
         <a href="#about">About</a>
         <a href="#modules">Skills</a>
         <a href="#work">Projects</a>
@@ -96,6 +98,11 @@
         <div class="drag-hint" id="dragHint">⟲ drag the core</div>
       </section>
 
+      <!-- TECH STRIP -->
+      <div class="strip" aria-label="Technologies I work with">
+        <div class="strip-track" id="stripTrack"></div>
+      </div>
+
       <!-- ABOUT -->
       <section class="band wrap" id="about">
         <div class="section-head reveal">
@@ -145,12 +152,18 @@
           <span class="eyebrow"><span class="section-index">03</span> &nbsp;Projects</span>
           <h2>Things I shipped.</h2>
           <p class="sub">
-            Sixteen builds across LLM evaluation, RAG systems, multi-agent research, legal &amp;
+            Two I'm proudest of first, then the rest: LLM evaluation, RAG systems, legal &amp;
             HR AI tools, computer vision, and full-stack AI products.
           </p>
         </div>
+        <div class="showcase" id="showcase"></div>
+        <div class="more-head reveal">
+          <h3>More projects</h3>
+          <span class="more-count" id="moreCount"></span>
+        </div>
         <div class="proj-controls reveal" id="projFilters"></div>
         <div class="proj-grid" id="projGrid"></div>
+        <div class="proj-more reveal" id="projMore"></div>
       </section>
 
       <!-- CHANGELOG (experience) -->
@@ -271,5 +284,6 @@
     <script src="/scene.js?v=14"></script>
     <script src="/render.js?v=14"></script>
     <script src="/interactions.js?v=14"></script>
+    <script src="/enhance.js?v=14"></script>
   </body>
 </html>

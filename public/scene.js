@@ -29,6 +29,44 @@
   }
   let accent = accentColor();
 
+  // ---- ambient veil: slow ribbons of light behind the whole page ----
+  // Drawn first, in this same renderer, so there is still one canvas and one
+  // WebGL context. A handful of sines per pixel: cheap on an integrated GPU.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const veilScene = new THREE.Scene();
+  const veilCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const veilMat = new THREE.ShaderMaterial({
+    transparent: true, depthTest: false, depthWrite: false,
+    uniforms: {
+      uTime: { value: 0 }, uRes: { value: new THREE.Vector2(1, 1) },
+      uColor: { value: accent.clone() }, uScroll: { value: 0 }, uHero: { value: 0 }
+    },
+    vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: [
+      'precision highp float;',
+      'uniform float uTime; uniform vec2 uRes; uniform vec3 uColor; uniform float uScroll; uniform float uHero;',
+      'void main(){',
+      '  vec2 uv = gl_FragCoord.xy / uRes;',
+      '  vec2 p = uv - 0.5; p.x *= uRes.x / uRes.y;',
+      '  float t = uTime * 0.07;',
+      '  vec2 q = p; q.y += uScroll;',
+      '  q.x += 0.32 * sin(q.y * 1.9 + t * 2.3) + 0.12 * sin(q.y * 4.3 - t * 1.6);',
+      '  q.y += 0.22 * sin(q.x * 1.5 - t * 1.9);',
+      '  float a = smoothstep(0.25, 1.0, sin(q.x * 2.4 + q.y * 1.6 + t * 3.1));',
+      '  float b = smoothstep(0.45, 1.0, sin(q.x * 1.2 - q.y * 2.6 - t * 2.2 + 1.7));',
+      '  float mask = smoothstep(1.15, 0.05, length(p - vec2(0.38, 0.12)));',
+      '  vec3 violet = vec3(0.42, 0.30, 1.0);',
+      '  vec3 col = uColor * a + mix(uColor, violet, 0.75) * b * 0.8;',
+      '  float inten = (a * 0.55 + b * 0.4) * mask * mix(0.30, 0.17, uHero);',
+      '  inten += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 170.0;',
+      '  float m = max(max(col.r, col.g), max(col.b, 0.0001));',
+      '  gl_FragColor = vec4(col / m, clamp(inten, 0.0, 1.0));',
+      '}'
+    ].join('\n')
+  });
+  veilScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), veilMat));
+  renderer.autoClear = false;
+
   // ---- build the core: fibonacci-sphere of points + a few orbiting shells ----
   const COUNT = 2600;
   const positions = new Float32Array(COUNT * 3);
@@ -135,6 +173,7 @@
     const w = window.innerWidth, h = window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.getDrawingBufferSize(veilMat.uniforms.uRes.value);
   }
   window.addEventListener('resize', resize);
   resize(); updateScroll();
@@ -186,6 +225,12 @@
     ico.material.opacity = 0.12 * vis;
     glow.material.opacity = 0.06 * vis;
 
+    veilMat.uniforms.uTime.value = reduceMotion ? 0 : t;
+    veilMat.uniforms.uScroll.value = window.scrollY / Math.max(1, window.innerHeight) * 0.12;
+    veilMat.uniforms.uHero.value = heroProg;
+
+    renderer.clear();
+    renderer.render(veilScene, veilCam);
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
   }
@@ -198,6 +243,7 @@
     accent = accentColor();
     mat.color = accent; nucleusMat.color = accent;
     ico.material.color = accent; glow.material.color = accent;
+    veilMat.uniforms.uColor.value.copy(accent);
   };
   // ---- public: positions hero offset for layout (not used externally now) ----
 })();

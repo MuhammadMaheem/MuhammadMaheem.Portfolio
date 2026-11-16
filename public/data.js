@@ -33,6 +33,12 @@ window.SITE = {
     ],
   },
 
+  // Tech names for the scrolling strip under the hero.
+  marquee: [
+    'Python', 'FastAPI', 'LangGraph', 'LangChain', 'RAG', 'AI Agents', 'PyTorch', 'Hugging Face',
+    'Next.js', 'React', 'TypeScript', 'PostgreSQL', 'ChromaDB', 'FAISS', 'Docker', 'OpenCV',
+  ],
+
   // Quick numbers (unused in hero by design; kept for reference)
   metrics: [
     { label: 'Projects shipped', value: 17, suffix: '' },
@@ -511,6 +517,24 @@ window.SITE = {
       ],
       desc: 'LangGraph-orchestrated multi-agent system where a Planner decomposes a research question into a DAG of 3–6 sub-questions, validated by topological sort. A scheduler dispatches every ready sub-question in parallel LangGraph Send() waves to specialist agents — web search (DuckDuckGo/Tavily), a sandboxed Python executor (import allowlist, CPU/memory rlimits, network isolation via unshare -rn), and a BM25 RAG agent over a local corpus — each citing evidence by ID. A Synthesizer writes the cited report; a Citation-Checker re-reads it sentence by sentence (pysbd-based splitting) and judges each claim against only its cited evidence, producing a coverage score. Below a 0.75 threshold, a Critic diagnoses the gaps and loops back to the Planner (max 2 iterations, best-coverage draft wins — reflection can regress). Every node emits typed trace events to SQLite and SSE, powering a live agent-execution-trace UI built with Next.js 15 and React Flow. Ships with a 30-question eval harness (web / computational / multi-hop / adversarial splits) comparing the full swarm against a no-critic ablation and a single-agent ReAct baseline, with paired sign-test significance and citation-coverage metrics.',
       role: 'Solo build — LangGraph multi-agent graph, sandboxed code execution, citation-audit pipeline, FastAPI SSE backend, Next.js trace UI, eval harness.',
+      // Shown as a large featured panel above the project grid.
+      showcase: {
+        order: 2,
+        kind: 'web',
+        kicker: 'Multi-agent AI · 2026',
+        title: 'Research Agent Swarm',
+        pitch:
+          'Ask a hard question. A team of AI agents splits it up, researches the parts at the same time, and fact-checks every sentence of the final report.',
+        points: [
+          'A planner breaks the question into 3 to 6 smaller questions',
+          'Web, code and document agents work in parallel',
+          'A checker audits each claim against its cited source',
+        ],
+        shots: [
+          'screenshots/Research-Agent-Swarm/web/02-live-trace.jpg',
+          'screenshots/Research-Agent-Swarm/web/03-final-report.jpg',
+        ],
+      },
       links: [
         {
           label: 'GitHub',
@@ -533,8 +557,27 @@ window.SITE = {
       blurb:
         'Mobile action game where you draw circles with your ink trail to wipe out every enemy inside.',
       tech: ['TypeScript', 'WebGL', 'Web Audio', 'Vite', 'Capacitor', 'Android', 'Google Play Games', 'Vitest', 'Playwright'],
-      desc: 'A single-player action game for Android phones, played in portrait with one thumb. Your hero leaves a trail of wet ink; cross your own trail and the loop closes into a circle that erases every enemy inside it. Each enemy you erase leaves a permanent stain, so every run ends as a painting you keep in a gallery. The game runs through five seasons and twenty stages (Spring, Summer, Autumn, Winter and the Red Sun), and each season ends with a boss fight. Between stages you pick new brushes and skills to build your own play style, and unlock new heroes. All art and sound are made in code. The web game is wrapped as a native Android app with Capacitor, works fully offline, and supports Google Play Games achievements, leaderboards and cloud saves. Tested with automated unit tests and browser tests that play the first stage frame by frame.',
-      role: 'Solo build — game design, gameplay code, art and sound in code, Android packaging for Google Play.',
+      desc: 'A single-player action game for Android phones, played in portrait with one thumb. Your hero leaves a trail of wet ink; cross your own trail and the loop closes into a circle that erases every enemy inside it. Each enemy you erase leaves a permanent stain, so every run ends as a painting you keep in a gallery. The game runs through five seasons and twenty stages (Spring, Summer, Autumn, Winter and the Red Sun), and each season ends with a boss fight. Between stages you pick new brushes and skills to build your own play style, and unlock new heroes. Sound is generated in code. The web game is wrapped as a native Android app with Capacitor, works fully offline, and supports Google Play Games achievements, leaderboards and cloud saves. Tested with automated unit tests and browser tests that play the first stage frame by frame.',
+      role: 'Solo build — game design, gameplay code, sound in code, Android packaging for Google Play.',
+      showcase: {
+        order: 1,
+        kind: 'game',
+        kicker: 'Android game · 2026',
+        title: 'INKWAKE',
+        pitch:
+          'A mobile action game painted in ink. Draw a circle with your trail and every enemy inside it is wiped out.',
+        points: [
+          'Five seasons and twenty stages, each season ending in a boss fight',
+          'Six heroes and eight weapons to unlock',
+          'One-thumb controls; plays fully offline',
+        ],
+        banner: 'screenshots/INKWAKE/00-feature.jpg',
+        shots: [
+          'screenshots/INKWAKE/02-draw-the-circle.jpg',
+          'screenshots/INKWAKE/03-erase.jpg',
+          'screenshots/INKWAKE/05-guardian.jpg',
+        ],
+      },
       links: [],
       screenshots: [
         'screenshots/INKWAKE/00-feature.jpg',
