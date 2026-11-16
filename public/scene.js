@@ -1,7 +1,14 @@
 /* ============================================================
-   scene.js — the "neural core": a draggable WebGL particle
-   object that lives behind the page, spins to your cursor,
-   and shrinks/fades as you scroll past the hero.
+   scene.js — the "neural core": a sphere of light points behind
+   the page. It turns toward the cursor, can be dragged, bursts
+   when grabbed, and shrinks and fades as you scroll past the hero.
+
+   Each point is drawn by a small shader, so the sphere has depth
+   (near points are larger and brighter), waves of light travel
+   across its surface, points near the cursor lift and glow, and
+   a few amber sparks sit among the cyan. A soft halo, a slow
+   outer dust shell and a wireframe core complete it.
+   A veil of light is drawn behind. One canvas, one WebGL context.
    ============================================================ */
 (function () {
   const canvas = document.getElementById('bg-canvas');
@@ -12,27 +19,27 @@
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   } catch (e) { return; }
 
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
-  renderer.setPixelRatio(DPR);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const small = window.innerWidth < 720;
+  const hoverable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.autoClear = false;
 
+  const FOV = 50;
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
   camera.position.z = 7.2;
-
   const group = new THREE.Group();
   scene.add(group);
 
-  // ---- accent color helper ----
-  function accentColor() {
-    const c = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#C6FF3A';
+  function cssColor(name, fallback) {
+    const c = getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
     return new THREE.Color(c);
   }
-  let accent = accentColor();
+  let accent = cssColor('--accent', '#00d4ff');
+  let signal = cssColor('--signal', '#ffb454');
 
-  // ---- ambient veil: slow ribbons of light behind the whole page ----
-  // Drawn first, in this same renderer, so there is still one canvas and one
-  // WebGL context. A handful of sines per pixel: cheap on an integrated GPU.
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------- veil: slow ribbons of light behind everything ---------- */
   const veilScene = new THREE.Scene();
   const veilCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const veilMat = new THREE.ShaderMaterial({
@@ -57,7 +64,7 @@
       '  float mask = smoothstep(1.15, 0.05, length(p - vec2(0.38, 0.12)));',
       '  vec3 violet = vec3(0.42, 0.30, 1.0);',
       '  vec3 col = uColor * a + mix(uColor, violet, 0.75) * b * 0.8;',
-      '  float inten = (a * 0.55 + b * 0.4) * mask * mix(0.30, 0.17, uHero);',
+      '  float inten = (a * 0.55 + b * 0.4) * mask * mix(0.26, 0.16, uHero);',
       '  inten += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 170.0;',
       '  float m = max(max(col.r, col.g), max(col.b, 0.0001));',
       '  gl_FragColor = vec4(col / m, clamp(inten, 0.0, 1.0));',
@@ -65,173 +72,234 @@
     ].join('\n')
   });
   veilScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), veilMat));
-  renderer.autoClear = false;
 
-  // ---- build the core: fibonacci-sphere of points + a few orbiting shells ----
-  const COUNT = 2600;
-  const positions = new Float32Array(COUNT * 3);
-  const base = new Float32Array(COUNT * 3);       // resting positions
-  const rand = new Float32Array(COUNT);
-  const R = 2.5;
-  for (let i = 0; i < COUNT; i++) {
-    const t = i / COUNT;
-    const inc = Math.acos(1 - 2 * t);
-    const az = Math.PI * (1 + Math.sqrt(5)) * i;
-    // multi-shell: push some points inward for depth
-    const shell = 0.55 + 0.45 * ((i % 7) / 6);
-    const r = R * shell * (0.92 + Math.random() * 0.16);
-    const x = r * Math.sin(inc) * Math.cos(az);
-    const y = r * Math.sin(inc) * Math.sin(az);
-    const z = r * Math.cos(inc);
-    base[i*3] = x; base[i*3+1] = y; base[i*3+2] = z;
-    positions[i*3] = x; positions[i*3+1] = y; positions[i*3+2] = z;
-    rand[i] = Math.random();
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-  // round soft sprite for each point
-  function makeSprite() {
-    const s = 64, cv = document.createElement('canvas'); cv.width = cv.height = s;
-    const g = cv.getContext('2d');
-    const grd = g.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
-    grd.addColorStop(0, 'rgba(255,255,255,1)');
-    grd.addColorStop(0.35, 'rgba(255,255,255,0.8)');
-    grd.addColorStop(1, 'rgba(255,255,255,0)');
-    g.fillStyle = grd; g.fillRect(0,0,s,s);
-    const tex = new THREE.CanvasTexture(cv); return tex;
-  }
-  const sprite = makeSprite();
-
-  const mat = new THREE.PointsMaterial({
-    size: 0.058, map: sprite, transparent: true, depthWrite: false,
-    blending: THREE.AdditiveBlending, color: accent, opacity: 0.9
+  /* ---------- the points shader, shared by the core and the dust ---------- */
+  const pointUniforms = {
+    uTime: { value: 0 },
+    uBurst: { value: 0 },
+    uOpacity: { value: 1 },
+    uScale: { value: 1 },                      // turns a world-space size into pixels
+    uAspect: { value: 1 },
+    uPointer: { value: new THREE.Vector2(9, 9) },
+    uPointerOn: { value: 0 },
+    uColor: { value: accent.clone() },
+    uSignal: { value: signal.clone() }
+  };
+  const pointMat = new THREE.ShaderMaterial({
+    uniforms: pointUniforms,
+    transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+    vertexShader: [
+      'attribute float aRand;',
+      'attribute float aSize;',
+      'uniform float uTime, uBurst, uOpacity, uScale, uAspect, uPointerOn;',
+      'uniform vec2 uPointer;',
+      'uniform vec3 uColor, uSignal;',
+      'varying vec3 vCol;',
+      'varying float vAlpha;',
+      'void main(){',
+      '  vec3 n = normalize(position);',
+      // a slow wave of "thought" rolling over the surface
+      '  float w = sin(n.x * 3.1 + uTime * 0.9) * sin(n.y * 4.0 - uTime * 0.7) * sin(n.z * 2.7 + uTime * 0.5);',
+      '  float crest = max(w, 0.0);',
+      '  float breathe = sin(uTime * 1.3 + aRand * 12.0) * 0.03;',
+      '  vec3 p = position * (1.0 + w * 0.09 + breathe + uBurst * (0.16 * aRand + 0.3 * crest + 0.05));',
+      // points under the cursor lift off the surface and glow
+      '  vec4 clip = projectionMatrix * modelViewMatrix * vec4(p, 1.0);',
+      '  vec2 d = clip.xy / clip.w - uPointer; d.x *= uAspect;',
+      '  float near = smoothstep(0.42, 0.0, length(d)) * uPointerOn;',
+      '  p += n * near * 0.32;',
+      '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
+      '  gl_Position = projectionMatrix * mv;',
+      // depth: 0 at the far side of the sphere, 1 at the near side
+      '  float depth = smoothstep(-10.4, -4.4, mv.z);',
+      '  float twinkle = 0.72 + 0.28 * sin(uTime * 2.1 + aRand * 43.0);',
+      '  float hot = clamp(crest * 1.5 + near * 0.9 + uBurst * 0.5, 0.0, 1.0);',
+      '  float spark = step(0.945, aRand);',
+      // capped, because large additive points are what costs frames on integrated graphics
+      '  gl_PointSize = min(aSize * (0.55 + 0.85 * depth) * (1.0 + hot * 0.9 + spark * 0.5) * uScale / -mv.z, 22.0);',
+      '  vec3 base = mix(uColor, uSignal, spark);',
+      '  vCol = mix(base, vec3(1.0), hot * 0.55);',
+      '  vAlpha = (0.22 + 0.78 * depth) * twinkle * (0.75 + hot * 0.6) * uOpacity;',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'precision mediump float;',
+      'varying vec3 vCol;',
+      'varying float vAlpha;',
+      'void main(){',
+      '  float r = length(gl_PointCoord - 0.5);',
+      '  float a = smoothstep(0.5, 0.0, r);',
+      '  a = a * a * (0.6 + 0.4 * a);',
+      '  gl_FragColor = vec4(vCol, a * vAlpha);',
+      '}'
+    ].join('\n')
   });
-  const points = new THREE.Points(geo, mat);
-  group.add(points);
 
-  // wireframe icosahedron core (faint structure)
-  const ico = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(1.5, 1),
-    new THREE.MeshBasicMaterial({ color: accent, wireframe: true, transparent: true, opacity: 0.12 })
-  );
+  function buildPoints(count, place) {
+    const pos = new Float32Array(count * 3), rnd = new Float32Array(count), size = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      const v = place(i, count);
+      pos[i * 3] = v[0]; pos[i * 3 + 1] = v[1]; pos[i * 3 + 2] = v[2];
+      rnd[i] = Math.random();
+      size[i] = v[3];
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('aRand', new THREE.BufferAttribute(rnd, 1));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+    const pts = new THREE.Points(geo, pointMat);
+    pts.frustumCulled = false;
+    return pts;
+  }
+
+  // the core: an even (fibonacci) sphere in a few shells, so it has a body, not just a skin
+  const R = 2.5;
+  const COUNT = small ? 1800 : 2800;
+  const core = buildPoints(COUNT, (i, n) => {
+    const inc = Math.acos(1 - 2 * (i + 0.5) / n);
+    const az = Math.PI * (1 + Math.sqrt(5)) * i;
+    const shell = 0.55 + 0.45 * ((i % 7) / 6);
+    const r = R * shell * (0.93 + Math.random() * 0.14);
+    return [r * Math.sin(inc) * Math.cos(az), r * Math.sin(inc) * Math.sin(az), r * Math.cos(inc),
+      0.03 + Math.random() * 0.032 + (shell > 0.95 ? 0.012 : 0)];
+  });
+  group.add(core);
+
+  // outer dust: sparse, slow, turning the other way, for depth
+  const dust = buildPoints(small ? 160 : 320, () => {
+    const u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, s = Math.sqrt(1 - u * u);
+    const r = R * (1.22 + Math.random() * 0.55);
+    return [r * s * Math.cos(th), r * u, r * s * Math.sin(th), 0.02 + Math.random() * 0.022];
+  });
+  group.add(dust);
+
+  // soft halo behind the core
+  function haloTexture() {
+    const s = 256, cv = document.createElement('canvas'); cv.width = cv.height = s;
+    const g = cv.getContext('2d');
+    const grd = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    grd.addColorStop(0, 'rgba(255,255,255,0.55)');
+    grd.addColorStop(0.25, 'rgba(255,255,255,0.22)');
+    grd.addColorStop(0.6, 'rgba(255,255,255,0.05)');
+    grd.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = grd; g.fillRect(0, 0, s, s);
+    return new THREE.CanvasTexture(cv);
+  }
+  const haloMat = new THREE.SpriteMaterial({
+    map: haloTexture(), color: accent, transparent: true, opacity: 0.3,
+    depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending
+  });
+  const halo = new THREE.Sprite(haloMat);
+  halo.scale.setScalar(R * 3.6);
+  group.add(halo);
+
+  // wireframe core: two nested shapes turning against each other
+  const icoMat = new THREE.MeshBasicMaterial({ color: accent, wireframe: true, transparent: true, opacity: 0.14, depthWrite: false });
+  const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(1.5, 1), icoMat);
   group.add(ico);
+  const innerMat = new THREE.MeshBasicMaterial({ color: signal, wireframe: true, transparent: true, opacity: 0.1, depthWrite: false });
+  const inner = new THREE.Mesh(new THREE.IcosahedronGeometry(0.72, 0), innerMat);
+  group.add(inner);
 
-  // a dim inner sphere glow
-  const glow = new THREE.Mesh(
-    new THREE.SphereGeometry(0.9, 24, 24),
-    new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.06 })
-  );
-  group.add(glow);
-
-  // bright nucleus point
-  const nucleusMat = new THREE.PointsMaterial({ size: 0.5, map: sprite, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, color: accent, opacity: 0.8 });
-  const nucleus = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0,0,0]),3)), nucleusMat);
-  group.add(nucleus);
-
-  // ---- interaction state ----
+  /* ---------- interaction ---------- */
   let rotX = -0.3, rotY = 0, velX = 0, velY = 0.0016;
   let dragging = false, lastX = 0, lastY = 0;
-  const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-  let burst = 0; // explode-on-grab energy
+  const pointer = { x: 0, y: 0, tx: 0, ty: 0, seen: false };
+  let burst = 0;
 
   // clicks on controls belong to the page, not the core
   const UI = 'a, button, input, textarea, select, label, .ask, .proj-modal, .mobile-menu';
   function onDown(e) {
     if (e.target.closest && e.target.closest(UI)) { return; }
     dragging = true;
-    const p = e.touches ? e.touches[0] : e;
-    lastX = p.clientX; lastY = p.clientY;
-    burst = 1;
+    lastX = e.clientX; lastY = e.clientY;
+    if (!reduceMotion) { burst = 1; }
     document.body.classList.add('grabbing');
   }
   function onMove(e) {
-    const p = e.touches ? e.touches[0] : e;
-    pointer.tx = (p.clientX / window.innerWidth) * 2 - 1;
-    pointer.ty = (p.clientY / window.innerHeight) * 2 - 1;
+    pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+    pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+    pointer.seen = true;
     if (dragging) {
-      const dx = p.clientX - lastX, dy = p.clientY - lastY;
-      velY = dx * 0.00038;
-      velX = dy * 0.00038;
-      lastX = p.clientX; lastY = p.clientY;
+      velY = (e.clientX - lastX) * 0.00038;
+      velX = (e.clientY - lastY) * 0.00038;
+      lastX = e.clientX; lastY = e.clientY;
     }
   }
   function onUp() { dragging = false; document.body.classList.remove('grabbing'); }
-
   window.addEventListener('pointerdown', onDown);
-  // the hero panel makes the core pulse while it "thinks" and "speaks"
-  window.addEventListener('ask:think', () => { if (!reduceMotion) { burst = Math.max(burst, 0.55); } });
-  window.addEventListener('ask:token', () => { if (!reduceMotion) { burst = Math.max(burst, 0.12); } });
   window.addEventListener('pointermove', onMove, { passive: true });
   window.addEventListener('pointerup', onUp);
   window.addEventListener('pointerleave', onUp);
 
-  // ---- scroll-driven transform ----
-  let heroProg = 0; // 0 at top, 1 when hero scrolled away
+  // the hero panel makes the core pulse while it "thinks" and "speaks"
+  window.addEventListener('ask:think', () => { if (!reduceMotion) { burst = Math.max(burst, 0.6); } });
+  window.addEventListener('ask:token', () => { if (!reduceMotion) { burst = Math.max(burst, 0.14); } });
+
+  let heroProg = 0;
   function updateScroll() {
-    const h = window.innerHeight;
-    heroProg = Math.min(1, Math.max(0, window.scrollY / (h * 0.9)));
+    heroProg = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.9)));
   }
   window.addEventListener('scroll', updateScroll, { passive: true });
 
-  // ---- resize ----
+  const bufSize = new THREE.Vector2();
   function resize() {
     const w = window.innerWidth, h = window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h; camera.updateProjectionMatrix();
-    renderer.getDrawingBufferSize(veilMat.uniforms.uRes.value);
+    renderer.getDrawingBufferSize(bufSize);
+    veilMat.uniforms.uRes.value.copy(bufSize);
+    // on phones the sphere sits behind the text, so its points are smaller and dimmer
+    pointUniforms.uScale.value = (small ? 0.7 : 1) * bufSize.y / (2 * Math.tan(FOV * Math.PI / 360));
+    pointUniforms.uAspect.value = w / h;
   }
   window.addEventListener('resize', resize);
   resize(); updateScroll();
 
-  // ---- animation loop ----
+  /* ---------- frame ---------- */
   const clock = new THREE.Clock();
-  const pos = geo.attributes.position.array;
+  let elapsed = 0;
 
   function tick() {
-    const t = clock.getElapsedTime();
+    const dt = Math.min(clock.getDelta(), 0.05);
+    if (!reduceMotion) { elapsed += dt; }
+    const t = elapsed;
 
-    // inertia / auto-spin
     if (!dragging) {
-      velY += (0.0016 - velY) * 0.02; // settle to gentle auto-rotate
+      velY += (0.0016 - velY) * 0.02;   // settle back to a gentle spin
       velX *= 0.94;
     }
-    rotY += velY; rotX += velX;
+    if (!reduceMotion) { rotY += velY; rotX += velX; }
     rotX = Math.max(-1.2, Math.min(1.2, rotX));
-
-    // pointer parallax (subtle)
     pointer.x += (pointer.tx - pointer.x) * 0.05;
     pointer.y += (pointer.ty - pointer.y) * 0.05;
-
     group.rotation.y = rotY + pointer.x * 0.25;
     group.rotation.x = rotX + pointer.y * 0.18;
+    dust.rotation.y = -rotY * 1.7;
+    dust.rotation.x = t * 0.03;
+    ico.rotation.y -= reduceMotion ? 0 : 0.0024; ico.rotation.x += reduceMotion ? 0 : 0.0012;
+    inner.rotation.y += reduceMotion ? 0 : 0.006; inner.rotation.z -= reduceMotion ? 0 : 0.003;
 
-    // breathing + burst displacement of particles
     burst *= 0.93;
-    const amp = 0.06 + burst * 0.5;
-    for (let i = 0; i < COUNT; i++) {
-      const bx = base[i*3], by = base[i*3+1], bz = base[i*3+2];
-      const n = Math.sin(t * 1.3 + rand[i] * 12.0) * amp;
-      const k = 1 + n * 0.12 + burst * 0.18 * rand[i];
-      pos[i*3] = bx * k;
-      pos[i*3+1] = by * k;
-      pos[i*3+2] = bz * k;
-    }
-    geo.attributes.position.needsUpdate = true;
-    ico.rotation.y -= 0.0024; ico.rotation.x += 0.0012;
 
-    // scroll: shrink, lift, fade as hero leaves
-    const s = 1 - heroProg * 0.5;
-    group.scale.setScalar(s);
+    // scroll: shrink, lift and fade as the hero leaves
+    group.scale.setScalar((small ? 0.8 : 1) * (1 - heroProg * 0.5));
     group.position.y = heroProg * 2.6;
     group.position.x = heroProg * 1.2;
-    const vis = 1 - heroProg * 0.78;
-    mat.opacity = 0.9 * vis;
-    nucleusMat.opacity = 0.8 * vis;
-    ico.material.opacity = 0.12 * vis;
-    glow.material.opacity = 0.06 * vis;
+    const vis = (small ? 0.5 : 1) * (1 - heroProg * 0.78);
 
-    veilMat.uniforms.uTime.value = reduceMotion ? 0 : t;
+    pointUniforms.uTime.value = t;
+    pointUniforms.uBurst.value = burst;
+    pointUniforms.uOpacity.value = vis;
+    pointUniforms.uPointer.value.set(pointer.x, -pointer.y);
+    pointUniforms.uPointerOn.value = (hoverable && pointer.seen && !reduceMotion) ? 1 : 0;
+    const pulse = 0.5 + 0.5 * Math.sin(t * 1.1);
+    haloMat.opacity = (0.22 + 0.1 * pulse + burst * 0.25) * vis;
+    icoMat.opacity = (0.12 + burst * 0.2) * vis;
+    innerMat.opacity = (0.08 + 0.08 * pulse + burst * 0.3) * vis;
+    inner.scale.setScalar(1 + 0.08 * pulse + burst * 0.5);
+
+    veilMat.uniforms.uTime.value = t;
     veilMat.uniforms.uScroll.value = window.scrollY / Math.max(1, window.innerHeight) * 0.12;
     veilMat.uniforms.uHero.value = heroProg;
 
@@ -242,14 +310,13 @@
   }
   tick();
 
-  // intro handled by the per-frame scroll transform; nothing to animate here.
-
-  // ---- public: change accent ----
+  /* ---------- public: re-read the accent colours ---------- */
   window.setSceneAccent = function () {
-    accent = accentColor();
-    mat.color = accent; nucleusMat.color = accent;
-    ico.material.color = accent; glow.material.color = accent;
+    accent = cssColor('--accent', '#00d4ff');
+    signal = cssColor('--signal', '#ffb454');
+    pointUniforms.uColor.value.copy(accent);
+    pointUniforms.uSignal.value.copy(signal);
+    haloMat.color = accent; icoMat.color = accent; innerMat.color = signal;
     veilMat.uniforms.uColor.value.copy(accent);
   };
-  // ---- public: positions hero offset for layout (not used externally now) ----
 })();
