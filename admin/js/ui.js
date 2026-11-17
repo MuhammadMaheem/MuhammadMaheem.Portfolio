@@ -94,7 +94,7 @@ export function listEditor({ items, renderItem, newItem, addLabel = 'Add', onStr
     items.forEach((item, i) => {
       const move = (d) => { const j = i + d; if (j < 0 || j >= items.length) { return; } [items[i], items[j]] = [items[j], items[i]]; touch(); redraw(); (onStructure || (() => {}))(); };
       root.appendChild(h('div', { class: 'row-card' },
-        h('div', { class: 'row-tools' },
+        h('div', { class: 'row-tools', role: 'group', 'aria-label': 'Row actions' },
           h('button', { type: 'button', class: 'icon', title: 'Move up', 'aria-label': 'Move up', disabled: i === 0, onclick: () => move(-1) }, '↑'),
           h('button', { type: 'button', class: 'icon', title: 'Move down', 'aria-label': 'Move down', disabled: i === items.length - 1, onclick: () => move(1) }, '↓'),
           h('button', { type: 'button', class: 'icon danger', title: 'Remove', 'aria-label': 'Remove' + (itemLabel ? ' ' + itemLabel(item) : ''), onclick: () => {

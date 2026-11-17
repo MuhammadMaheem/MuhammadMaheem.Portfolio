@@ -39,6 +39,7 @@ export function normalize(site) {
     c.bullets = Array.isArray(c.bullets) ? c.bullets : [];
   });
   site.projects.forEach((p) => {
+    if (p.visible === undefined) { p.visible = true; }
     p.tech = p.tech || [];
     p.links = p.links || [];
     p.screenshots = p.screenshots || [];

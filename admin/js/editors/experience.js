@@ -69,7 +69,11 @@ export function experienceEditor() {
   wrap.appendChild(listEditor({
     items: site.changelog, addLabel: 'Add experience',
     newItem: newExperience, addToTop: true,
-    renderItem: (c) => entry(c),
+    renderItem: (c, i) => {
+      const box = entry(c);
+      box.addEventListener('focusin', () => window.dispatchEvent(new CustomEvent('adm:focus', { detail: { selector: '.tl-item', index: i, flash: true } })));
+      return box;
+    },
     itemLabel: (c) => (c.role || 'entry') + (c.org ? ' at ' + c.org : ''),
   }));
   return wrap;

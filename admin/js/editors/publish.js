@@ -1,22 +1,8 @@
 import { h, field, toast } from '../ui.js';
 import { api } from '../api.js';
-import { state, changes, pendingCount, problems, publish, discardDraft, writePreview, undo } from '../store.js';
+import { state, changes, pendingCount, problems, publish, discardDraft } from '../store.js';
 
 const card = (title, ...kids) => h('section', { class: 'card' }, h('h3', {}, title), ...kids);
-
-export function previewEditor() {
-  writePreview();
-  const frame = h('iframe', { class: 'preview-frame', src: '/?adm-preview=1', title: 'Site preview' });
-  const size = (w) => { frame.style.width = w; };
-  return h('div', { class: 'stack' },
-    h('p', { class: 'hint lead' }, 'This is the real site showing your draft. Nothing is public until you publish.'),
-    h('div', { class: 'bar' },
-      h('button', { type: 'button', class: 'btn', onclick: () => size('100%') }, 'Desktop'),
-      h('button', { type: 'button', class: 'btn', onclick: () => size('820px') }, 'Tablet'),
-      h('button', { type: 'button', class: 'btn', onclick: () => size('390px') }, 'Phone'),
-      h('button', { type: 'button', class: 'btn', onclick: () => { writePreview(); frame.contentWindow.location.reload(); } }, 'Refresh')),
-    h('div', { class: 'frame-wrap' }, frame));
-}
 
 export function publishEditor(refresh) {
   const root = h('div', { class: 'stack' });

@@ -8,6 +8,7 @@ const open = new WeakSet();
 const PLACEMENTS = [['flagship', 'Flagship (big panel at the top)'], ['featured', 'Featured (first in the grid)'], ['normal', 'Normal']];
 const BADGE = { flagship: 'Flagship', featured: 'Featured', normal: '' };
 
+const focusInPreview = (p) => window.dispatchEvent(new CustomEvent('adm:focus', { detail: { project: p.name, flash: true } }));
 export const folderFor = (p) => slug((p.repo && p.repo.name) || p.name);
 
 function allUsed() {
@@ -142,8 +143,6 @@ function projectBody(p, redrawRow) {
         field('Finished (optional)', text(p, 'end', { placeholder: 'YYYY-MM' }))),
       p.repo ? h('p', { class: 'hint' }, 'Imported from GitHub: ' + p.repo.fullName + (p.repo.private ? ' (private, so no source link is shown).' : '.')) : null,
       toggle(p, 'visible', 'Show on the site'));
-    // `visible` defaults to true when missing
-    if (p.visible === undefined) { p.visible = true; }
   };
   draw();
   return body;
@@ -163,7 +162,7 @@ export function projectsEditor() {
       items: site.projects, emptyText: 'No projects yet.',
       itemLabel: (p) => p.name,
       renderItem: (p) => {
-        const head = h('button', { type: 'button', class: 'proj-head', 'aria-expanded': String(open.has(p)), onclick: () => { open.has(p) ? open.delete(p) : open.add(p); redraw(); } });
+        const head = h('button', { type: 'button', class: 'proj-head', 'aria-expanded': String(open.has(p)), onclick: () => { open.has(p) ? open.delete(p) : open.add(p); redraw(); if (open.has(p)) { focusInPreview(p); } } });
         const paintHead = () => {
           head.replaceChildren(...[
             p.screenshots[0] ? h('img', { src: imgSrc(p.screenshots[0]), alt: '', class: 'mini' }) : null,
@@ -175,7 +174,9 @@ export function projectsEditor() {
           head.setAttribute('aria-expanded', String(open.has(p)));
         };
         paintHead();
-        return h('div', {}, head, open.has(p) ? projectBody(p, paintHead) : null);
+        const wrap = h('div', {}, head, open.has(p) ? projectBody(p, paintHead) : null);
+        wrap.addEventListener('focusin', () => { if (open.has(p)) { focusInPreview(p); } });
+        return wrap;
       },
     }));
   }
