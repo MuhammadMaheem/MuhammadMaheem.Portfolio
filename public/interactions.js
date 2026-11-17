@@ -119,7 +119,7 @@
       if (frame >= total) { clearInterval(id); target.textContent = finalText; }
     }, 16);
   }
-  if (codeEl) { setTimeout(() => scramble(codeEl, 'MHM·01 // SYSTEM ONLINE', 900), 200); }
+  if (codeEl) { setTimeout(() => scramble(codeEl, codeEl.textContent, 900), 200); }
 
   /* ---------- uptime ticker (skipped if element absent) ---------- */
   const uptimeEl = $('#rUptime');

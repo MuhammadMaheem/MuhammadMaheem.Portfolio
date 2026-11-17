@@ -14,6 +14,10 @@ export function normalize(site) {
   id.bio = Array.isArray(id.bio) ? id.bio : [];
   id.specs = Array.isArray(id.specs) ? id.specs : [];
   id.quote = id.quote || { text: '', by: '' };
+  if (id.heroLabel === undefined) { id.heroLabel = 'MHM·01 // SYSTEM ONLINE'; }
+  if (id.ctaPrimary === undefined) { id.ctaPrimary = 'View deployments'; }
+  if (id.ctaSecondary === undefined) { id.ctaSecondary = 'Establish uplink'; }
+  if (id.resumeLabel === undefined) { id.resumeLabel = 'Spec sheet'; }
   ['modules', 'projects', 'changelog', 'socials', 'writing', 'marquee'].forEach((k) => { if (!Array.isArray(site[k])) { site[k] = []; } });
   site.sections = site.sections || {};
   SECTION_KEYS.forEach(([k, label]) => {

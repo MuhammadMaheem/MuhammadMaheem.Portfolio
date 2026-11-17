@@ -37,7 +37,11 @@ window.SITE = {
         "k": "Status",
         "v": "Open to internships & roles"
       }
-    ]
+    ],
+    "ctaPrimary": "View deployments",
+    "ctaSecondary": "Establish uplink",
+    "resumeLabel": "Spec sheet",
+    "heroLabel": "MHM·01 // SYSTEM ONLINE"
   },
   "ask": {
     "title": "Ask my portfolio",

@@ -36,6 +36,11 @@
   // hidden projects are dropped; ids follow the order so cards and the modal stay in step
   S.projects = S.projects.filter((p) => p.visible !== false);
   S.projects.forEach((p, i) => { p.id = String(i + 1).padStart(2, '0'); });
+  // other scripts (the Ask panel) read c.date and c.note, so fill them in from the structured fields
+  (S.changelog || []).forEach((c) => {
+    if (c.start || c.end || c.present) { c.date = fmtRange(c.start, c.end, c.present); }
+    if (c.format === 'bullets' && Array.isArray(c.bullets) && c.bullets.length) { c.note = c.bullets.filter(Boolean).join('. '); }
+  });
   const exp = (S.changelog || []).slice();
   const expById = {};
   exp.forEach((c) => { if (c.id) { expById[c.id] = c; } });
@@ -74,6 +79,38 @@
   $('heroTagline').textContent = S.identity.tagline;
   $('heroRole').textContent = S.identity.role;
   const rLoc = $('rLoc'); if (rLoc) rLoc.textContent = S.identity.location;
+  // name, brand, codename and button labels come from the admin-editable identity block
+  (function () {
+    const id = S.identity;
+    const words = String(id.name || '').trim().split(/\s+/).filter(Boolean);
+    const title = $('heroTitle');
+    if (title && words.length) {
+      const first = words[0];
+      const rest = words.slice(1).join(' ');
+      // the last line keeps its accent on everything after the first two letters ("Ma" + "heem")
+      const accent = (t) => (t.length > 4 ? esc(t.slice(0, 2)) + '<em>' + esc(t.slice(2)) + '</em>' : esc(t));
+      title.innerHTML = rest
+        ? '<span class="ln"><span>' + esc(first) + '</span></span><span class="ln"><span>' + accent(rest) + '</span></span>'
+        : '<span class="ln"><span>' + accent(first) + '</span></span>';
+      title.setAttribute('aria-label', id.name);
+    }
+    const code = String(id.codename || '').trim();
+    if (code) {
+      const dot = code.indexOf('.');
+      const brand = document.querySelector('.nav .brand');
+      if (brand) {
+        brand.innerHTML = '<span class="dot"></span>' + (dot > 0 ? esc(code.slice(0, dot)) + '<span style="color: var(--accent)">' + esc(code.slice(dot)) + '</span>' : esc(code));
+      }
+      const big = document.querySelector('.footer .big, .big');
+      if (big && big.textContent.trim() === 'MHM.DEV') { big.textContent = code; }
+    }
+    const cn = $('codename');
+    if (cn && id.heroLabel) { cn.textContent = id.heroLabel; }
+    const cta = document.querySelectorAll('.hero-cta a');
+    if (cta[0] && id.ctaPrimary) { cta[0].innerHTML = esc(id.ctaPrimary) + ' <span class="arrow">→</span>'; }
+    if (cta[1] && id.ctaSecondary) { cta[1].textContent = id.ctaSecondary; }
+    if (id.resumeLabel) { document.querySelectorAll('.resume-btn').forEach((a) => { a.textContent = id.resumeLabel + ' ↓'; }); }
+  })();
   const rUnit = $('rUnit'); if (rUnit) rUnit.textContent = S.identity.codename || 'MHM·01';
 
   // metrics (removed from hero — skip if container absent)

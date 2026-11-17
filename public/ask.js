@@ -31,9 +31,10 @@
   };
 
   /* ---------- facts, read from data.js ---------- */
-  const jobs = S.changelog.filter((c) => /intern/i.test(c.role));
-  const degree = S.changelog.find((c) => /bachelor/i.test(c.role));
-  const featured = S.projects.filter((p) => p.showcase).sort((x, y) => x.showcase.order - y.showcase.order);
+  const jobs = S.changelog.filter((c) => c.type ? c.type !== 'education' : /intern/i.test(c.role));
+  const allInterns = jobs.every((c) => (c.type ? c.type === 'internship' : true));
+  const degree = S.changelog.find((c) => c.type ? c.type === 'education' : /bachelor/i.test(c.role));
+  const featured = S.projects.filter((p) => p.placement === 'flagship' && p.showcase).sort((x, y) => x.showcase.order - y.showcase.order);
   const moreCount = S.projects.length - featured.length;
   const game = featured.find((p) => p.showcase.kind === 'game');
   const resume = document.getElementById('resumeBtn');
@@ -54,8 +55,8 @@
       action: ['See the projects', '#work'],
     }),
     experience: () => ({
-      text: 'He has completed ' + jobs.length + ' internships: ' +
-        list(jobs.map((j) => j.role + ' at ' + j.org + ' (' + j.date.replace(/\s*—\s*/, ' to ') + ')')) + '.',
+      text: (allInterns ? 'He has completed ' + jobs.length + ' internships: ' : 'His experience: ') +
+        list(jobs.map((j) => j.role + ' at ' + j.org + (j.date ? ' (' + j.date.replace(/\s*—\s*/, ' to ') + ')' : ''))) + '.',
       sources: [['Experience', '#changelog']],
       action: ['See his experience', '#changelog'],
     }),
@@ -65,7 +66,7 @@
       action: ['See all skills', '#modules'],
     }),
     education: () => ({
-      text: degree ? degree.role + ' at ' + degree.org + ' (' + degree.date.replace(/\s*—\s*/, ' to ') + '). ' + degree.note : A.fallback,
+      text: degree ? degree.role + ' at ' + degree.org + (degree.date ? ' (' + degree.date.replace(/\s*—\s*/, ' to ') + ')' : '') + '. ' + (degree.note || '') : A.fallback,
       sources: [['Experience', '#changelog']],
     }),
     hire: () => ({
