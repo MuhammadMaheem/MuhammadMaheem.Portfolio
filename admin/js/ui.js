@@ -1,3 +1,9 @@
+// replaceChildren would print "null" for an empty slot; skip empty values and flatten lists instead
+const nativeReplace = Element.prototype.replaceChildren;
+Element.prototype.replaceChildren = function (...kids) {
+  return nativeReplace.apply(this, kids.flat(Infinity).filter((k) => k !== null && k !== undefined && k !== false));
+};
+
 // Tiny DOM helpers. No framework: editors build elements and re-render their own tab when the structure changes.
 export function h(tag, props, ...kids) {
   const n = document.createElement(tag);

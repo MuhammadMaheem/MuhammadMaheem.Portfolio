@@ -165,13 +165,13 @@ export function projectsEditor() {
       renderItem: (p) => {
         const head = h('button', { type: 'button', class: 'proj-head', 'aria-expanded': String(open.has(p)), onclick: () => { open.has(p) ? open.delete(p) : open.add(p); redraw(); } });
         const paintHead = () => {
-          head.replaceChildren(
-            h('img', { src: imgSrc(p.screenshots[0]), alt: '', class: 'mini', hidden: !p.screenshots[0] }),
+          head.replaceChildren(...[
+            p.screenshots[0] ? h('img', { src: imgSrc(p.screenshots[0]), alt: '', class: 'mini' }) : null,
             h('span', { class: 'ph-name' }, p.name || '(untitled)'),
             BADGE[p.placement] ? h('span', { class: 'badge ' + p.placement }, BADGE[p.placement]) : null,
             p.visible === false ? h('span', { class: 'badge off' }, 'Hidden') : null,
             h('span', { class: 'ph-tag' }, p.tag),
-            h('span', { class: 'chev' }, open.has(p) ? '▾' : '▸'));
+            h('span', { class: 'chev' }, open.has(p) ? '▾' : '▸')].filter(Boolean));
           head.setAttribute('aria-expanded', String(open.has(p)));
         };
         paintHead();
