@@ -1380,3 +1380,47 @@ html.js-ready body.booted .ask {
   padding: 0;
   list-style: none;
 }
+
+/* ---- admin-driven additions: company badge, experience bullets, attached projects ---- */
+.built-at {
+  margin: 10px 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+.tl-item .tl-bullets {
+  margin: 8px 0 0;
+  padding-left: 1.1em;
+  color: var(--text-dim);
+  font-family: var(--font-ui);
+  line-height: 1.6;
+}
+.tl-item .tl-bullets li { margin: 4px 0; }
+.tl-item .org a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.tl-built {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.tl-built > span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tl-proj {
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.tl-proj:hover, .tl-proj:focus-visible { border-color: var(--accent); color: var(--accent); }

@@ -7,6 +7,69 @@
   const $ = (id) => document.getElementById(id);
   const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
 
+  // ---- safety helpers: everything the admin or an import writes is plain text ----
+  const esc = (t) => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  // only http(s), mailto and tel links (and site-relative paths) are allowed
+  const safeUrl = (u) => {
+    const v = String(u == null ? '' : u).trim();
+    if (!v) { return ''; }
+    if (/^(https?:|mailto:|tel:)/i.test(v)) { return v; }
+    if (/^[a-z][a-z0-9+.-]*:/i.test(v) || v.startsWith('//')) { return ''; }
+    return v;
+  };
+  // headings: a line break is "\n", emphasis is *word*
+  const rich = (t) => esc(t).replace(/\n/g, '<br />').replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fmtDate = (d) => {
+    const m = String(d || '').match(/^(\d{4})(?:-(\d{2}))?$/);
+    if (!m) { return String(d || ''); }
+    return m[2] ? MON[Math.max(0, Math.min(11, +m[2] - 1))] + ' ' + m[1] : m[1];
+  };
+  const fmtRange = (start, end, present) => {
+    const a = fmtDate(start);
+    const b = present ? 'Present' : fmtDate(end);
+    return a && b ? a + ' — ' + b : (a || b);
+  };
+  window._fmtRange = fmtRange;
+  window._safeUrl = safeUrl;
+
+  // hidden projects are dropped; ids follow the order so cards and the modal stay in step
+  S.projects = S.projects.filter((p) => p.visible !== false);
+  S.projects.forEach((p, i) => { p.id = String(i + 1).padStart(2, '0'); });
+  const exp = (S.changelog || []).slice();
+  const expById = {};
+  exp.forEach((c) => { if (c.id) { expById[c.id] = c; } });
+  window._expById = expById;
+
+  // ---- section headings, nav labels, visibility ----
+  const SEC = S.sections || {};
+  const SEC_ORDER = [['about', 'about'], ['skills', 'modules'], ['projects', 'work'], ['experience', 'changelog'], ['writing', 'writing'], ['contact', 'uplink']];
+  // a writing section with no linked posts is hidden rather than showing links to nowhere
+  const posts = (S.writing || []).filter((w) => safeUrl(w.url));
+  if (!posts.length && SEC.writing) { SEC.writing.visible = false; }
+  let secNo = 0;
+  SEC_ORDER.forEach(([key, id]) => {
+    const node = document.getElementById(id);
+    const cfg = SEC[key];
+    if (!node || !cfg) { if (node) { secNo++; } return; }
+    if (cfg.visible === false && /^(skills|experience|writing)$/.test(key)) {
+      node.remove();
+      document.querySelectorAll('a[href="#' + id + '"]').forEach((a) => a.remove());
+      return;
+    }
+    secNo++;
+    document.querySelectorAll('.nav-links a[href="#' + id + '"], .mobile-menu a[href="#' + id + '"]').forEach((a) => { a.textContent = cfg.nav || cfg.eyebrow || a.textContent; });
+    const eb = node.querySelector('.eyebrow');
+    if (eb && cfg.eyebrow) { eb.innerHTML = '<span class="section-index">' + String(secNo).padStart(2, '0') + '</span> &nbsp;' + esc(cfg.eyebrow); }
+    const h = node.querySelector('h2');
+    if (h && cfg.title) { h.innerHTML = rich(cfg.title); }
+    let sub = node.querySelector('.sub');
+    if (cfg.sub) {
+      if (!sub) { sub = el('p', 'sub'); h.parentNode.appendChild(sub); }
+      sub.textContent = cfg.sub;
+    } else if (sub) { sub.remove(); }
+  });
+
   // ---- hero ----
   $('heroTagline').textContent = S.identity.tagline;
   $('heroRole').textContent = S.identity.role;
@@ -27,17 +90,17 @@
   const ac = $('aboutCopy');
   S.identity.bio.forEach((p, i) => {
     if (i > 0) ac.appendChild(el('div', 'bio-sep'));
-    ac.appendChild(el('p', null, p));
+    ac.appendChild(el('p', null, esc(p)));
   });
   if (S.identity.quote) {
     const q = el('blockquote', 'bio-quote');
-    q.innerHTML = '<span class="bq-mark">"</span><span class="bq-text">' + S.identity.quote.text + '</span><cite class="bq-by">— ' + S.identity.quote.by + '</cite>';
+    q.innerHTML = '<span class="bq-mark">"</span><span class="bq-text">' + esc(S.identity.quote.text) + '</span><cite class="bq-by">— ' + esc(S.identity.quote.by) + '</cite>';
     ac.appendChild(q);
   }
   const sl = $('specList');
   S.identity.specs.forEach((s) => {
     const r = el('div', 'row');
-    r.innerHTML = '<span class="k">' + s.k + '</span><span class="v">' + s.v + '</span>';
+    r.innerHTML = '<span class="k">' + esc(s.k) + '</span><span class="v">' + esc(s.v) + '</span>';
     sl.appendChild(r);
   });
 
@@ -57,10 +120,10 @@
 
   // ---- modules ----
   const mg = $('moduleGrid');
-  S.modules.forEach((mod, i) => {
+  (mg ? S.modules : []).forEach((mod, i) => {
     const c = el('div', 'module reveal');
     c.style.transitionDelay = (i * 40) + 'ms';
-    c.innerHTML = '<h3><span class="mi">0' + (i+1) + '</span>' + mod.name + '</h3><div class="mblurb">' + mod.blurb + '</div><ul class="tags">' + mod.items.map((t) => '<li>' + t + '</li>').join('') + '</ul>';
+    c.innerHTML = '<h3><span class="mi">0' + (i+1) + '</span>' + esc(mod.name) + '</h3><div class="mblurb">' + esc(mod.blurb) + '</div><ul class="tags">' + mod.items.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul>';
     c.addEventListener('pointermove', (e) => {
       const r = c.getBoundingClientRect();
       c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
@@ -73,14 +136,16 @@
   const strip = $('stripTrack');
   if (strip && S.marquee) {
     // two identical halves so the loop is seamless
-    const half = S.marquee.map((t) => '<span class="strip-item">' + t + '</span>').join('');
+    const half = S.marquee.map((t) => '<span class="strip-item">' + esc(t) + '</span>').join('');
     strip.innerHTML = '<div class="strip-half">' + half + '</div><div class="strip-half" aria-hidden="true">' + half + '</div>';
   }
 
   // ---- featured showcase (large panels above the grid) ----
-  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  const showcased = S.projects.filter((p) => p.showcase).sort((x, y) => x.showcase.order - y.showcase.order);
-  const gridProjects = S.projects.filter((p) => !p.showcase);
+  const isFlagship = (p) => p.placement === 'flagship' && p.showcase;
+  const showcased = S.projects.filter(isFlagship).sort((x, y) => x.showcase.order - y.showcase.order);
+  // featured cards come first in the grid; the sort is stable, so each group keeps its own order
+  const gridProjects = S.projects.filter((p) => !isFlagship(p))
+    .sort((a, b) => (b.placement === 'featured') - (a.placement === 'featured'));
   const sw = $('showcase');
   if (sw) {
     showcased.forEach((p, i) => {
@@ -90,29 +155,30 @@
       let media = '';
       if (sc.kind === 'game') {
         media =
-          '<img class="show-banner" src="' + sc.banner + '" alt="' + esc(sc.title) + ' cover art" loading="lazy">' +
+          '<img class="show-banner" src="' + esc(sc.banner) + '" alt="' + esc(sc.title) + ' cover art" loading="lazy">' +
           '<div class="phones">' +
-          sc.shots.map((src, k) => '<div class="phone phone-' + (k + 1) + '"><img src="' + src + '" alt="' + esc(sc.title) + ' gameplay screen ' + (k + 1) + '" loading="lazy"></div>').join('') +
+          sc.shots.map((src, k) => '<div class="phone phone-' + (k + 1) + '"><img src="' + esc(src) + '" alt="' + esc(sc.title) + ' gameplay screen ' + (k + 1) + '" loading="lazy"></div>').join('') +
           '</div>';
       } else {
         media = sc.shots.slice(0, 2).reverse().map((src, k, arr) =>
           '<div class="browser browser-' + (arr.length - k) + '"><div class="bbar"><i></i><i></i><i></i></div>' +
-          '<img src="' + src + '" alt="' + esc(sc.title) + ' screen" loading="lazy"></div>').join('');
+          '<img src="' + esc(src) + '" alt="' + esc(sc.title) + ' screen" loading="lazy"></div>').join('');
       }
       const source = (p.links || []).find((l) => /github/i.test(l.label));
       const store = (p.links || []).find((l) => /google play/i.test(l.label));
       c.innerHTML =
         '<div class="show-media"><div class="show-stage">' + media + '</div></div>' +
         '<div class="show-body">' +
-          '<span class="show-kicker"><b>0' + (i + 1) + '</b> Featured · ' + sc.kicker + '</span>' +
-          '<h3>' + sc.title + '</h3>' +
-          '<p class="show-pitch">' + sc.pitch + '</p>' +
-          '<ul class="show-points">' + sc.points.map((t) => '<li>' + t + '</li>').join('') + '</ul>' +
-          '<div class="show-tech">' + p.tech.slice(0, 6).map((t) => '<span>' + t + '</span>').join('') + '</div>' +
+          '<span class="show-kicker"><b>0' + (i + 1) + '</b> Featured · ' + esc(sc.kicker) + '</span>' +
+          '<h3>' + esc(sc.title) + '</h3>' +
+          '<p class="show-pitch">' + esc(sc.pitch) + '</p>' +
+          '<ul class="show-points">' + sc.points.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul>' +
+          '<div class="show-tech">' + p.tech.slice(0, 6).map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>' +
+          (p.company && expById[p.company] ? '<div class="built-at">Built during ' + esc(expById[p.company].role) + ' at ' + esc(expById[p.company].org) + '</div>' : '') +
           '<div class="show-cta">' +
             '<button type="button" class="btn btn-primary show-open">View project <span class="arrow">→</span></button>' +
-            (store ? '<a class="btn btn-ghost" href="' + store.url + '" target="_blank" rel="noopener">Get it on Google Play ↗</a>' : '') +
-            (source ? '<a class="btn btn-ghost" href="' + source.url + '" target="_blank" rel="noopener">Source code ↗</a>' : '') +
+            (store && safeUrl(store.url) ? '<a class="btn btn-ghost" href="' + esc(safeUrl(store.url)) + '" target="_blank" rel="noopener">Get it on Google Play ↗</a>' : '') +
+            (source && safeUrl(source.url) ? '<a class="btn btn-ghost" href="' + esc(safeUrl(source.url)) + '" target="_blank" rel="noopener">Source code ↗</a>' : '') +
           '</div>' +
         '</div>';
       c.addEventListener('click', (e) => {
@@ -127,7 +193,7 @@
   const tags = ['All', ...Array.from(new Set(gridProjects.map((p) => p.tag)))];
   const pf = $('projFilters');
   tags.forEach((t, i) => {
-    const b = el('button', 'filter' + (i === 0 ? ' active' : ''), t);
+    const b = el('button', 'filter' + (i === 0 ? ' active' : ''), esc(t));
     b.dataset.tag = t;
     b.setAttribute('data-cursor', 'filter');
     pf.appendChild(b);
@@ -212,21 +278,22 @@
 
   const pg = $('projGrid');
   gridProjects.forEach((p) => {
-    const c = el('article', 'proj reveal' + (p.featured ? ' featured' : ''));
+    const c = el('article', 'proj reveal' + (p.placement === 'featured' ? ' featured' : ''));
     c.dataset.tag = p.tag;
     c.setAttribute('data-cursor', 'view');
     const hasShots = p.screenshots && p.screenshots.length > 0;
     const thumbContent = hasShots
-      ? '<img src="' + p.screenshots[0] + '" alt="' + p.name + '" loading="lazy">'
+      ? '<img src="' + esc(p.screenshots[0]) + '" alt="' + esc(p.name) + '" loading="lazy">'
       : '<canvas></canvas>';
     c.innerHTML =
       '<div class="thumb">' + thumbContent + '<div class="thumb-scan"></div></div>' +
       '<div class="proj-content">' +
-        '<div class="proj-top"><span class="pid">' + p.id + ' / ' + S.projects.length + '</span><span class="ptag">' + p.tag + '</span></div>' +
-        '<h3>' + p.name + '</h3>' +
-        '<p class="pblurb">' + p.blurb + '</p>' +
-        '<div class="ptech">' + p.tech.map((t) => '<span>' + t + '</span>').join('') + '</div>' +
-        '<a class="go" href="#" aria-label="Open ' + p.name + '">&#8599;</a>' +
+        '<div class="proj-top"><span class="pid">' + p.id + ' / ' + S.projects.length + '</span><span class="ptag">' + esc(p.tag) + '</span></div>' +
+        '<h3>' + esc(p.name) + '</h3>' +
+        '<p class="pblurb">' + esc(p.blurb) + '</p>' +
+        (p.company && expById[p.company] ? '<div class="built-at">Built during ' + esc(expById[p.company].role) + ' at ' + esc(expById[p.company].org) + '</div>' : '') +
+        '<div class="ptech">' + p.tech.map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>' +
+        '<a class="go" href="#" aria-label="Open ' + esc(p.name) + '">&#8599;</a>' +
       '</div>';
     pg.appendChild(c);
     if (!hasShots) {
@@ -288,39 +355,67 @@
 
   // ---- timeline ----
   const tl = $('timeline');
-  S.changelog.forEach((c, i) => {
-    const item = el('div', 'tl-item reveal');
-    item.style.transitionDelay = (i * 60) + 'ms';
-    item.innerHTML =
-      '<span class="node"></span>' +
-      '<span class="ver">' + c.v + '</span><span class="when">' + c.date + '</span>' +
-      '<h3>' + c.role + ' <span class="org">· ' + c.org + '</span></h3>' +
-      '<p>' + c.note + '</p>';
-    tl.appendChild(item);
-  });
+  if (tl) {
+    const total = exp.length;
+    exp.forEach((c, i) => {
+      const item = el('div', 'tl-item reveal');
+      item.style.transitionDelay = (i * 60) + 'ms';
+      const when = c.start || c.end || c.present ? fmtRange(c.start, c.end, c.present) : (c.date || '');
+      const ver = c.v || 'v' + (total - 1 - i) + '.x';
+      let body = '';
+      if (c.format === 'bullets' && Array.isArray(c.bullets) && c.bullets.length) {
+        body = '<ul class="tl-bullets">' + c.bullets.filter(Boolean).map((b) => '<li>' + esc(b) + '</li>').join('') + '</ul>';
+      } else if (c.note) {
+        body = '<p>' + esc(c.note) + '</p>';
+      }
+      const built = S.projects.filter((p) => p.company && p.company === c.id);
+      if (built.length) {
+        body += '<div class="tl-built"><span>Built here</span>' + built.map((p) => '<button type="button" class="tl-proj" data-idx="' + (+p.id - 1) + '">' + esc(p.name) + '</button>').join('') + '</div>';
+      }
+      const org = c.url && safeUrl(c.url) ? '<a href="' + esc(safeUrl(c.url)) + '" target="_blank" rel="noopener">' + esc(c.org) + '</a>' : esc(c.org);
+      item.innerHTML =
+        '<span class="node"></span>' +
+        '<span class="ver">' + esc(ver) + '</span><span class="when">' + esc(when) + '</span>' +
+        '<h3>' + esc(c.role) + ' <span class="org">· ' + org + '</span></h3>' + body;
+      tl.appendChild(item);
+    });
+    tl.addEventListener('click', (e) => {
+      const b = e.target.closest ? e.target.closest('.tl-proj') : null;
+      const pr = b ? S.projects[+b.dataset.idx] : null;
+      if (pr && window._openProject) { window._openProject(pr); }
+    });
+  }
 
-  // ---- writing ----
+  // ---- writing (only posts that link somewhere) ----
   const pl = $('postList');
-  S.writing.forEach((w) => {
-    const a = el('a', 'post reveal');
-    a.href = '#';
-    a.setAttribute('data-cursor', 'read');
-    a.innerHTML =
-      '<div class="pmeta"><span class="ptag2">' + w.tag + '</span>' + w.date + '</div>' +
-      '<div><h3>' + w.title + '</h3><p class="pex">' + w.excerpt + '</p></div>' +
-      '<div class="read">' + w.read + ' →</div>';
-    pl.appendChild(a);
-  });
+  if (pl) {
+    posts.forEach((w) => {
+      const a = el('a', 'post reveal');
+      a.href = safeUrl(w.url);
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('data-cursor', 'read');
+      a.innerHTML =
+        '<div class="pmeta"><span class="ptag2">' + esc(w.tag) + '</span>' + esc(w.date) + '</div>' +
+        '<div><h3>' + esc(w.title) + '</h3><p class="pex">' + esc(w.excerpt) + '</p></div>' +
+        '<div class="read">' + esc(w.read) + ' →</div>';
+      pl.appendChild(a);
+    });
+  }
 
   // ---- socials ----
   const sc = $('socials');
-  S.socials.forEach((s) => {
-    const a = el('a', 'social');
-    a.href = s.url;
-    a.setAttribute('data-cursor', 'open');
-    a.innerHTML = '<span>' + s.label + '</span><span class="h">' + s.handle + '</span>';
-    sc.appendChild(a);
-  });
+  if (sc) {
+    S.socials.forEach((s) => {
+      const url = safeUrl(s.url);
+      if (!url) { return; }
+      const a = el('a', 'social');
+      a.href = url;
+      a.setAttribute('data-cursor', 'open');
+      a.innerHTML = '<span>' + esc(s.label) + '</span><span class="h">' + esc(s.handle) + '</span>';
+      sc.appendChild(a);
+    });
+  }
 
   $('year').textContent = new Date().getFullYear();
 })();

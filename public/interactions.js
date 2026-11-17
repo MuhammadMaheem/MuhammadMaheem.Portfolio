@@ -298,12 +298,31 @@
     $('#pmName').textContent = p.name;
     $('#pmDesc').textContent = p.desc || p.blurb;
     $('#pmRole').textContent = p.role || '—';
+    // optional extras: company, dates, collaborators, private repo note
+    var pmBody = document.querySelector('.pm-body');
+    var oldX = document.getElementById('pmExtra'); if (oldX) { oldX.remove(); }
+    var extra = document.createElement('div'); extra.id = 'pmExtra'; extra.className = 'pm-section';
+    var bits = [];
+    var co = p.company && window._expById ? window._expById[p.company] : null;
+    if (co) { bits.push(['Built during', co.role + ' at ' + co.org]); }
+    if ((p.start || p.end) && window._fmtRange) { bits.push(['When', window._fmtRange(p.start, p.end, false)]); }
+    if (p.collaborators && p.collaborators.length) { bits.push(['With', p.collaborators.map(function(c) { return c.name; }).join(', ')]); }
+    if (p.repo && p.repo.private) { bits.push(['Source', 'Private repository']); }
+    bits.forEach(function(b) {
+      var row = document.createElement('p'); row.className = 'pm-role';
+      var k = document.createElement('b'); k.textContent = b[0] + ': ';
+      row.appendChild(k); row.appendChild(document.createTextNode(b[1]));
+      extra.appendChild(row);
+    });
+    if (bits.length && pmBody) { pmBody.insertBefore(extra, document.getElementById('pmTech').parentNode); }
     const tech = $('#pmTech'); tech.innerHTML = '';
     (p.tech || []).forEach(function(t) { var s = document.createElement('span'); s.textContent = t; tech.appendChild(s); });
     const links = $('#pmLinks'); links.innerHTML = '';
     (p.links || []).forEach(function(l, i) {
       var a = document.createElement('a');
-      a.href = l.url; a.textContent = l.label + ' ↗';
+      var safe = window._safeUrl ? window._safeUrl(l.url) : l.url;
+      if (!safe) { return; }
+      a.href = safe; a.textContent = l.label + ' ↗';
       a.className = 'pm-link' + (i === 0 ? ' primary' : '');
       a.target = '_blank'; a.rel = 'noopener';
       links.appendChild(a);
