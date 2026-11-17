@@ -417,5 +417,10 @@
     });
   }
 
+  // a new resume upload changes this value, so browsers never serve the old PDF
+  if (S.identity.resumeVersion) {
+    document.querySelectorAll('.resume-btn').forEach((a) => { a.setAttribute('href', './Muhammad-Maheem-Resume.pdf?v=' + encodeURIComponent(S.identity.resumeVersion)); });
+  }
+
   $('year').textContent = new Date().getFullYear();
 })();

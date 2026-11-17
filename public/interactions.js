@@ -149,7 +149,11 @@
      If left blank, the form opens the visitor's mail client
      pre-filled to your address — works with zero setup. */
   const WEB3FORMS_KEY = '05dc0c33-c161-4555-9aaa-268d42a26d3d';
-  const CONTACT_EMAIL = 'mirza.muhammad.maheem@gmail.com';
+  // the address comes from the Email link in the admin-editable socials; the old address is the fallback
+  const CONTACT_EMAIL = (function () {
+    var m = ((window.SITE && window.SITE.socials) || []).find(function (x) { return /^mailto:/i.test(x.url || ''); });
+    return m ? m.url.replace(/^mailto:/i, '').split('?')[0] : 'mirza.muhammad.maheem@gmail.com';
+  })();
 
   const form = $('#contactForm');
   if (form) {
