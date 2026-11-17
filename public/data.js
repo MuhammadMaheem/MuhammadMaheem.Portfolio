@@ -612,7 +612,7 @@ window.SITE = {
           'screenshots/INKWAKE/05-guardian.jpg',
         ],
       },
-      links: [],
+      links: [{ label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.maheem.inkwake' }],
       screenshots: [
         'screenshots/INKWAKE/00-feature.jpg',
         'screenshots/INKWAKE/01-title.jpg',

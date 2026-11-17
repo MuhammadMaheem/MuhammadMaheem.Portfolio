@@ -100,6 +100,7 @@
           '<img src="' + src + '" alt="' + esc(sc.title) + ' screen" loading="lazy"></div>').join('');
       }
       const source = (p.links || []).find((l) => /github/i.test(l.label));
+      const store = (p.links || []).find((l) => /google play/i.test(l.label));
       c.innerHTML =
         '<div class="show-media"><div class="show-stage">' + media + '</div></div>' +
         '<div class="show-body">' +
@@ -110,6 +111,7 @@
           '<div class="show-tech">' + p.tech.slice(0, 6).map((t) => '<span>' + t + '</span>').join('') + '</div>' +
           '<div class="show-cta">' +
             '<button type="button" class="btn btn-primary show-open">View project <span class="arrow">→</span></button>' +
+            (store ? '<a class="btn btn-ghost" href="' + store.url + '" target="_blank" rel="noopener">Get it on Google Play ↗</a>' : '') +
             (source ? '<a class="btn btn-ghost" href="' + source.url + '" target="_blank" rel="noopener">Source code ↗</a>' : '') +
           '</div>' +
         '</div>';
