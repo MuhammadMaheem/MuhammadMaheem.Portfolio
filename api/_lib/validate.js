@@ -48,5 +48,20 @@ export function validateSite(site) {
   if (!site.identity.name) { bad('name is empty'); }
   if (site.projects.some((p) => !p || !p.name)) { bad('a project has no name'); }
   if (JSON.stringify(site).length > 600000) { bad('too large'); }
+  // defence in depth: the site also escapes everything, but no link may use a script-capable scheme
+  const SAFE = /^(https?:\/\/|mailto:|tel:|[^:]*$)/i;
+  const walk = (v, path) => {
+    if (Array.isArray(v)) { v.forEach((x, i) => walk(x, path + '[' + i + ']')); return; }
+    if (v && typeof v === 'object') {
+      Object.keys(v).forEach((k) => {
+        if (k === '__proto__' || k === 'constructor' || k === 'prototype') { bad('forbidden key ' + path + '.' + k); }
+        if (/^(url|href|link|homepage|adminUrl|banner)$/i.test(k) && typeof v[k] === 'string' && v[k].trim() && !SAFE.test(v[k].trim())) {
+          bad('unsafe link in ' + path + '.' + k);
+        }
+        walk(v[k], path + '.' + k);
+      });
+    }
+  };
+  walk(site, 'site');
   return site;
 }

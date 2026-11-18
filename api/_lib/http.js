@@ -19,6 +19,7 @@ export function readEnv(src = process.env) {
   return {
     password: src.ADMIN_PASSWORD || '',
     secret: src.SESSION_SECRET || '',
+    totpSecret: src.ADMIN_TOTP_SECRET || '',
     token: src.GITHUB_TOKEN || '',
     importToken: src.GITHUB_IMPORT_TOKEN || src.GITHUB_TOKEN || '',
     owner: src.GITHUB_OWNER || 'MuhammadMaheem',

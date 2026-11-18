@@ -47,6 +47,11 @@ if (!TABS.some((t) => t[0] === tab)) { tab = 'projects'; }
 let preview = null;
 let statusPill; let publishBadge; let appEl;
 
+// the live site, opened with ?owner=1 so its menu shows an Admin shortcut in this browser
+const siteUrl = () => {
+  const s = state.session;
+  return s ? 'https://' + s.owner.toLowerCase() + '.github.io/' + s.repo + '/?owner=1' : '/';
+};
 const lsGet = (k, d) => { try { return localStorage.getItem(k) || d; } catch { return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
@@ -54,16 +59,17 @@ const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore 
 function showLogin(message) {
   preview = null;
   const pw = h('input', { type: 'password', autocomplete: 'current-password', 'aria-label': 'Password', required: true, placeholder: 'Password' });
+  const code = h('input', { type: 'text', inputmode: 'numeric', autocomplete: 'one-time-code', maxlength: '7', 'aria-label': 'Code from your authenticator app', placeholder: 'Authenticator code (if you use one)' });
   const err = h('p', { class: 'err', role: 'alert' }, message || '');
   const btn = h('button', { class: 'btn primary wide', type: 'submit' }, 'Sign in');
   const form = h('form', { class: 'login', onsubmit: async (e) => {
     e.preventDefault();
     err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
-    try { await api.login(pw.value); pw.value = ''; start(); }
+    try { await api.login(pw.value, code.value.trim()); pw.value = ''; code.value = ''; start(); }
     catch (x) { err.textContent = x.message; pw.select(); btn.disabled = false; btn.textContent = 'Sign in'; }
   } },
     h('div', { class: 'login-mark' }, icon('rocket', 22)),
-    h('h1', {}, 'Portfolio admin'), h('p', { class: 'hint' }, 'Sign in to edit your site.'), pw, btn, err);
+    h('h1', {}, 'Portfolio admin'), h('p', { class: 'hint' }, 'Sign in to edit your site.'), pw, code, btn, err);
   root.replaceChildren(h('div', { class: 'login-wrap' }, form));
   pw.focus();
 }
@@ -89,6 +95,7 @@ function shell() {
       statusPill,
       h('span', { class: 'sp' }),
       h('button', { type: 'button', class: 'btn ghost', title: 'Undo the last change', onclick: () => { if (undo()) { render(false); } else { toast('Nothing to undo'); } } }, icon('undo', 16), h('span', { class: 'btn-lbl' }, 'Undo')),
+      h('a', { class: 'btn ghost', href: siteUrl(), target: '_blank', rel: 'noopener', title: 'Open the live site. This also shows an Admin button in its menu, in this browser only.' }, icon('external', 16), h('span', { class: 'btn-lbl' }, 'View site')),
       h('button', { type: 'button', class: 'btn ghost pv-toggle', onclick: () => appEl.classList.toggle('pv-open') }, icon('eye', 16), h('span', { class: 'btn-lbl' }, 'Preview')),
       h('button', { type: 'button', class: 'btn ghost hide-pv', title: 'Show or hide the live preview', onclick: () => { appEl.classList.toggle('no-pv'); lsSet('adm.nopv', appEl.classList.contains('no-pv') ? '1' : '0'); setTimeout(() => preview.layout(), 260); } }, icon('eye', 16), h('span', { class: 'btn-lbl' }, 'Live preview')),
       h('button', { type: 'button', class: 'btn primary', onclick: () => go('publish') }, 'Publish', publishBadge),
@@ -162,7 +169,7 @@ function render(scrollPreview = true) {
 async function start() {
   root.replaceChildren(h('div', { class: 'boot' }, h('span', { class: 'spinner' }), h('p', { class: 'hint' }, 'Loading your site…')));
   try {
-    await api.session();
+    state.session = await api.session();
     await load();
   } catch (e) {
     if (e.status === 401) { showLogin(); return; }

@@ -109,7 +109,7 @@
     const cta = document.querySelectorAll('.hero-cta a');
     if (cta[0] && id.ctaPrimary) { cta[0].innerHTML = esc(id.ctaPrimary) + ' <span class="arrow">→</span>'; }
     if (cta[1] && id.ctaSecondary) { cta[1].textContent = id.ctaSecondary; }
-    if (id.resumeLabel) { document.querySelectorAll('.resume-btn').forEach((a) => { a.textContent = id.resumeLabel + ' ↓'; }); }
+    if (id.resumeLabel) { document.querySelectorAll('.resume-btn:not(.admin-link)').forEach((a) => { a.textContent = id.resumeLabel + ' ↓'; }); }
   })();
   const rUnit = $('rUnit'); if (rUnit) rUnit.textContent = S.identity.codename || 'MHM·01';
 
@@ -454,9 +454,42 @@
     });
   }
 
+  // Owner shortcut: an "Admin" button in the menu, shown only in a browser that opened the site once with ?owner=1
+  // (the admin's "View site" link does that). Visitors never see it. It is a convenience, not a lock:
+  // the admin page itself needs the password.
+  (function () {
+    const adminUrl = safeUrl(S.identity.adminUrl);
+    if (!adminUrl) { return; }
+    let on = false;
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('owner') === '1') { localStorage.setItem('site.owner', '1'); }
+      if (q.get('owner') === '0') { localStorage.removeItem('site.owner'); }
+      on = localStorage.getItem('site.owner') === '1';
+    } catch (e) { on = false; }
+    // keyboard shortcut for the owner on any device: Alt + Shift + A
+    document.addEventListener('keydown', (e) => {
+      if (e.altKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) { window.location.href = adminUrl; }
+    });
+    if (!on || /[?&]adm-preview=1/.test(location.search)) { return; }
+    const make = () => {
+      const a = document.createElement('a');
+      a.className = 'resume-btn admin-link';
+      a.href = adminUrl;
+      a.rel = 'noopener';
+      a.textContent = 'Admin ↗';
+      a.title = 'Open the admin panel (only you see this button)';
+      return a;
+    };
+    const right = document.querySelector('.nav-right');
+    if (right) { right.insertBefore(make(), right.firstChild); }
+    const foot = document.querySelector('.mobile-menu .mm-foot');
+    if (foot) { foot.insertBefore(make(), foot.firstChild); }
+  })();
+
   // a new resume upload changes this value, so browsers never serve the old PDF
   if (S.identity.resumeVersion) {
-    document.querySelectorAll('.resume-btn').forEach((a) => { a.setAttribute('href', './Muhammad-Maheem-Resume.pdf?v=' + encodeURIComponent(S.identity.resumeVersion)); });
+    document.querySelectorAll('.resume-btn:not(.admin-link)').forEach((a) => { a.setAttribute('href', './Muhammad-Maheem-Resume.pdf?v=' + encodeURIComponent(S.identity.resumeVersion)); });
   }
 
   $('year').textContent = new Date().getFullYear();

@@ -64,7 +64,10 @@ export function linksEditor() {
           field('Shown as', text(s, 'handle', { placeholder: '/in/your-name' })),
           field('Link', text(s, 'url', { placeholder: 'https://…' }))),
         itemLabel: (s) => s.label || 'link',
-      })));
+      })),
+    card('Owner shortcut',
+      h('p', { class: 'hint' }, 'The address of this admin page. After you click "View site" in the admin, a small Admin button appears in your site\'s menu, in your browser only. Visitors never see it. Alt+Shift+A also opens it.'),
+      field('Admin page address', text(site.identity, 'adminUrl', { placeholder: 'https://…/admin/' }))));
 }
 
 export function resumeEditor() {

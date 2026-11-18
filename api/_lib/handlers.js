@@ -1,5 +1,6 @@
 import { HttpError, json, sleep, readEnv } from './http.js';
-import { requireAuth, passwordMatches, sessionCookie, clearCookie, loginAllowed, loginFailed, loginSucceeded } from './auth.js';
+import { requireAuth, passwordMatches, sessionCookie, clearCookie, loginAllowed, loginFailed, loginSucceeded, failDelayMs } from './auth.js';
+import { matchTotp, markTotpUsed } from './totp.js';
 import { makeGithub, portfolioRepo } from './github.js';
 import { checkWritePath, checkMagic, MAX_FILE_BYTES, parseDataJs, serializeDataJs, validateSite } from './validate.js';
 import { readmeImages, resolveImage, folderImages, readmeText, isImagePath } from './repoimport.js';
@@ -22,14 +23,20 @@ export function makeApi({ env: envIn, fetchImpl } = {}) {
       if (!configured()) { throw new HttpError(503, 'Admin is not configured on the server'); }
       const ip = String(req.headers['x-forwarded-for'] || req.ip || 'x').split(',')[0].trim();
       if (!loginAllowed(ip)) { throw new HttpError(429, 'Too many attempts. Try again in 15 minutes.'); }
-      if (env.loginDelayMs) { await sleep(env.loginDelayMs); }
-      const pw = req.body && req.body.password;
-      if (!passwordMatches(pw, env.password)) {
+      if (env.loginDelayMs) { await sleep(failDelayMs(ip, env.loginDelayMs)); }
+      const body = req.body && typeof req.body === 'object' ? req.body : {};
+      // both checks always run, and one message covers both, so nothing reveals which part was wrong
+      const pwOk = passwordMatches(body.password, env.password);
+      const step = env.totpSecret ? matchTotp(env.totpSecret, body.code) : 0;
+      const codeOk = step !== null;
+      if (!(pwOk && codeOk)) {
         loginFailed(ip);
-        throw new HttpError(401, 'Wrong password');
+        console.warn('admin login failed from ' + ip.replace(/(\d+\.\d+)\.\d+\.\d+/, '$1.x.x'));
+        throw new HttpError(401, env.totpSecret ? 'Wrong password or code' : 'Wrong password');
       }
       loginSucceeded(ip);
-      return json(200, { ok: true }, { 'set-cookie': sessionCookie(env.secret, req.headers.host) });
+      if (env.totpSecret) { markTotpUsed(env.totpSecret, step); }
+      return json(200, { ok: true }, { 'set-cookie': sessionCookie(env.secret, req.headers.host, req.headers['user-agent']) });
     },
 
     'POST /api/logout': async (req) => json(200, { ok: true }, { 'set-cookie': clearCookie(req.headers.host) }),

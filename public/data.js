@@ -41,7 +41,8 @@ window.SITE = {
     "ctaPrimary": "View deployments",
     "ctaSecondary": "Establish uplink",
     "resumeLabel": "Spec sheet",
-    "heroLabel": "MHM·01 // SYSTEM ONLINE"
+    "heroLabel": "MHM·01 // SYSTEM ONLINE",
+    "adminUrl": "https://maheem-portfolio.vercel.app/admin/"
   },
   "ask": {
     "title": "Ask my portfolio",

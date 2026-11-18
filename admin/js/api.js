@@ -18,7 +18,7 @@ async function call(method, path, body, raw) {
 const q = (o) => '?' + new URLSearchParams(o).toString();
 
 export const api = {
-  login: (password) => call('POST', '/api/login', { password }),
+  login: (password, code) => call('POST', '/api/login', { password, code }),
   logout: () => call('POST', '/api/logout', {}),
   session: () => call('GET', '/api/session'),
   content: () => call('GET', '/api/content'),

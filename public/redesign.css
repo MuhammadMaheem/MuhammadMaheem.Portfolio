@@ -1424,3 +1424,14 @@ html.js-ready body.booted .ask {
   transition: border-color 0.2s, color 0.2s;
 }
 .tl-proj:hover, .tl-proj:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+/* owner-only shortcut to the admin panel */
+.resume-btn.admin-link {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line-strong);
+  font-weight: 500;
+  margin-right: 8px;
+}
+.resume-btn.admin-link:hover { border-color: var(--accent); color: var(--accent); filter: none; }
+.mobile-menu .mm-foot .resume-btn.admin-link { margin: 0 8px 8px 0; }
