@@ -23,6 +23,27 @@ function stampDataVersion() {
 }
 
 
+// GitHub Pages only: /admin/ on the public site is a tiny page that sends you to the real admin on Vercel
+// (the address comes from "Admin page address" in the admin, identity.adminUrl).
+function pagesAdminRedirect() {
+  return {
+    name: "pages-admin-redirect",
+    apply: "build" as const,
+    generateBundle(this: any) {
+      if (onVercel) { return; }
+      let target = "https://maheem-portfolio.vercel.app/admin/";
+      try {
+        const txt = fs.readFileSync(path.resolve(__dirname, "public/data.js"), "utf8");
+        const site = JSON.parse(txt.slice(txt.indexOf("=", txt.indexOf("window.SITE")) + 1).trim().replace(/;\s*$/, ""));
+        if (/^https:\/\//.test(site.identity.adminUrl || "")) { target = site.identity.adminUrl; }
+      } catch { /* keep the default */ }
+      const safe = target.replace(/[^A-Za-z0-9:/._~%?&=#-]/g, "");
+      const html = fs.readFileSync(path.resolve(__dirname, "redirect/admin.html"), "utf8").replace(/__ADMIN_URL__/g, safe);
+      this.emitFile({ type: "asset", fileName: "admin/index.html", source: html });
+    },
+  };
+}
+
 // `vite dev`: serve /api/* from the same handlers Vercel runs, so the admin works locally.
 // FAKE_GITHUB=1 swaps GitHub for an in-memory copy (no token needed, nothing is pushed).
 function devApi() {
@@ -71,7 +92,7 @@ function devApi() {
 
 export default defineConfig({
   base: onVercel ? "/" : "/MuhammadMaheem.Portfolio/",
-  plugins: [stampDataVersion(), devApi()],
+  plugins: [stampDataVersion(), pagesAdminRedirect(), devApi()],
   build: {
     rollupOptions: {
       input: onVercel
