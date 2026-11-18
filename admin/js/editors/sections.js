@@ -1,4 +1,5 @@
-import { h, field, text, toggle, listEditor, select } from '../ui.js';
+import { h, field, text, toggle, listEditor, select, flash } from '../ui.js';
+import { take } from '../bus.js';
 import { state } from '../store.js';
 import { SECTION_KEYS, HIDEABLE } from '../schema.js';
 
@@ -6,16 +7,21 @@ const card = (title, ...kids) => h('section', { class: 'card' }, h('h3', {}, tit
 
 export function headingsEditor() {
   const site = state.site;
-  return h('div', { class: 'stack' },
+  const cmd = take('headings');
+  const root = h('div', { class: 'stack' },
     h('p', { class: 'hint lead' }, 'Edit the words around each section. In a heading, press Enter for a new line and wrap a word in *stars* to emphasise it.'),
     SECTION_KEYS.map(([key, label]) => {
       const s = site.sections[key];
-      return card(label,
+      const c = card(label,
         h('div', { class: 'grid2' }, field('Menu label', text(s, 'nav')), field('Small label above the heading', text(s, 'eyebrow'))),
         field('Heading', text(s, 'title', { multi: true, rows: 2 })),
         field('Text under the heading', text(s, 'sub', { multi: true, rows: 2 })),
         HIDEABLE.includes(key) ? toggle(s, 'visible', 'Show this section on the site') : h('p', { class: 'hint' }, 'This section is always shown.'));
+      c.dataset.section = key;
+      return c;
     }));
+  if (cmd) { requestAnimationFrame(() => flash(root.querySelector('[data-section="' + cmd.arg + '"]'))); }
+  return root;
 }
 
 export function homeExtrasEditor() {

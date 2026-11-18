@@ -1,7 +1,7 @@
 import { api } from './api.js';
 import { normalize, summarize } from './schema.js';
 import { blobToBase64 } from './images.js';
-import { setTouch } from './ui.js';
+import { setTouch, confirmDialog } from './ui.js';
 
 export const RESUME_PATH = 'public/Muhammad-Maheem-Resume.pdf';
 const DRAFT_KEY = 'adm.draft';
@@ -57,6 +57,8 @@ export function touch() {
   undoTimer = setTimeout(() => {
     const snap = JSON.stringify(state.site);
     if (state.undo[state.undo.length - 1] !== snap) { state.undo.push(snap); if (state.undo.length > 30) { state.undo.shift(); } }
+    // editing something back to how it was means there is nothing to publish
+    state.dirty = snap !== state.original || state.pending.size > 0;
     emit();
   }, 700);
   emit();
@@ -84,9 +86,9 @@ export async function load() {
   if (draft && draft.site && JSON.stringify(normalize(clone(draft.site))) !== state.original) {
     const same = draft.baseBlob === d.blob;
     const when = new Date(draft.at).toLocaleString();
-    const keep = confirm(same
-      ? 'You have unpublished changes saved on this device (' + when + '). Restore them?'
-      : 'A draft saved on ' + when + ' is based on an older version; the site has changed since.\n\nOK = keep the draft (publishing will use it and replace newer changes)\nCancel = discard the draft and load the live site');
+    const keep = await confirmDialog(same
+      ? { title: 'Restore your unpublished changes?', message: 'You have changes saved on this device from ' + when + '.', confirmLabel: 'Restore them', cancelLabel: 'Discard them' }
+      : { title: 'This draft is out of date', message: 'The draft saved on ' + when + ' is based on an older version, and the site has changed since. Keeping it means publishing will replace the newer changes.', confirmLabel: 'Keep my draft', cancelLabel: 'Load the live site', danger: true });
     if (keep) { site = normalize(draft.site); state.dirty = true; } else { localStorage.removeItem(DRAFT_KEY); await idbDo('readwrite', (s) => s.clear()); }
   }
   state.site = site;
@@ -171,11 +173,11 @@ export async function publish(message, progress) {
   const files = [];
   let n = 0;
   for (const [path, blob] of todo) {
-    progress && progress('Uploading ' + (++n) + ' of ' + todo.length + '…');
+    progress && progress({ phase: 'upload', n: ++n, total: todo.length });
     const r = await api.upload(path, await blobToBase64(blob));
     files.push({ path, sha: r.sha });
   }
-  progress && progress('Publishing…');
+  progress && progress({ phase: 'commit' });
   const res = await api.publish({ site: state.site, baseBlob: state.baseBlob, files, message });
   state.baseBlob = res.blob;
   state.original = JSON.stringify(state.site);

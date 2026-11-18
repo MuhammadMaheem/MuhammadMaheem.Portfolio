@@ -1,9 +1,11 @@
-import { h, field, text, listEditor, chips } from '../ui.js';
+import { h, field, text, listEditor, chips, flash } from '../ui.js';
+import { take } from '../bus.js';
 import { state } from '../store.js';
 
 export function skillsEditor() {
   const site = state.site;
-  return h('div', { class: 'stack' },
+  const cmd = take('skills');
+  const root = h('div', { class: 'stack' },
     h('p', { class: 'hint lead' }, 'Each group becomes one card in the Skills section.'),
     listEditor({
       items: site.modules, addLabel: 'Add skill group', newItem: () => ({ name: '', blurb: '', items: [] }),
@@ -13,4 +15,6 @@ export function skillsEditor() {
         field('Skills', chips(m.items, { placeholder: 'Add a skill and press Enter' }))),
       itemLabel: (m) => m.name || 'group',
     }));
+  if (cmd) { requestAnimationFrame(() => flash(root.querySelectorAll(':scope > .list > .row-card')[cmd.arg || 0])); }
+  return root;
 }

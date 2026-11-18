@@ -1,4 +1,4 @@
-import { h, field, modal, toast } from '../ui.js';
+import { h, field, modal, toast, skeleton } from '../ui.js';
 import { api } from '../api.js';
 import { state, touch } from '../store.js';
 import { newProject, repoNameFromInput } from '../schema.js';
@@ -20,17 +20,20 @@ function guessTag(meta) {
 
 const fileFromBlob = (blob, name) => new File([blob], name, { type: blob.type });
 
+const stepHead = (n) => h('ol', { class: 'steps-hd', 'aria-label': 'Import steps' },
+  [['Choose a repository'], ['Pick images and options']].map(([t], i) => h('li', { class: i + 1 < n ? 'done' : i + 1 === n ? 'on' : '' }, h('span', {}, String(i + 1)), t)));
+
 export function openImporter(onDone) {
   const body = h('div', { class: 'importer' });
   const m = modal('Import a project from GitHub', body, { wide: true });
   showList();
 
   async function showList() {
-    const status = h('p', { class: 'hint' }, 'Loading your repositories…');
+    const status = h('div', {}, skeleton(4));
     const list = h('div', { class: 'repo-list' });
     const search = h('input', { type: 'search', placeholder: 'Search your repos, or paste a GitHub link', 'aria-label': 'Search or paste a link' });
     const go = h('button', { type: 'button', class: 'btn primary', onclick: () => { const n = repoNameFromInput(search.value); if (n) { showRepo(n); } } }, 'Open');
-    body.replaceChildren(h('div', { class: 'bar' }, search, go), status, list);
+    body.replaceChildren(stepHead(1), h('div', { class: 'bar' }, search, go), status, list);
     search.focus();
     let repos = [];
     const paint = () => {
@@ -40,15 +43,15 @@ export function openImporter(onDone) {
         h('span', { class: 'rn' }, r.name, r.private ? h('span', { class: 'badge off' }, 'Private') : null),
         h('span', { class: 'rd' }, r.description || 'No description'),
         h('span', { class: 'rm' }, [r.language, r.pushedAt ? 'pushed ' + new Date(r.pushedAt).toLocaleDateString() : ''].filter(Boolean).join(' · ')))));
-      status.textContent = shown.length ? '' : (repos.length ? 'No match. Press Open to try the text as a repo name.' : 'No repositories found.');
+      status.replaceChildren(shown.length ? '' : h('p', { class: 'hint' }, repos.length ? 'No match. Press Open to try the text as a repo name.' : 'No repositories found.'));
     };
     search.addEventListener('input', paint);
     search.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); go.click(); } });
-    try { repos = (await api.repos('')).repos; paint(); } catch (e) { status.textContent = 'Could not load your repositories: ' + e.message + ' You can still paste a repo link above.'; }
+    try { repos = (await api.repos('')).repos; paint(); } catch (e) { status.replaceChildren(h('p', { class: 'hint' }, 'Could not load your repositories: ' + e.message + ' You can still paste a repo link above.')); }
   }
 
   async function showRepo(name) {
-    body.replaceChildren(h('p', { class: 'hint' }, 'Reading ' + name + '…'));
+    body.replaceChildren(stepHead(2), h('p', { class: 'hint' }, 'Reading ' + name + '…'), skeleton(4));
     let d;
     try { d = await api.repo(name); } catch (e) { body.replaceChildren(h('p', { class: 'err' }, e.message), h('button', { type: 'button', class: 'btn', onclick: showList }, 'Back')); return; }
     const meta = d.meta;
@@ -79,6 +82,7 @@ export function openImporter(onDone) {
     const progress = h('p', { class: 'hint' });
 
     body.replaceChildren(
+      stepHead(2),
       h('div', { class: 'bar' }, h('button', { type: 'button', class: 'btn', onclick: showList }, '← Back'), h('strong', {}, meta.fullName), meta.private ? h('span', { class: 'badge off' }, 'Private') : h('span', { class: 'badge' }, 'Public')),
       dup ? h('p', { class: 'warn' }, 'You already imported this repo as "' + dup.name + '". Importing again adds a second copy.') : null,
       meta.private ? h('div', { class: 'warn' }, h('label', { class: 'check' }, ack, h('span', {}, 'This repo is private. Its description, README text and images will be copied onto your public site. I want that.'))) : null,

@@ -96,6 +96,11 @@ export function summarize(a, b) {
   [...eb.keys()].filter((k) => !ea.has(k)).forEach((k) => out.push('Added experience: ' + (eb.get(k).role || '(untitled)')));
   [...ea.keys()].filter((k) => !eb.has(k)).forEach((k) => out.push('Removed experience: ' + (ea.get(k).role || '(untitled)')));
   [...eb.keys()].filter((k) => ea.has(k) && JSON.stringify(ea.get(k)) !== JSON.stringify(eb.get(k))).forEach((k) => out.push('Edited experience: ' + (eb.get(k).role || '(untitled)')));
+  // moving things around is a change too, even when nothing was added or edited
+  const common = (x, y) => x.filter((k) => y.includes(k));
+  const orderOf = (x, y) => JSON.stringify(common(x, y)) !== JSON.stringify(common(y, x));
+  if (orderOf([...pa.keys()], [...pb.keys()])) { out.push('Changed order: projects'); }
+  if (orderOf([...ea.keys()], [...eb.keys()])) { out.push('Changed order: experience'); }
   const skip = new Set(['projects', 'changelog']);
   Object.keys(b).filter((k) => !skip.has(k) && JSON.stringify(a[k]) !== JSON.stringify(b[k])).forEach((k) => out.push('Changed: ' + k));
   return out;

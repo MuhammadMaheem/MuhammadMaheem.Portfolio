@@ -1,4 +1,5 @@
-import { h, field, text, select, toggle, listEditor } from '../ui.js';
+import { h, field, text, select, toggle, listEditor, flash } from '../ui.js';
+import { take } from '../bus.js';
 import { state, touch } from '../store.js';
 import { newExperience, validDate, fmtRange } from '../schema.js';
 
@@ -64,6 +65,8 @@ function entry(c) {
 
 export function experienceEditor() {
   const site = state.site;
+  const cmd = take('experience');
+  if (cmd && cmd.cmd === 'add') { site.changelog.unshift(newExperience()); touch(); }
   const wrap = h('div', { class: 'stack' },
     h('p', { class: 'hint lead' }, 'Newest first. Projects can be attached to an entry from the project editor; they then show under it as "Built here".'));
   wrap.appendChild(listEditor({
@@ -76,5 +79,11 @@ export function experienceEditor() {
     },
     itemLabel: (c) => (c.role || 'entry') + (c.org ? ' at ' + c.org : ''),
   }));
+  if (cmd) {
+    requestAnimationFrame(() => {
+      const rows = wrap.querySelectorAll(':scope > .list > .row-card');
+      flash(rows[cmd.cmd === 'add' ? 0 : (cmd.arg || 0)]);
+    });
+  }
   return wrap;
 }

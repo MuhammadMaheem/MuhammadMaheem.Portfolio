@@ -189,6 +189,7 @@
       const sc = p.showcase;
       const c = el('article', 'show reveal show--' + sc.kind);
       c.setAttribute('data-cursor', 'view');
+      c.dataset.pname = p.name;
       let media = '';
       if (sc.kind === 'game') {
         media =
@@ -317,6 +318,7 @@
   gridProjects.forEach((p) => {
     const c = el('article', 'proj reveal' + (p.placement === 'featured' ? ' featured' : ''));
     c.dataset.tag = p.tag;
+    c.dataset.pname = p.name;
     c.setAttribute('data-cursor', 'view');
     const hasShots = p.screenshots && p.screenshots.length > 0;
     const thumbContent = hasShots
