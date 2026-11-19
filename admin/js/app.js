@@ -11,6 +11,7 @@ import { skillsEditor } from './editors/skills.js';
 import { experienceEditor } from './editors/experience.js';
 import { projectsEditor } from './editors/projects.js';
 import { writingEditor } from './editors/writing.js';
+import { certsEditor } from './editors/certs.js';
 import { publishEditor } from './editors/publish.js';
 
 registerIcons({
@@ -18,6 +19,7 @@ registerIcons({
   github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
   image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>',
   chev: '<path d="M9 6l6 6-6 6"/>',
+  award: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14.2L7 21l5-3 5 3-1.5-6.8"/>',
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   alert: '<path d="M12 4l9 16H3zM12 10v4M12 17.5v.01"/>',
   dash: '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
@@ -46,6 +48,7 @@ const TABS = [
   ['skills', 'Skills', 'Content', 'tools', 'Groups of skills shown as cards.', skillsEditor, '#modules'],
   ['projects', 'Projects', 'Content', 'folder', 'Import from GitHub, set flagship or featured, add screenshots.', projectsEditor, '#work'],
   ['experience', 'Experience', 'Content', 'brief', 'Jobs, internships and education.', experienceEditor, '#changelog'],
+  ['certs', 'Certifications', 'Content', 'award', 'Courses and badges, shown under your timeline.', certsEditor, '#changelog'],
   ['writing', 'Writing', 'Content', 'pen', 'Articles. Only posts with a link are shown.', writingEditor, '#writing'],
   ['headings', 'Section headings', 'Site', 'type', 'The words around each section, and which sections show.', headingsEditor, null],
   ['extras', 'How it works & Ask', 'Site', 'spark', 'The animated strip and the Ask panel.', homeExtrasEditor, '#flow'],
@@ -226,6 +229,7 @@ function openCmd() {
     { group: 'Actions', label: 'Sign out', icon: 'out', run: async () => { await api.logout().catch(() => {}); showLogin(); } });
   s.projects.forEach((p) => items.push({ group: 'Projects', label: p.name, hint: [p.placement === 'normal' ? '' : p.placement, p.tag].filter(Boolean).join(' · '), icon: 'folder', run: () => goTab('projects', 'open', p.name) }));
   s.changelog.forEach((c, i) => items.push({ group: 'Experience', label: (c.role || 'Entry') + (c.org ? ' at ' + c.org : ''), icon: 'brief', run: () => goTab('experience', 'open', i) }));
+  s.certifications.forEach((c) => items.push({ group: 'Certifications', label: c.title || 'Certification', hint: c.issuer, icon: 'award', run: () => goTab('certs') }));
   s.modules.forEach((m, i) => items.push({ group: 'Skills', label: m.name || 'Skill group', hint: (m.items || []).slice(0, 4).join(', '), icon: 'tools', run: () => goTab('skills', 'open', i) }));
   openPalette(items);
 }

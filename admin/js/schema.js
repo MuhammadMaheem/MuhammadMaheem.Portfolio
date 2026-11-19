@@ -18,7 +18,7 @@ export function normalize(site) {
   if (id.ctaPrimary === undefined) { id.ctaPrimary = 'View deployments'; }
   if (id.ctaSecondary === undefined) { id.ctaSecondary = 'Establish uplink'; }
   if (id.resumeLabel === undefined) { id.resumeLabel = 'Spec sheet'; }
-  ['modules', 'projects', 'changelog', 'socials', 'writing', 'marquee'].forEach((k) => { if (!Array.isArray(site[k])) { site[k] = []; } });
+  ['modules', 'projects', 'changelog', 'socials', 'writing', 'marquee', 'certifications'].forEach((k) => { if (!Array.isArray(site[k])) { site[k] = []; } });
   site.sections = site.sections || {};
   SECTION_KEYS.forEach(([k, label]) => {
     const s = site.sections[k] = site.sections[k] || {};
@@ -32,6 +32,7 @@ export function normalize(site) {
   site.flow.steps = site.flow.steps || [];
   site.ask = site.ask || { questions: [] };
   site.ask.questions = site.ask.questions || [];
+  site.certifications.forEach((c) => { if (!c.id) { c.id = uid('cert'); } });
   site.changelog.forEach((c) => {
     if (!c.id) { c.id = uid('exp'); }
     c.type = c.type || 'other';
@@ -48,6 +49,8 @@ export function normalize(site) {
   });
   return site;
 }
+
+export const newCert = () => ({ id: uid('cert'), title: '', issuer: '', kind: 'Course completion badge', date: '', url: '', image: '', note: '' });
 
 export const newExperience = () => ({
   id: uid('exp'), type: 'internship', role: '', org: '', location: '', start: '', end: '', present: false,
@@ -66,10 +69,11 @@ export const newShowcase = (p, order) => ({
 
 // "2026-06" -> "Jun 2026", "2024" -> "2024"
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-export const validDate = (d) => !d || /^\d{4}(-(0[1-9]|1[0-2]))?$/.test(d);
+export const validDate = (d) => !d || /^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/.test(d);
 export function fmtDate(d) {
-  const m = String(d || '').match(/^(\d{4})(?:-(\d{2}))?$/);
+  const m = String(d || '').match(/^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?$/);
   if (!m) { return d || ''; }
+  if (m[3]) { return MON[+m[2] - 1] + ' ' + (+m[3]) + ', ' + m[1]; }
   return m[2] ? MON[+m[2] - 1] + ' ' + m[1] : m[1];
 }
 export const fmtRange = (s, e, present) => {
@@ -96,12 +100,16 @@ export function summarize(a, b) {
   [...eb.keys()].filter((k) => !ea.has(k)).forEach((k) => out.push('Added experience: ' + (eb.get(k).role || '(untitled)')));
   [...ea.keys()].filter((k) => !eb.has(k)).forEach((k) => out.push('Removed experience: ' + (ea.get(k).role || '(untitled)')));
   [...eb.keys()].filter((k) => ea.has(k) && JSON.stringify(ea.get(k)) !== JSON.stringify(eb.get(k))).forEach((k) => out.push('Edited experience: ' + (eb.get(k).role || '(untitled)')));
+  const ca = new Map((a.certifications || []).map((c) => [c.id, c])); const cb = new Map((b.certifications || []).map((c) => [c.id, c]));
+  [...cb.keys()].filter((k) => !ca.has(k)).forEach((k) => out.push('Added certification: ' + (cb.get(k).title || '(untitled)')));
+  [...ca.keys()].filter((k) => !cb.has(k)).forEach((k) => out.push('Removed certification: ' + (ca.get(k).title || '(untitled)')));
+  [...cb.keys()].filter((k) => ca.has(k) && JSON.stringify(ca.get(k)) !== JSON.stringify(cb.get(k))).forEach((k) => out.push('Edited certification: ' + (cb.get(k).title || '(untitled)')));
   // moving things around is a change too, even when nothing was added or edited
   const common = (x, y) => x.filter((k) => y.includes(k));
   const orderOf = (x, y) => JSON.stringify(common(x, y)) !== JSON.stringify(common(y, x));
   if (orderOf([...pa.keys()], [...pb.keys()])) { out.push('Changed order: projects'); }
   if (orderOf([...ea.keys()], [...eb.keys()])) { out.push('Changed order: experience'); }
-  const skip = new Set(['projects', 'changelog']);
+  const skip = new Set(['projects', 'changelog', 'certifications']);
   Object.keys(b).filter((k) => !skip.has(k) && JSON.stringify(a[k]) !== JSON.stringify(b[k])).forEach((k) => out.push('Changed: ' + k));
   return out;
 }

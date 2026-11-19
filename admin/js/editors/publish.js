@@ -11,7 +11,7 @@ function changeList(list) {
     const m = c.match(/^(Added|Removed|Edited|Changed)\s+([^:]+):\s*(.*)$/);
     if (m && m[2] === 'order') { return h('li', {}, h('span', { class: 'chg edit' }, 'Reordered'), h('span', { class: 'cw' }, 'The order of your ' + m[3] + ' changed')); }
     return m
-      ? h('li', {}, h('span', { class: 'chg ' + KIND[m[1]] }, m[1]), h('span', { class: 'cw' }, m[2] === 'project' || m[2] === 'experience' ? m[3] : m[3] + ' (' + m[2] + ')'), h('span', { class: 'ck' }, m[2]))
+      ? h('li', {}, h('span', { class: 'chg ' + KIND[m[1]] }, m[1]), h('span', { class: 'cw' }, ['project', 'experience', 'certification'].includes(m[2]) ? m[3] : m[3] + ' (' + m[2] + ')'), h('span', { class: 'ck' }, m[2]))
       : h('li', {}, h('span', { class: 'chg edit' }, 'Changed'), h('span', { class: 'cw' }, c.replace(/^Changed:\s*/, '')));
   }));
 }

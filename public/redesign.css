@@ -1435,3 +1435,22 @@ html.js-ready body.booted .ask {
 }
 .resume-btn.admin-link:hover { border-color: var(--accent); color: var(--accent); filter: none; }
 .mobile-menu .mm-foot .resume-btn.admin-link { margin: 0 8px 8px 0; }
+
+/* certifications and badges (inside the Experience section) */
+.certs { margin-top: clamp(40px, 5vw, 72px); }
+.certs-title { font-size: var(--fs-h3); letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; margin: 0 0 22px; }
+.certs-title span { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-faint); border: 1px solid var(--line-strong); border-radius: 99px; padding: 2px 9px; }
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 18px; }
+.cert { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; padding: 16px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.02); transition: border-color 0.3s, transform 0.3s; }
+.cert:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+.cert-img { display: block; border-radius: 12px; overflow: hidden; align-self: start; border: 1px solid var(--line); }
+.cert-img img { display: block; width: 100%; height: auto; aspect-ratio: 1400 / 953; object-fit: cover; transition: transform 0.5s; }
+.cert-img:hover img { transform: scale(1.05); }
+.cert-body { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.cert-kind { font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.cert h4 { margin: 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.25; letter-spacing: -0.015em; }
+.cert-meta { margin: 0; color: var(--text-dim); font-size: var(--fs-sm); }
+.cert-note { margin: 0; color: var(--text-dim); font-size: var(--fs-sm); line-height: 1.55; }
+.cert-cta { margin-top: 6px; }
+.cert-cta .btn { padding: 8px 14px; font-size: var(--fs-sm); }
+@media (max-width: 520px) { .cert { grid-template-columns: 1fr; } .cert-img { max-width: 260px; } }

@@ -21,8 +21,9 @@
   const rich = (t) => esc(t).replace(/\n/g, '<br />').replace(/\*([^*]+)\*/g, '<em>$1</em>');
   const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const fmtDate = (d) => {
-    const m = String(d || '').match(/^(\d{4})(?:-(\d{2}))?$/);
+    const m = String(d || '').match(/^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?$/);
     if (!m) { return String(d || ''); }
+    if (m[3]) { return MON[Math.max(0, Math.min(11, +m[2] - 1))] + ' ' + (+m[3]) + ', ' + m[1]; }
     return m[2] ? MON[Math.max(0, Math.min(11, +m[2] - 1))] + ' ' + m[1] : m[1];
   };
   const fmtRange = (start, end, present) => {
@@ -423,6 +424,33 @@
       const pr = b ? S.projects[+b.dataset.idx] : null;
       if (pr && window._openProject) { window._openProject(pr); }
     });
+  }
+
+  // ---- certifications and badges: shown under the timeline in the Experience section ----
+  const certSec = $('changelog');
+  const certs = (S.certifications || []).filter((c) => c && c.title);
+  if (certSec && certs.length) {
+    const wrap = el('div', 'certs reveal');
+    wrap.appendChild(el('h3', 'certs-title', esc((S.sections.experience && S.sections.experience.certsTitle) || 'Certifications') + ' <span>' + certs.length + '</span>'));
+    const grid = el('div', 'cert-grid');
+    certs.forEach((c) => {
+      const art = el('article', 'cert');
+      const img = safeUrl(c.image);
+      const verify = safeUrl(c.url);
+      const issued = fmtDate(c.date);
+      art.innerHTML =
+        (img ? '<a class="cert-img" href="' + esc(img) + '" target="_blank" rel="noopener" aria-label="View the badge for ' + esc(c.title) + '"><img src="' + esc(img) + '" alt="' + esc(c.title) + ' badge" loading="lazy"></a>' : '') +
+        '<div class="cert-body">' +
+          (c.kind ? '<span class="cert-kind">' + esc(c.kind) + '</span>' : '') +
+          '<h4>' + esc(c.title) + '</h4>' +
+          '<p class="cert-meta">' + esc([c.issuer, issued].filter(Boolean).join(' · ')) + '</p>' +
+          (c.note ? '<p class="cert-note">' + esc(c.note) + '</p>' : '') +
+          (verify ? '<div class="cert-cta"><a class="btn btn-ghost" href="' + esc(verify) + '" target="_blank" rel="noopener">Verify credential ↗</a></div>' : '') +
+        '</div>';
+      grid.appendChild(art);
+    });
+    wrap.appendChild(grid);
+    certSec.appendChild(wrap);
   }
 
   // ---- writing (only posts that link somewhere) ----

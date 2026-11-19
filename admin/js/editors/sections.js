@@ -16,6 +16,7 @@ export function headingsEditor() {
         h('div', { class: 'grid2' }, field('Menu label', text(s, 'nav')), field('Small label above the heading', text(s, 'eyebrow'))),
         field('Heading', text(s, 'title', { multi: true, rows: 2 })),
         field('Text under the heading', text(s, 'sub', { multi: true, rows: 2 })),
+        key === 'experience' ? field('Heading above your certifications', text(s, 'certsTitle', { placeholder: 'Certifications' })) : null,
         HIDEABLE.includes(key) ? toggle(s, 'visible', 'Show this section on the site') : h('p', { class: 'hint' }, 'This section is always shown.'));
       c.dataset.section = key;
       return c;

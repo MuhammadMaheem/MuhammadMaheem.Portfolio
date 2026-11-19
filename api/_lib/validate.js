@@ -55,7 +55,7 @@ export function validateSite(site) {
     if (v && typeof v === 'object') {
       Object.keys(v).forEach((k) => {
         if (k === '__proto__' || k === 'constructor' || k === 'prototype') { bad('forbidden key ' + path + '.' + k); }
-        if (/^(url|href|link|homepage|adminUrl|banner)$/i.test(k) && typeof v[k] === 'string' && v[k].trim() && !SAFE.test(v[k].trim())) {
+        if (/^(url|href|link|homepage|adminUrl|banner|image)$/i.test(k) && typeof v[k] === 'string' && v[k].trim() && !SAFE.test(v[k].trim())) {
           bad('unsafe link in ' + path + '.' + k);
         }
         walk(v[k], path + '.' + k);

@@ -69,6 +69,14 @@
       text: degree ? degree.role + ' at ' + degree.org + (degree.date ? ' (' + degree.date.replace(/\s*—\s*/, ' to ') + ')' : '') + '. ' + (degree.note || '') : A.fallback,
       sources: [['Experience', '#changelog']],
     }),
+    certs: () => {
+      const list = (S.certifications || []).filter((c) => c && c.title);
+      return list.length ? {
+        text: 'He has completed ' + (list.length === 1 ? 'one course' : list.length + ' courses') + ': ' + list.map((c) => c.title + (c.issuer ? ' (' + c.issuer + ')' : '')).join(', ') + '. Each one has a verification link.',
+        sources: [['Experience', '#changelog']],
+        action: ['See certifications', '#changelog'],
+      } : answers.fallback();
+    },
     hire: () => ({
       text: 'Yes. ' + sentence(S.identity.status) + ' He is based in ' + S.identity.location + '. You can message him from the contact section.',
       sources: [['Contact', '#uplink']],
@@ -85,6 +93,7 @@
 
   // free text is matched to an answer by keywords
   const routes = [
+    [/certif|badge|course|fluency|anthropic|claude academy|credential/i, 'certs'],
     [/game|inkwake|android|play/i, 'game'],
     [/hire|hiring|availab|contact|email|reach|open to|job|role|onsite|remote|relocat/i, 'hire'],
     [/project|built|portfolio|best|work on|shipped|demo|swarm|chatbot/i, 'projects'],

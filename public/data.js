@@ -100,6 +100,8 @@ window.SITE = {
     "LangChain",
     "RAG",
     "AI Agents",
+    "MCP",
+    "Claude Code",
     "PyTorch",
     "Hugging Face",
     "Next.js",
@@ -154,7 +156,9 @@ window.SITE = {
         "Gemini API",
         "OpenAI API",
         "Reinforcement learning",
-        "Prompt engineering"
+        "Prompt engineering",
+        "AI agents & tool use",
+        "Context engineering"
       ]
     },
     {
@@ -190,7 +194,8 @@ window.SITE = {
         "Linux (Kali)",
         "Docker (basics)",
         "CI/CD",
-        "Claude Code",
+        "Agentic coding (Claude Code)",
+        "MCP servers",
         "Copilot CLI",
         "Groq API",
         "ChromaDB",
@@ -921,7 +926,8 @@ window.SITE = {
       "eyebrow": "Experience",
       "title": "How I got here.",
       "sub": "",
-      "visible": true
+      "visible": true,
+      "certsTitle": "Certifications"
     },
     "writing": {
       "nav": "Writing",
@@ -937,5 +943,17 @@ window.SITE = {
       "sub": "Hiring, collaborating, or just want to argue about evals? My inbox is open.",
       "visible": true
     }
-  }
+  },
+  "certifications": [
+    {
+      "id": "claude-ai-fluency",
+      "title": "AI Fluency: Framework and foundations",
+      "issuer": "Claude Academy (Anthropic)",
+      "kind": "Course completion badge",
+      "date": "2026-11-17",
+      "url": "https://academy.claude.com/verify/62fd939b038a685db1c6c2167d9084fe",
+      "image": "screenshots/certifications/01-claude-ai-fluency-badge.webp",
+      "note": ""
+    }
+  ]
 };

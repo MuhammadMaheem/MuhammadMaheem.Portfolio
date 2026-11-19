@@ -408,3 +408,10 @@ kbd { font: 600 11px/1 var(--font); color: var(--dim); background: var(--bg); bo
 .card { transition: border-color .2s; } .card:hover { border-color: var(--line2); }
 .page-title { background: linear-gradient(180deg, #fff, #b8c0cf); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (max-width: 1180px) { .cmdk { min-width: 0; } }
+
+/* certifications editor */
+.cert-pick { display: grid; gap: 12px; }
+.cert-thumb { position: relative; max-width: 320px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); }
+.cert-thumb img { display: block; width: 100%; height: auto; }
+.cert-thumb .thumb-tools { position: absolute; top: 8px; right: 8px; padding: 0; }
+.inline-ico { display: inline-flex; vertical-align: -3px; color: var(--accent); }

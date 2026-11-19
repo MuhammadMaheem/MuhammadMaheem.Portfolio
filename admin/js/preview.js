@@ -153,6 +153,8 @@ const SECTION_TAB = { about: 'about', modules: 'skills', work: 'projects', chang
 const RULES = [
   // [selector, label, resolver(node) -> intent]
   ['.show, .proj', 'Edit this project', (n) => ({ tab: 'projects', project: n.dataset.pname })],
+  ['.cert', 'Edit this certification', () => ({ tab: 'certs' })],
+  ['.certs-title', 'Edit certifications', () => ({ tab: 'certs' })],
   ['.tl-item', 'Edit this experience entry', (n) => ({ tab: 'experience', index: [...n.parentNode.children].filter((c) => c.classList.contains('tl-item')).indexOf(n) })],
   ['.module', 'Edit this skill group', (n) => ({ tab: 'skills', index: [...n.parentNode.children].indexOf(n) })],
   ['.post', 'Edit this article', () => ({ tab: 'writing' })],

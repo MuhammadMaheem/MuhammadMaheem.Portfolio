@@ -76,6 +76,7 @@ export function overviewEditor() {
     h('div', { class: 'tiles' },
       tile(site.projects.length, 'Projects', flag + ' flagship · ' + feat + ' featured', 'projects'),
       tile(site.changelog.length, 'Experience entries', null, 'experience'),
+      tile(site.certifications.length, 'Certifications', null, 'certs'),
       tile(site.modules.length, 'Skill groups', site.modules.reduce((a, m) => a + (m.items || []).length, 0) + ' skills', 'skills'),
       tile(avg + '%', 'Project completeness', 'average of 5 quick checks', 'projects'),
       tile(site.socials.length, 'Links', null, 'links')),
