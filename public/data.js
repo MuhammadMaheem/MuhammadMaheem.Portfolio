@@ -954,6 +954,16 @@ window.SITE = {
       "url": "https://academy.claude.com/verify/62fd939b038a685db1c6c2167d9084fe",
       "image": "screenshots/certifications/01-claude-ai-fluency-badge.webp",
       "note": ""
+    },
+    {
+      "id": "teyzix-core-internship",
+      "title": "Internship Program in Artificial Intelligence",
+      "issuer": "TEYZIX CORE",
+      "kind": "Certificate of completion",
+      "date": "2026-07-10",
+      "url": "",
+      "image": "screenshots/certifications/02-teyzix-core-internship-certificate.webp",
+      "note": "Hosted 11 June 2026 to 10 July 2026, with real-world project work. Ref ID: TC-INT-18991230-778."
     }
   ]
 };
